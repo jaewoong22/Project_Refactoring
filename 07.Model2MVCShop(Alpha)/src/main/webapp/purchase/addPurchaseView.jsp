@@ -152,7 +152,7 @@ function fncAddPurchase() {
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
 			<input	type="number" name="buyNum" 	class="ct_input_g" 
-							style="width: 100px; height: 19px" maxLength="20" />
+							style="width: 100px; height: 19px" maxLength="20" min="0"/>
 		</td>
 	</tr>
 	<tr>
