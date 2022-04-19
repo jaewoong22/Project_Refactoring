@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
@@ -57,7 +59,30 @@ public class ProductController {
 	int pageSize;
 	
 
-	
+	@RequestMapping(value="addProduct", method=RequestMethod.POST )
+	public String addProduct( @ModelAttribute("product") Product product, @RequestParam("fileName2") MultipartFile file, Model model ) throws Exception {
+		
+		System.out.println("/product/addProduct : POST");
+		
+		String temDir = "C:\\Users\\bitcamp\\git\\Project_Refactoring\\07.Model2MVCShop(Alpha)\\src\\main\\webapp\\images\\uploadFiles\\";
+		
+		if(!file.getOriginalFilename().isEmpty()) {
+			file.transferTo(new File(temDir, file.getOriginalFilename()));
+			product.setFileName(file.getOriginalFilename());
+			System.out.println("파일명 :: "+file.getOriginalFilename());
+		}else {
+			System.out.println("파일업로드 실패...?");
+		}
+		
+		product.setManuDate(product.getManuDate().replace("-", ""));
+		productService.addProduct(product);
+		
+		model.addAttribute(product);
+		
+		return "forward:/product/getProduct.jsp";
+	}
+
+/*	
 	@RequestMapping(value="addProduct", method=RequestMethod.POST )
 	public String addProduct( HttpServletRequest request, HttpServletResponse response ) throws Exception {
 
@@ -127,6 +152,24 @@ public class ProductController {
 		
 		return "forward:/product/getProduct.jsp";
 	}
+*/
+	
+/*	
+	@RequestMapping(value="addProduct", method=RequestMethod.POST)
+	public String addProduct( @ModelAttribute("product") Product product, Model model ) throws Exception {
+
+		System.out.println("/product/addProduct : POST");
+		//Business Logic
+		System.out.println(product);
+		
+		product.setManuDate(product.getManuDate().replace("-", ""));
+		productService.addProduct(product);
+		
+		model.addAttribute(product);
+		
+		return "forward:/product/readProduct.jsp";
+	}
+*/
 	
 	@RequestMapping(value="getProduct", method=RequestMethod.GET)
 	public String getProduct( @RequestParam("prodNo") int prodNo , Model model ) throws Exception {
@@ -153,6 +196,7 @@ public class ProductController {
 		return "forward:/product/updateProduct.jsp";
 	}
 	
+/*	
 	@RequestMapping(value="updateProduct", method=RequestMethod.POST)
 	public String updateProduct( @ModelAttribute("product") Product product , Model model , HttpSession session) throws Exception{
 
@@ -162,8 +206,28 @@ public class ProductController {
 		
 		return "redirect:/product/getProduct?prodNo="+product.getProdNo();
 	}
+*/	
 	
-	
+	@RequestMapping(value="updateProduct", method=RequestMethod.POST)
+	public String updateProduct( @ModelAttribute("product") Product product , @RequestParam("fileName2") MultipartFile file) throws Exception{
+
+		System.out.println("/product/updateProduct : POST");
+		
+		String temDir = "C:\\Users\\bitcamp\\git\\Project_Refactoring\\07.Model2MVCShop(Alpha)\\src\\main\\webapp\\images\\uploadFiles\\";
+		
+		if(!file.getOriginalFilename().isEmpty()) {
+			file.transferTo(new File(temDir, file.getOriginalFilename()));
+			product.setFileName(file.getOriginalFilename());
+			System.out.println("파일명 :: "+file.getOriginalFilename());
+		}else {
+			System.out.println("파일업로드 실패...?");
+		}
+		
+		//Business Logic
+		productService.updateProduct(product);
+		
+		return "redirect:/product/getProduct?prodNo="+product.getProdNo();
+	}
 	
 	@RequestMapping( value="listProduct" )
 	public String listProduct( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{

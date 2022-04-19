@@ -62,9 +62,10 @@
 
 
 	<!--  :: ViewResolver 선언 -->	
-    <bean id="viewResolver"
+   <bean id="viewResolver"
 				class="org.springframework.web.servlet.view.InternalResourceViewResolver" />
 	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" /> 
 	
 	<!-- ////////////////////////////////////////// 추가 ,  변경된 부분 ////////////////////////////////////////////////// -->
 	<!--	
