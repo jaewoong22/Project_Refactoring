@@ -47,7 +47,25 @@
 	<tr>
 		<td width="104" class="ct_write">상품이미지</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><img src="/images/${product.fileName }" width="300" height="300" align="absmiddle"/></td>
+		<c:choose>
+		
+		<c:when test="${product.fileName.contains('&')}">
+		
+			<td class="ct_write01">
+				
+				<c:forEach var="name" items="${product.fileName.split('&')}">
+					<img src="/images/uploadFiles/${name}" width="300" height="300" align="absmiddle"/>
+				</c:forEach>
+		
+			</td>
+		
+		</c:when>
+		
+		<c:otherwise>
+			<td class="ct_write01"><img src="/images/uploadFiles/${product.fileName}" width="300" height="300" align="absmiddle"/></td>
+		</c:otherwise>
+		</c:choose>
+		
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>

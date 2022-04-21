@@ -60,26 +60,38 @@ public class ProductController {
 	
 
 	@RequestMapping(value="addProduct", method=RequestMethod.POST )
-	public String addProduct( @ModelAttribute("product") Product product, @RequestParam("fileName2") MultipartFile file, Model model ) throws Exception {
+	public String addProduct( @ModelAttribute("product") Product product, @RequestParam("uploadfiles[]") MultipartFile[] fileArray, Model model ) throws Exception {
 		
 		System.out.println("/product/addProduct : POST");
 		
 		String temDir = "C:\\Users\\bitcamp\\git\\Project_Refactoring\\07.Model2MVCShop(Alpha)\\src\\main\\webapp\\images\\uploadFiles\\";
 		
-		if(!file.getOriginalFilename().isEmpty()) {
-			file.transferTo(new File(temDir, file.getOriginalFilename()));
-			product.setFileName(file.getOriginalFilename());
-			System.out.println("파일명 :: "+file.getOriginalFilename());
-		}else {
-			System.out.println("파일업로드 실패...?");
-		}
+		String fileName = "";
+	
 		
+		for(int i=0; i<fileArray.length;i++) {
+		
+			if(!fileArray[i].getOriginalFilename().isEmpty()) {
+				fileArray[i].transferTo(new File(temDir, fileArray[i].getOriginalFilename()));
+				System.out.println("파일명 :: "+fileArray[i].getOriginalFilename());
+				
+			}else {
+				System.out.println("파일업로드 실패...?");
+			}
+		
+			fileName+=fileArray[i].getOriginalFilename()+"&";
+			
+			System.out.println("저장될 파일이름 : "+fileName);
+		}
+				
+		
+		product.setFileName(fileName);
 		product.setManuDate(product.getManuDate().replace("-", ""));
 		productService.addProduct(product);
 		
 		model.addAttribute(product);
 		
-		return "forward:/product/getProduct.jsp";
+		return "forward:/product/readProduct.jsp";
 	}
 
 /*	
@@ -209,21 +221,32 @@ public class ProductController {
 */	
 	
 	@RequestMapping(value="updateProduct", method=RequestMethod.POST)
-	public String updateProduct( @ModelAttribute("product") Product product , @RequestParam("fileName2") MultipartFile file) throws Exception{
+	public String updateProduct( @ModelAttribute("product") Product product , @RequestParam("uploadfiles[]") MultipartFile[] fileArray) throws Exception{
 
 		System.out.println("/product/updateProduct : POST");
 		
 		String temDir = "C:\\Users\\bitcamp\\git\\Project_Refactoring\\07.Model2MVCShop(Alpha)\\src\\main\\webapp\\images\\uploadFiles\\";
 		
-		if(!file.getOriginalFilename().isEmpty()) {
-			file.transferTo(new File(temDir, file.getOriginalFilename()));
-			product.setFileName(file.getOriginalFilename());
-			System.out.println("파일명 :: "+file.getOriginalFilename());
-		}else {
-			System.out.println("파일업로드 실패...?");
+		String fileName = "";
+	
+		
+		for(int i=0; i<fileArray.length;i++) {
+		
+			if(!fileArray[i].getOriginalFilename().isEmpty()) {
+				fileArray[i].transferTo(new File(temDir, fileArray[i].getOriginalFilename()));
+				System.out.println("파일명 :: "+fileArray[i].getOriginalFilename());
+				
+			}else {
+				System.out.println("파일업로드 실패...?");
+			}
+		
+			fileName+=fileArray[i].getOriginalFilename()+"&";
+			
+			System.out.println("저장될 파일이름 : "+fileName);
 		}
 		
-		//Business Logic
+		
+		product.setFileName(fileName);
 		productService.updateProduct(product);
 		
 		return "redirect:/product/getProduct?prodNo="+product.getProdNo();
