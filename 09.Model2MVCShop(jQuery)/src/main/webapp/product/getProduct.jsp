@@ -17,14 +17,21 @@
 	<script type="text/javascript">
 	
 	$(function() {	
-		 $( "td.ct_btn01:contains('확인')" ).on("click" , function() {
-			history.go(-1);
-		});
 		
-		 $( "td.ct_btn01:contains('구매')" ).on("click" , function() {\
-			 console.log('구매');
-				self.location = "/purchase/addPurchase?prodNo="${product.prodNo};
+		 $( "td.ct_btn01:contains('확인')" ).on("click" , function() {
+			 self.location = "/product/listProduct?menu=manage"
+		});
+		 
+		 $( "td.ct_btn01:contains('취소')" ).on("click" , function() {
+				history.go(-1);
 			});
+		
+		///*
+		 $( "td.ct_btn01:contains('구매')" ).on("click" , function() {
+			 console.log('구매');
+				self.location = "/purchase/addPurchase?prodNo=${product.prodNo}&menu=${param.menu}"
+			});
+		//*/
 	});
 	
 	</script>
@@ -139,29 +146,43 @@
 		<td align="right">
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
-				<c:if test="${!empty param.menu }">
+				<c:choose>
+					<c:when test="${!empty param.menu }">
 					
-					<td width="17" height="23">
-						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
-					</td>
+						<td width="17" height="23">
+							<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
+						</td>
+						
+						<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
+							구매
+						</td>
+						
+						<td width="14" height="23">
+							<img src="/images/ct_btnbg03.gif" width="14" height="23">
+						</td>
 					
-					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						구매
-					</td>
+						
+						<td width="30"></td>					
+						<td width="17" height="23">
+							<img src="/images/ct_btnbg01.gif" width="17" height="23">
+						</td>
+						<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
+							취소
+						</td>
+						<td width="14" height="23"><img src="/images/ct_btnbg03.gif" width="14" height="23"></td>
+					</c:when>
 					
-					<td width="14" height="23">
-						<img src="/images/ct_btnbg03.gif" width="14" height="23">
-					</td>
-				</c:if>
-					
-					<td width="30"></td>					
-					<td width="17" height="23">
-						<img src="/images/ct_btnbg01.gif" width="17" height="23">
-					</td>
-					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						확인
-					</td>
-					<td width="14" height="23"><img src="/images/ct_btnbg03.gif" width="14" height="23"></td>
+					<c:otherwise>
+						<td width="30"></td>					
+						<td width="17" height="23">
+							<img src="/images/ct_btnbg01.gif" width="17" height="23">
+						</td>
+						<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
+							확인
+						</td>
+						<td width="14" height="23"><img src="/images/ct_btnbg03.gif" width="14" height="23"></td>
+					</c:otherwise>
+				</c:choose>
 				</tr>
 			</table>
 		</td>
