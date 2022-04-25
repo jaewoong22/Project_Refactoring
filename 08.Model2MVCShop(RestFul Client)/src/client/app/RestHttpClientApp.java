@@ -3,8 +3,8 @@ package client.app;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
-import javax.xml.crypto.KeySelector.Purpose;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -17,10 +17,11 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
+import com.model2.mvc.service.domain.Product;
+import com.model2.mvc.service.domain.Purchase;
 //import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.domain.Search;
 import com.model2.mvc.service.domain.User;
-import com.model2.mvc.service.domain.Product;
 
 
 public class RestHttpClientApp {
@@ -29,52 +30,52 @@ public class RestHttpClientApp {
 	public static void main(String[] args) throws Exception{
 		
 		
-		//JsonSimple	
-		//==USER===============================================================		
+	
+		//==USER========================================================	
 //		RestHttpClientApp.getUserTest_JsonSimple();
 //		RestHttpClientApp.LoginTest_JsonSimple();
 //		RestHttpClientApp.addUserTest_JsonSimple();		
 //		RestHttpClientApp.updateUserTest_JsonSimple();			
 //		RestHttpClientApp.checkDuplicationTest_JsonSimple();		
-		RestHttpClientApp.listUserTest_JsonSimple();	
-
-		//==PRODUCT===============================================================
-//		RestHttpClientApp.addProductTest_JsonSimple();		
-//		RestHttpClientApp.getProductTest_JsonSimple();		
-//		RestHttpClientApp.updateProductTest_JsonSimple();		
-//		RestHttpClientApp.listProductTest_JsonSimple();
+//		RestHttpClientApp.listUserTest_JsonSimple();	
 		
-		//==PURCHASE===============================================================		
-		
-		
-////////////////////////////////////////////////////////////////////////////////////////////////////////		
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-		
-		//CodeHaus
-		//==USER===============================================================		
 //		RestHttpClientApp.getUserTest_Codehaus();
 //		RestHttpClientApp.LoginTest_Codehaus();
 //		RestHttpClientApp.addUserTest_Codehaus();
 //		RestHttpClientApp.updateUserTest_Codehaus();
 //		RestHttpClientApp.checkDuplicationTest_Codehaus();
-//		RestHttpClientApp.listUserTest_Codehaus();
+//		RestHttpClientApp.listUserTest_Codehaus();		
+
 		
-		//==PRODUCT===============================================================
+		//==PRODUCT=====================================================
+//		RestHttpClientApp.addProductTest_JsonSimple();		
+//		RestHttpClientApp.getProductTest_JsonSimple();		
+//		RestHttpClientApp.updateProductTest_JsonSimple();		
+//		RestHttpClientApp.listProductTest_JsonSimple();
+		
 //		RestHttpClientApp.addProductTest_Codehaus();		
 //		RestHttpClientApp.getProductTest_Codehaus();		
-//		RestHttpClientApp.updateProduct_Codehaus();		
-//		RestHttpClientApp.listProductTest_Codehaus();
-		
-		//==PURCHASE===============================================================		
+//		RestHttpClientApp.updateProductTest_Codehaus();		
+//		RestHttpClientApp.listProductTest_Codehaus();		
 		
 		
+		//==PURCHASE====================================================
+//		RestHttpClientApp.addPurchaseTest_JsonSimple();			
+//		RestHttpClientApp.getPurchaseTest_JsonSimple();	
+//		RestHttpClientApp.updatePurchaseTest_JsonSimple();
+//		RestHttpClientApp.updateTranCodeTest_JsonSimple();		
 		
+//		RestHttpClientApp.addPurchaseTest_Codehaus();		
+//		RestHttpClientApp.getPurchaseTest_Codehaus();			
+//		RestHttpClientApp.updatePurchaseTest_Codehaus();			
+//		RestHttpClientApp.updateTranCodeTest_Codehaus();			
+
 
 		
 	}
 	
-	
-//==UESR==============================================================//
+////////////////////////////////////////////////////////////////////////	
+////UESR////////////////////////////////////////////////////////////////
 //====================================================================//
 	public static void addUserTest_JsonSimple() throws Exception{
 		
@@ -610,8 +611,8 @@ public class RestHttpClientApp {
 		System.out.println(serverData);
 	}	
 //================================================================//	
-
-//==PRODUCT==============================================================//
+///////////////////////////////////////////////////////////////////////////
+////PRODUCT////////////////////////////////////////////////////////////////
 //=======================================================================//
 	
 	public static void addProductTest_JsonSimple() throws Exception {
@@ -783,7 +784,6 @@ public class RestHttpClientApp {
 	}
 	
 //================================================================//		
-	
 //================================================================//
 
 	public static void updateProductTest_JsonSimple() throws Exception {
@@ -957,6 +957,387 @@ public class RestHttpClientApp {
 		System.out.println(serverData);
 	}	
 //================================================================//	
+///////////////////////////////////////////////////////////////////////////
+////PRODUCT////////////////////////////////////////////////////////////////
+//=======================================================================//
+
+	public static void addPurchaseTest_JsonSimple() throws Exception {
 	
+		// HttpClient : Http Protocol 의 client 추상화
+		HttpClient httpClient = new DefaultHttpClient();
+		
+		String url = "http://127.0.0.1:8080/purchase/json/addPurchase";
+		HttpPost httpPost = new HttpPost(url);
+		httpPost.setHeader("Accept", "application/json");
+		httpPost.setHeader("Content-Type", "application/json");
+		
+//		User user = new User();
+//		user.setUserId("user12");
+//		
+//		Product product = new Product();
+//		product.setProdNo(10001);
+		
+		Map map1 = new HashMap();
+		map1.put("userId", "user12");
+		
+		Map map2 = new HashMap();
+		map2.put("prodNo", 10001);
+		
+		JSONObject json = new JSONObject();
+		json.put("buyer", map1);
+		json.put("purchaseProd", map2);
+		json.put("divyAddr", "suwon");
+		json.put("divyDate", "");
+		json.put("divyRequest", "test");
+		json.put("paymentOption", "1");
+		json.put("receiverName", "SCOTT");
+		json.put("receiverPhone", "");
+		json.put("tranCode", "001");
+		
+		HttpEntity httpEntity01 = new StringEntity(json.toString(),"utf-8");
+
+		System.out.println("json.toString: "+json.toString());
+		System.out.println();
+		
+		httpPost.setEntity(httpEntity01);
+		HttpResponse httpResponse = httpClient.execute(httpPost);
+		
+		//==> Response 확인
+		System.out.println(httpResponse);
+		System.out.println();
+
+		//==> Response 중 entity(DATA) 확인
+		HttpEntity httpEntity = httpResponse.getEntity();
+		
+		//==> InputStream 생성
+		InputStream is = httpEntity.getContent();
+		BufferedReader br = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+		
+		System.out.println("[ Server 에서 받은 Data 확인 ] ");
+		String serverData = br.readLine();
+		System.out.println(serverData);
+	
+	}
+
+	public static void addPurchaseTest_Codehaus() throws Exception {
+	
+		// HttpClient : Http Protocol 의 client 추상화
+		HttpClient httpClient = new DefaultHttpClient();
+		
+		String url = "http://127.0.0.1:8080/purchase/json/addPurchase";
+		HttpPost httpPost = new HttpPost(url);
+		httpPost.setHeader("Accept", "application/json");
+		httpPost.setHeader("Content-Type", "application/json");
+		
+		User user = new User();
+		user.setUserId("user10");
+		
+		Product product = new Product();
+		product.setProdNo(10002);
+		
+		Purchase purchase = new Purchase();
+		purchase.setBuyer(user);
+		purchase.setPurchaseProd(product);
+		purchase.setDivyAddr("suwon");
+		purchase.setDivyDate("");
+		purchase.setDivyRequest("test");
+		purchase.setPaymentOption("1");
+		purchase.setReceiverName("SCOTT");
+		purchase.setReceiverPhone("");
+		purchase.setTranCode("001");
+		
+		
+		
+		
+		System.out.println(purchase);
+		
+		ObjectMapper objectMapper01 = new ObjectMapper();
+		String jsonValue = objectMapper01.writeValueAsString(purchase);
+		
+		System.out.println(jsonValue);
+		
+		
+		HttpEntity httpEntity01 = new StringEntity(jsonValue,"utf-8");
+		
+		httpPost.setEntity(httpEntity01);
+		HttpResponse httpResponse = httpClient.execute(httpPost);
+		
+		// ==> Response 확인
+		System.out.println(httpResponse);
+		System.out.println();
+		
+		// ==> Response 중 entity(DATA) 확인
+		HttpEntity httpEntity = httpResponse.getEntity();
+		
+		// ==> InputStream 생성
+		InputStream is = httpEntity.getContent();
+		BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+		
+		System.out.println("[ Server 에서 받은 Data 확인 ] ");
+		String serverData = br.readLine();
+		System.out.println(serverData);
+		
+		
+	
+	}
+
+//================================================================//
+//================================================================//
+
+	public static void getPurchaseTest_JsonSimple() throws Exception {
+
+		// HttpClient : Http Protocol 의 client 추상화
+		HttpClient httpClient = new DefaultHttpClient();
+
+		String url = "http://127.0.0.1:8080/purchase/json/getPurchase/10003";
+		HttpPost httpPost = new HttpPost(url);
+		httpPost.setHeader("Accept", "application/json");
+		httpPost.setHeader("Content-Type", "application/json");
+		
+		// HttpGet : Http Protocol 의 GET 방식 Request
+		HttpGet httpGet = new HttpGet(url);
+		httpGet.setHeader("Accept", "application/json");
+		httpGet.setHeader("Content-Type", "application/json");
+		
+		// HttpResponse : Http Protocol 응답 Message 추상화
+		HttpResponse httpResponse = httpClient.execute(httpGet);
+		
+		//==> Response 확인
+		System.out.println(httpResponse);
+		System.out.println();
+
+		//==> Response 중 entity(DATA) 확인
+		HttpEntity httpEntity = httpResponse.getEntity();
+		
+		//==> InputStream 생성
+		InputStream is = httpEntity.getContent();
+		BufferedReader br = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+		
+		
+		//==> API 확인 : Stream 객체를 직접 전달 
+		JSONObject jsonobj = (JSONObject)JSONValue.parse(br);
+		System.out.println(jsonobj);
+	
+		ObjectMapper objectMapper = new ObjectMapper();
+		Purchase purchase = objectMapper.readValue(jsonobj.toString(), Purchase.class);
+		 System.out.println(purchase);
+	}
+	
+	public static void getPurchaseTest_Codehaus() throws Exception {
+
+		// HttpClient : Http Protocol 의 client 추상화
+		HttpClient httpClient = new DefaultHttpClient();
+
+		String url = "http://127.0.0.1:8080/purchase/json/getPurchase/10003";
+		HttpPost httpPost = new HttpPost(url);
+		httpPost.setHeader("Accept", "application/json");
+		httpPost.setHeader("Content-Type", "application/json");
+		
+		// HttpGet : Http Protocol 의 GET 방식 Request
+		HttpGet httpGet = new HttpGet(url);
+		httpGet.setHeader("Accept", "application/json");
+		httpGet.setHeader("Content-Type", "application/json");
+		
+		// HttpResponse : Http Protocol 응답 Message 추상화
+		HttpResponse httpResponse = httpClient.execute(httpGet);
+		
+		//==> Response 확인
+		System.out.println(httpResponse);
+		System.out.println();
+
+		//==> Response 중 entity(DATA) 확인
+		HttpEntity httpEntity = httpResponse.getEntity();
+		
+		//==> InputStream 생성
+		InputStream is = httpEntity.getContent();
+		BufferedReader br = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+		
+		
+		//==> API 확인 : Stream 객체를 직접 전달 
+		JSONObject jsonobj = (JSONObject)JSONValue.parse(br);
+		System.out.println(jsonobj);
+	
+		ObjectMapper objectMapper = new ObjectMapper();
+		 Purchase purchase = objectMapper.readValue(jsonobj.toString(), Purchase.class);
+		 System.out.println(purchase);
+	}
+	
+//================================================================//	
+//================================================================//
+
+	public static void updatePurchaseTest_JsonSimple() throws Exception {
+
+		// HttpClient : Http Protocol 의 client 추상화
+		HttpClient httpClient = new DefaultHttpClient();
+
+		String url = "http://127.0.0.1:8080/purchase/json/updatePurchase";
+		HttpPost httpPost = new HttpPost(url);
+		httpPost.setHeader("Accept", "application/json");
+		httpPost.setHeader("Content-Type", "application/json");
+
+		JSONObject json = new JSONObject();
+		json.put("paymentOption", "1");
+		json.put("receiverName", "재웅");
+		json.put("receiverPhone", "");
+		json.put("divyAddr", "광교");
+		json.put("divyRequest", "업데이트");
+		json.put("divyDate", "");
+		json.put("tranNo", 10003);
+		
+		
+		System.out.println(json.toString());
+		HttpEntity httpEntity01 = new StringEntity(json.toString(), "utf-8");
+
+		httpPost.setEntity(httpEntity01);
+		HttpResponse httpResponse = httpClient.execute(httpPost);
+
+		// ==> Response 확인
+		System.out.println(httpResponse);
+		System.out.println();
+
+		// ==> Response 중 entity(DATA) 확인
+		HttpEntity httpEntity = httpResponse.getEntity();
+
+		// ==> InputStream 생성
+		InputStream is = httpEntity.getContent();
+		BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+
+		System.out.println("[ Server 에서 받은 Data 확인 ] ");
+		String serverData = br.readLine();
+		System.out.println(serverData);
+
+	}
+	
+	public static void updatePurchaseTest_Codehaus() throws Exception {
+
+		// HttpClient : Http Protocol 의 client 추상화
+		HttpClient httpClient = new DefaultHttpClient();
+
+		String url = "http://127.0.0.1:8080/purchase/json/updatePurchase";
+		HttpPost httpPost = new HttpPost(url);
+		httpPost.setHeader("Accept", "application/json");
+		httpPost.setHeader("Content-Type", "application/json");
+
+		Purchase purchase = new Purchase();
+		purchase.setDivyAddr("비트");
+		purchase.setDivyDate("");
+		purchase.setDivyRequest("CodeHaus");
+		purchase.setPaymentOption("1");
+		purchase.setReceiverName("태호르");
+		purchase.setReceiverPhone("");
+		purchase.setTranNo(10003);
+		
+		System.out.println(purchase);
+		
+		ObjectMapper objectMapper01 = new ObjectMapper();
+		String jsonValue = objectMapper01.writeValueAsString(purchase);
+		
+		System.out.println(jsonValue);
+		
+	
+		HttpEntity httpEntity01 = new StringEntity(jsonValue,"utf-8");
+		
+		httpPost.setEntity(httpEntity01);
+		HttpResponse httpResponse = httpClient.execute(httpPost);
+
+		// ==> Response 확인
+		System.out.println(httpResponse);
+		System.out.println();
+
+		// ==> Response 중 entity(DATA) 확인
+		HttpEntity httpEntity = httpResponse.getEntity();
+
+		// ==> InputStream 생성
+		InputStream is = httpEntity.getContent();
+		BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+
+		System.out.println("[ Server 에서 받은 Data 확인 ] ");
+		String serverData = br.readLine();
+		System.out.println(serverData);
+
+	}
+	
+//================================================================//		
+//================================================================//
+	
+	public static void updateTranCodeTest_JsonSimple() throws Exception {
+
+		// HttpClient : Http Protocol 의 client 추상화
+		HttpClient httpClient = new DefaultHttpClient();
+
+		String url = "http://127.0.0.1:8080/purchase/json/updateTranCode/10003";
+		HttpPost httpPost = new HttpPost(url);
+		httpPost.setHeader("Accept", "application/json");
+		httpPost.setHeader("Content-Type", "application/json");
+		
+		// HttpGet : Http Protocol 의 GET 방식 Request
+		HttpGet httpGet = new HttpGet(url);
+		httpGet.setHeader("Accept", "application/json");
+		httpGet.setHeader("Content-Type", "application/json");
+		
+		// HttpResponse : Http Protocol 응답 Message 추상화
+		HttpResponse httpResponse = httpClient.execute(httpGet);
+		
+		//==> Response 확인
+		System.out.println(httpResponse);
+		System.out.println();
+
+		//==> Response 중 entity(DATA) 확인
+		HttpEntity httpEntity = httpResponse.getEntity();
+		
+		//==> InputStream 생성
+		InputStream is = httpEntity.getContent();
+		BufferedReader br = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+		
+		
+		//==> API 확인 : Stream 객체를 직접 전달 
+		JSONObject jsonobj = (JSONObject)JSONValue.parse(br);
+		System.out.println(jsonobj);
+	
+		ObjectMapper objectMapper = new ObjectMapper();
+		Purchase purchase = objectMapper.readValue(jsonobj.toString(), Purchase.class);
+		 System.out.println(purchase);
+	}
+	
+	public static void updateTranCodeTest_Codehaus() throws Exception {
+
+		// HttpClient : Http Protocol 의 client 추상화
+		HttpClient httpClient = new DefaultHttpClient();
+
+		String url = "http://127.0.0.1:8080/purchase/json/updateTranCode/10003";
+		HttpPost httpPost = new HttpPost(url);
+		httpPost.setHeader("Accept", "application/json");
+		httpPost.setHeader("Content-Type", "application/json");
+		
+		// HttpGet : Http Protocol 의 GET 방식 Request
+		HttpGet httpGet = new HttpGet(url);
+		httpGet.setHeader("Accept", "application/json");
+		httpGet.setHeader("Content-Type", "application/json");
+		
+		// HttpResponse : Http Protocol 응답 Message 추상화
+		HttpResponse httpResponse = httpClient.execute(httpGet);
+		
+		//==> Response 확인
+		System.out.println(httpResponse);
+		System.out.println();
+
+		//==> Response 중 entity(DATA) 확인
+		HttpEntity httpEntity = httpResponse.getEntity();
+		
+		//==> InputStream 생성
+		InputStream is = httpEntity.getContent();
+		BufferedReader br = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+		
+		
+		//==> API 확인 : Stream 객체를 직접 전달 
+		JSONObject jsonobj = (JSONObject)JSONValue.parse(br);
+		System.out.println(jsonobj);
+	
+		ObjectMapper objectMapper = new ObjectMapper();
+		 Purchase purchase = objectMapper.readValue(jsonobj.toString(), Purchase.class);
+		 System.out.println(purchase);
+	}
+	
+//================================================================//		
 	
 }

@@ -44,7 +44,7 @@ public class ProductRestController {
 	int pageSize;
 	
 	@RequestMapping( value="json/addProduct", method=RequestMethod.POST )
-	public Map addUser( @RequestBody Product product ) throws Exception {
+	public Map addProduct( @RequestBody Product product ) throws Exception {
 
 		System.out.println("/product/addProduct : POST");
 		//Business Logic
@@ -69,7 +69,7 @@ public class ProductRestController {
 	
 	
 	@RequestMapping( value="json/updateProduct", method=RequestMethod.POST )
-	public Product updateupdateProductUser( @RequestBody Product product) throws Exception{
+	public Product updateProduct( @RequestBody Product product) throws Exception{
 
 		productService.updateProduct(product);
 		

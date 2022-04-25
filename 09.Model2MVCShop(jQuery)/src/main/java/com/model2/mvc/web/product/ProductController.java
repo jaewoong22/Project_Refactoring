@@ -60,12 +60,12 @@ public class ProductController {
 	
 /*
 	@RequestMapping(value="addProduct", method=RequestMethod.POST )
-	public String addProduct( @ModelAttribute("product") Product product, @RequestParam("uploadfiles[]") MultipartFile[] fileArray, Model model ) throws Exception {
+	public String addProduct( @ModelAttribute("product") Product product, @RequestParam("uploadfiles[]") MultipartFile[] fileArray ) throws Exception {
 		System.out.println("addProduct Ω√¿€");
 		System.out.println(product);
 		System.out.println("/product/addProduct : POST");
 		
-		String temDir = "C:\\workspace\\07.Model2MVCShop(Alpha)\\src\\main\\webapp\\images\\uploadFiles\\";
+		String temDir = "C:\\Users\\bitcamp\\git\\Project_Refactoring\\09.Model2MVCShop(jQuery)\\src\\main\\webapp\\images\\uploadFiles\\";
 		
 		String fileName = "";
 	
@@ -91,14 +91,16 @@ public class ProductController {
 		product.setManuDate(product.getManuDate().replace("-", ""));
 		productService.addProduct(product);
 		
-		model.addAttribute(product);
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject(product);
 		
 		return "forward:/product/readProduct.jsp";
 	}
 
 
-	*/
-
+	//*/
+///*
 	@RequestMapping(value="addProduct", method=RequestMethod.POST)
 	public ModelAndView addProduct( @ModelAttribute("product") Product product) throws Exception {
 
@@ -116,7 +118,7 @@ public class ProductController {
 		return modelAndView;
 	}
 
-	
+//*/	
 	@RequestMapping(value="getProduct", method=RequestMethod.GET)
 	public String getProduct( @RequestParam("prodNo") int prodNo , Model model ) throws Exception {
 		
