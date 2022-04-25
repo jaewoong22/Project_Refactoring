@@ -88,10 +88,18 @@
 		<c:when test="${product.fileName.contains('&')}">
 		
 			<td class="ct_write01">
-				
-				<c:forEach var="name" items="${product.fileName.split('&')}">
-					<img src="/images/uploadFiles/${name}" width="300" height="300" align="absmiddle"/>
-				</c:forEach>
+				<c:choose>
+				<c:when test="${product.fileName.contains('mp4')}">
+					<c:forEach var="name" items="${product.fileName.split('&')}">
+						<video width="400" height="300" controls autoplay src="/images/uploadFiles/${name}" type="video/mp4"></video>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<c:forEach var="name" items="${product.fileName.split('&')}">
+						<img src="/images/uploadFiles/${name}" width="300" height="300" align="absmiddle"/>
+					</c:forEach>
+				</c:otherwise>
+				</c:choose>		
 		
 			</td>
 		
