@@ -1,44 +1,14 @@
 <%@ page contentType="text/html; charset=euc-kr" %>
-<%@ page pageEncoding="EUC-KR"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 
 <html>
 <head>
-<meta charset="EUC-KR">
 <title>상품상세조회</title>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
-<script type="text/javascript" src="../javascript/calendar.js">
-</script>
-	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-<script type="text/javascript">
-
-
-
-
-$(function() {
-	
-	 $( "td.ct_btn01:contains('확인')" ).on("click" , function() {
-		 console.log('확인');
-		 self.location = "/product/listProduct?menu=manage"
-	});
-	
-});
-
-
-$(function() {
-	
-	$("td.ct_btn01:contains('추가등록')").click(function(){
-		console.log('추가등록');
-		self.location = "/product/addProductView.jsp"
-		
-	});
-	
-});
-
-
-
-</script>
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
@@ -64,6 +34,23 @@ $(function() {
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+	<tr>
+		<td width="104" class="ct_write">
+			상품번호 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
+		</td>
+		<td bgcolor="D6D6D6" width="1"></td>
+		<td class="ct_write01">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="105">${product.prodNo}</td>
+					<td></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+	</tr>
 	
 	<tr>
 		<td width="104" class="ct_write">
@@ -75,18 +62,55 @@ $(function() {
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+	
+	
+	
+	<c:if test="${ user.role.equals('admin')}">
 	<tr>
-		<td width="104" class="ct_write">재고량</td>
+		<td width="104" class="ct_write">상품재고량</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">${product.prodStock }</td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+	</c:if>
+	
+	
+	
+	
 	<tr>
 		<td width="104" class="ct_write">상품이미지</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><img src="/images/${product.fileName }" width="300" height="300" align="absmiddle"/></td>
+		
+		<c:choose>
+		
+		<c:when test="${product.fileName.contains('&')}">
+		
+			<td class="ct_write01">
+				<c:choose>
+				<c:when test="${product.fileName.contains('mp4')}">
+					<c:forEach var="name" items="${product.fileName.split('&')}">
+						<video width="400" height="300" controls autoplay src="/images/uploadFiles/${name}" type="video/mp4"></video>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<c:forEach var="name" items="${product.fileName.split('&')}">
+						<img src="/images/uploadFiles/${name}" width="300" height="300" align="absmiddle"/>
+					</c:forEach>
+				</c:otherwise>
+				</c:choose>		
+		
+			</td>
+		
+		</c:when>
+		
+		<c:otherwise>
+			<td class="ct_write01"><img src="/images/uploadFiles/${product.fileName}" width="300" height="300" align="absmiddle"/></td>
+		</c:otherwise>
+		</c:choose>
+		
+		
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -124,7 +148,15 @@ $(function() {
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
-	
+	<tr>
+		<td width="104" class="ct_write">등록일자</td>
+		<td bgcolor="D6D6D6" width="1"></td>
+		<td class="ct_write01">${product.regDate }</td>
+	</tr>
+
+	<tr>
+		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+	</tr>
 </table>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0"	style="margin-top:10px;">
@@ -133,27 +165,27 @@ $(function() {
 		<td align="right">
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
-				
+				<c:if test="${!empty param.menu }">
 					
 					<td width="17" height="23">
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
 					
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						확인
+						<a href="/purchase/addPurchase?prodNo=${product.prodNo }">구매</a>
 					</td>
 					
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23">
 					</td>
-				
+				</c:if>
 					
 					<td width="30"></td>					
 					<td width="17" height="23">
 						<img src="/images/ct_btnbg01.gif" width="17" height="23">
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						추가등록
+						<a href="javascript:history.go(-1);">확인</a>
 					</td>
 					<td width="14" height="23"><img src="/images/ct_btnbg03.gif" width="14" height="23"></td>
 				</tr>

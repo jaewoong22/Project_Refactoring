@@ -1,24 +1,22 @@
 <%@ page contentType="text/html; charset=euc-kr" %>
-<%@ page pageEncoding="EUC-KR"%>
 
 <html>
 <head>
-<meta charset="EUC-KR">
 <title>상품등록</title>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
 <script type="text/javascript" src="../javascript/calendar.js">
 </script>
-	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+
 <script type="text/javascript">
 
 function fncAddProduct(){
 	//Form 유효성 검증
- 	var name = $("input[name='prodName']").val();
-	var detail = $("input[name='prodDetail']").val();
-	var manuDate = $("input[name='manuDate']").val();
-	var price = $("input[name='price']").val();
+ 	var name = document.detailForm.prodName.value;
+	var detail = document.detailForm.prodDetail.value;
+	var manuDate = document.detailForm.manuDate.value;
+	var price = document.detailForm.price.value;
 
 	if(name == null || name.length<1){
 		alert("상품명은 반드시 입력하여야 합니다.");
@@ -37,40 +35,20 @@ function fncAddProduct(){
 		return;
 	}
 
-	console.log(name);
-	
-	$("form").attr("method", "POST").attr("action", "/product/addProduct").submit();
-	
+	document.detailForm.action='/product/addProduct';
+	document.detailForm.submit();
 }
 
-
-$(function() {
-	
-	 $( "td.ct_btn01:contains('취소')" ).on("click" , function() {
-			$("form")[0].reset();
-	});
-	
-});
-
-
-$(function() {
-	
-	$("td.ct_btn01:contains('등록')").click(function(){
-		console.log('등록');
-		fncAddProduct();
-		
-	});
-	
-});
-
-
+function resetData(){
+	document.detailForm.reset();
+}
 
 </script>
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
 
-<form name="detailForm">
+<form name="detailForm" method="post" enctype="multipart/form-data">
 <%--<form name="detailForm" method="post"> --%>
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
@@ -110,19 +88,6 @@ $(function() {
 					</td>
 				</tr>
 			</table>
-		</td>
-	</tr>
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">
-			상품재고량 <img	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
-		</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<input type="text" name="prodStock" class="ct_input_g" 
-						style="width: 100px; height: 19px" maxLength="10" minLength="6"/>
 		</td>
 	</tr>
 	<tr>
@@ -186,7 +151,7 @@ $(function() {
 		<td width="104" class="ct_write">상품이미지</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<input	type="file" name="fileName" class="ct_input_g" 
+			<input	type="file" name="uploadfiles[]" multiple="multiple"  class="ct_input_g" 
 							style="width: 200px; height: 25px" maxLength="13"/>
 		</td>
 	</tr>
@@ -205,7 +170,7 @@ $(function() {
 					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 				</td>
 				<td background="/images/ct_btnbg02.gif" class="ct_btn01"  style="padding-top: 3px;">
-					등록
+					<a href="javascript:fncAddProduct();">등록</a>
 				</td>
 				<td width="14" height="23">
 					<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
@@ -215,7 +180,7 @@ $(function() {
 					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 				</td>
 				<td background="/images/ct_btnbg02.gif" class="ct_btn01"	 style="padding-top: 3px;">
-					취소
+					<a href="javascript:resetData();">취소</a>
 				</td>
 				<td width="14" height="23">
 					<img src="/images/ct_btnbg03.gif" width="14" height="23"/>

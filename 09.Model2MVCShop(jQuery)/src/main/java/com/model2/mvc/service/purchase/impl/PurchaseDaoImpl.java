@@ -48,9 +48,41 @@ public class PurchaseDaoImpl implements PurchaseDao{
 		sqlSession.update("PurchaseMapper.updateTranCode", purchase);
 	}
 
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public void updateStock(int buyNum, int prodNo) throws Exception {
+		
+		String buyNumber = buyNum+"";
+		String prodNumber = prodNo+"";
+		
+		System.out.println("buyNumber : "+buyNumber);
+		System.out.println("prodNumber : "+prodNumber);
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("buyNum", buyNumber);
+		map.put("prodNo",  prodNumber );
+		
+		sqlSession.update("PurchaseMapper.updateStock", map);
+	}
+	
+	public void cancelOrder(int buyNum, int prodNo) throws Exception {
+		
+		String buyNumber = buyNum+"";
+		String prodNumber = prodNo+"";
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("buyNum", buyNumber);
+		map.put("prodNo",  prodNumber );
+		
+		sqlSession.update("PurchaseMapper.cancelOrder", map);
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
 	public List<Purchase> getPurchaseList(Search search, String buyerId) throws Exception {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("searchCondition", search.getSearchCondition() );
+		map.put("orderCondition",  search.getOrderCondition() );
 		map.put("searchKeyword",  search.getSearchKeyword() );
 		map.put("endRowNum",  search.getEndRowNum()+"" );
 		map.put("startRowNum",  search.getStartRowNum()+"" );
@@ -63,10 +95,24 @@ public class PurchaseDaoImpl implements PurchaseDao{
 	public int getTotalCount(Search search, String buyerId) throws Exception {		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("searchCondition", search.getSearchCondition() );
+		map.put("orderCondition",  search.getOrderCondition() );
 		map.put("searchKeyword",  search.getSearchKeyword() );
 		map.put("endRowNum",  search.getEndRowNum()+"" );
 		map.put("startRowNum",  search.getStartRowNum()+"" );
 		map.put("buyerId", buyerId);
 		return sqlSession.selectOne("PurchaseMapper.getTotalCount", map);
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
+	
+	public List<Purchase> getSalesList(Search search) throws Exception {
+		
+		return sqlSession.selectList("PurchaseMapper.getSalesList", search);
+	}
+
+	// 게시판 Page 처리를 위한 전체 Row(totalCount)  return
+	public int getTotalCount2(Search search) throws Exception {		
+		
+		return sqlSession.selectOne("PurchaseMapper.getTotalCount2", search);
 	}
 }

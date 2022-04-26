@@ -59,6 +59,12 @@
 			
 			}); 
 			
+			$(".Depth03:contains('판매리스트조회')").on("click" , function() {
+				
+		 		$(window.parent.frames["rightFrame"].document.location).attr("href","/purchase/listSales?menu=manage");
+			
+			});
+			
 			
 			$(".Depth03:contains('상 품 검 색')").on("click" , function() {
 				
@@ -133,6 +139,11 @@
 				<tr>
 					<td class="Depth03">
 						판매상품관리
+					</td>
+				</tr>
+				<tr>
+					<td class="Depth03">
+						판매리스트조회
 					</td>
 				</tr>
 				<tr>

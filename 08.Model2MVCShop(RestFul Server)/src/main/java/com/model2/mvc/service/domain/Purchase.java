@@ -19,6 +19,7 @@ public class Purchase {
 	private String receiverPhone;
 	private String tranCode;
 	private int tranNo;
+	private int buyNum;
 	
 	public Purchase(){
 	}
@@ -90,9 +91,17 @@ public class Purchase {
 		this.tranNo = tranNo;
 	}
 	
+	public int getBuyNum() {
+		return buyNum;
+	}
+
+	public void setBuyNum(int buyNum) {
+		this.buyNum = buyNum;
+	}
+
 	@Override
 	public String toString() {
-		return "PurchaseVO [buyer=" + buyer + ", divyAddr=" + divyAddr
+		return "PurchaseVO [buyer=" + buyer + ", buyNum=" + buyNum + ", divyAddr=" + divyAddr
 				+ ", divyDate=" + divyDate + ", divyRequest=" + divyRequest
 				+ ", orderDate=" + orderDate + ", paymentOption="
 				+ paymentOption + ", purchaseProd=" + purchaseProd

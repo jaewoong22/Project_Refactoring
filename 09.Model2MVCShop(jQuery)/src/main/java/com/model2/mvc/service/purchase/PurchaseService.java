@@ -18,9 +18,15 @@ public interface PurchaseService {
 	// 회원정보리스트 
 	public Map<String , Object> getPurchaseList(Search search, String buyerId) throws Exception;
 	
+	public Map<String , Object > getSalesList(Search search) throws Exception;
+	
 	// 회원정보수정
 	public void updatePurchase(Purchase purchase) throws Exception;
 	
 	public void updateTranCode(Purchase purchase) throws Exception;
+	
+	public void updateStock(int buyNum, int prodNo) throws Exception;
+	
+	public void cancelOrder(int buyNum, int prodNo) throws Exception;
 	
 }

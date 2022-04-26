@@ -57,7 +57,7 @@ public class PurchaseController {
 	int pageSize;
 	
 	
-	@RequestMapping( value="addPurchase", method=RequestMethod.GET )
+	@RequestMapping(value="addPurchase", method=RequestMethod.GET)
 	public ModelAndView addPurchase(@RequestParam("prodNo") int prodNo , Model model) throws Exception {
 
 		
@@ -88,20 +88,28 @@ public class PurchaseController {
 		purchase.setPurchaseProd(product);
 		purchase.setTranCode("001");
 		
+		int buyNum = purchase.getBuyNum();
+		
 		System.out.println(purchase);
 		purchaseService.addPurchase(purchase);
 		
+		
+		System.out.println(buyNum);
+		System.out.println(prodNo);
+		purchaseService.updateStock(buyNum, prodNo);
+		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("/purchase/getPurchaseView.jsp");
+		modelAndView.addObject("purchsae", purchase);
 		
 		//return "forward:/purchase/getPurchaseView.jsp";
 		return modelAndView;
 	}
 	
-	@RequestMapping(value="getPurchase", method=RequestMethod.GET )
+	@RequestMapping( value="getPurchase", method=RequestMethod.GET)
 	public ModelAndView getPurchase( @RequestParam("tranNo") int tranNo) throws Exception {
 		
-		System.out.println("/purchase/getPurchase : GET");
+		System.out.println("/purchase/getPurchase : GET ");
 		
 		Purchase purchase = purchaseService.getPurchase(tranNo);
 
@@ -113,10 +121,10 @@ public class PurchaseController {
 		return modelAndView;
 	}
 	
-	@RequestMapping( value="updatePurchase", method=RequestMethod.GET)
+	@RequestMapping(value="updatePurchase", method=RequestMethod.GET)
 	public ModelAndView updatePurchase( @RequestParam("tranNo") int tranNo) throws Exception{
 
-		System.out.println("/purchase/updatePurchase : GET");
+		System.out.println("/purchase/updatePurchase : GET ");
 		//Business Logic
 		Purchase purchase = purchaseService.getPurchase(tranNo);
 		// Model 과 View 연결
@@ -131,7 +139,7 @@ public class PurchaseController {
 	@RequestMapping(value="updatePurchase", method=RequestMethod.POST)
 	public ModelAndView updatePurchase( @ModelAttribute("purchase") Purchase purchase, @RequestParam("tranNo") int tranNo) throws Exception{
 
-		System.out.println("/purchase/updatePurchase : POST");
+		System.out.println("/purchase/updatePurchase : POST ");
 		//Business Logic
 		
 		purchase.setTranNo(tranNo);
@@ -147,7 +155,7 @@ public class PurchaseController {
 	@RequestMapping(value="updateTranCode", method=RequestMethod.GET)
 	public ModelAndView updateTranCode( @ModelAttribute("purchase") Purchase purchase, HttpServletRequest request) throws Exception{
 
-		System.out.println("/purchsae/updateTranCode : GET");
+		System.out.println("/purchase/updateTranCode : GET");
 		//Business Logic
 		
 		int tranNo = Integer.parseInt(request.getParameter("tranNo")); 
@@ -182,12 +190,36 @@ public class PurchaseController {
 		//return "redirect:/getPurchase.do?tranNo="+purchase.getTranNo();
 		return modelAndView;
 	}
+
+	
+	@RequestMapping(value="cancelOrder", method=RequestMethod.GET)
+	public ModelAndView cancelOrder(@RequestParam("tranNo") int tranNo) throws Exception{
+
+		System.out.println("/purchase/cancelOrder : GET");
+		//Business Logic
+		
+		Purchase purchase = purchaseService.getPurchase(tranNo);
+		
+		int buyNum = purchase.getBuyNum();
+		int prodNo = purchase.getPurchaseProd().getProdNo();
+		
+		purchaseService.cancelOrder(buyNum, prodNo);
+		
+		purchase.setTranCode("000");
+		purchaseService.updateTranCode(purchase);
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("/purchase/listPurchase.do");		
+		
+		//return "redirect:/getPurchase.do?tranNo="+purchase.getTranNo();
+		return modelAndView;
+	}
 	
 	
-	@RequestMapping(value="listPurchase")
+	@RequestMapping(value="listPurchase" )
 	public ModelAndView listPurchase( @ModelAttribute("search") Search search ,  HttpServletRequest request) throws Exception{
 		
-		System.out.println("/purchase/listPurchase : GET / POST");
+		System.out.println("/purchase/listPurchase : GET / POST ");
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
@@ -209,10 +241,7 @@ public class PurchaseController {
 		System.out.println(resultPage);
 		
 		// Model 과 View 연결
-//		model.addAttribute("list", map.get("list"));
-//		model.addAttribute("resultPage", resultPage);
-//		model.addAttribute("search", search);
-		
+
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("/purchase/listPurchase.jsp");
 		modelAndView.addObject("list", map.get("list"));
@@ -226,42 +255,27 @@ public class PurchaseController {
 	}
 	
 	@RequestMapping(value="listSales")
-	public ModelAndView listSales( @ModelAttribute("search") Search search ,  HttpServletRequest request) throws Exception{
+	public ModelAndView listSales( @ModelAttribute("search") Search search) throws Exception{
 		
-		System.out.println("/purchase/listSales : GET / POST");
+		System.out.println("/purchase/listSales : GET / POST ");
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
 		
-		
-		HttpSession session = request.getSession();
-		User user = (User)session.getAttribute("user");
-		
-		String buyerId = user.getUserId();
-		
-		
 		// Business logic 수행
-		Map<String , Object> map=purchaseService.getPurchaseList(search, buyerId);
+		Map<String , Object> map=purchaseService.getSalesList(search);
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		System.out.println(resultPage);
-		
-		// Model 과 View 연결
-//		model.addAttribute("list", map.get("list"));
-//		model.addAttribute("resultPage", resultPage);
-//		model.addAttribute("search", search);
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("/purchase/listSales.jsp");
 		modelAndView.addObject("list", map.get("list"));
 		modelAndView.addObject("resultPage", resultPage);
 		modelAndView.addObject("search", search);
-		modelAndView.addObject("user", user);
 		
-		
-		//return "forward:/purchase/listSales.jsp";
 		return modelAndView;
 	}
 }

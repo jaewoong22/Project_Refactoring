@@ -17,13 +17,21 @@ public interface PurchaseDao {
 
 	// SELECT LIST
 	public List<Purchase> getPurchaseList(Search search, String buyerId) throws Exception ;
+	
+	public List<Purchase> getSalesList(Search search) throws Exception ;
 
 	// UPDATE
 	public void updatePurchase(Purchase purchase) throws Exception ;
 	
 	public void updateTranCode(Purchase purchase) throws Exception ;
 	
+	public void updateStock(int buyNum, int prodNo) throws Exception ;
+	
+	public void cancelOrder(int buyNum, int prodNo) throws Exception ;
+	
 	// 게시판 Page 처리를 위한 전체Row(totalCount)  return
 	public int getTotalCount(Search search, String buyerId) throws Exception ;
+	
+	public int getTotalCount2(Search search) throws Exception ;
 	
 }

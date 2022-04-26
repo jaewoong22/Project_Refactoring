@@ -64,8 +64,8 @@ public class ProductController {
 		
 		System.out.println("/product/addProduct : POST");
 		
-		//String temDir = "C:\\workspace\\07.Model2MVCShop(Alpha)\\src\\main\\webapp\\images\\uploadFiles\\";
-		String temDir = "C:\\Users\\pjn39\\git\\Project_Refactoring\\07.Model2MVCShop(Alpha)\\src\\main\\webapp\\images\\uploadFiles\\";
+		String temDir = "C:\\Users\\bitcamp\\git\\Project_Refactoring\\07.Model2MVCShop(Alpha)\\src\\main\\webapp\\images\\uploadFiles\\";
+		//String temDir = "C:\\Users\\pjn39\\git\\Project_Refactoring\\07.Model2MVCShop(Alpha)\\src\\main\\webapp\\images\\uploadFiles\\";
 		
 		String fileName = "";
 	

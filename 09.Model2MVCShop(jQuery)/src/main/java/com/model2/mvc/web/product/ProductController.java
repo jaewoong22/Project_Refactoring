@@ -60,16 +60,15 @@ public class ProductController {
 	
 /*
 	@RequestMapping(value="addProduct", method=RequestMethod.POST )
-	public String addProduct( @ModelAttribute("product") Product product, @RequestParam("uploadfiles[]") MultipartFile[] fileArray ) throws Exception {
-		System.out.println("addProduct 시작");
-		System.out.println(product);
+	public String addProduct( @ModelAttribute("product") Product product, @RequestParam("uploadfiles[]") MultipartFile[] fileArray, Model model ) throws Exception {
+		
 		System.out.println("/product/addProduct : POST");
 		
-		String temDir = "C:\\Users\\bitcamp\\git\\Project_Refactoring\\09.Model2MVCShop(jQuery)\\src\\main\\webapp\\images\\uploadFiles\\";
+		String temDir = "C:\\Users\\bitcamp\\git\\Project_Refactoring\\07.Model2MVCShop(Alpha)\\src\\main\\webapp\\images\\uploadFiles\\";
+		//String temDir = "C:\\Users\\pjn39\\git\\Project_Refactoring\\07.Model2MVCShop(Alpha)\\src\\main\\webapp\\images\\uploadFiles\\";
 		
 		String fileName = "";
 	
-		System.out.println(fileArray[0].getOriginalFilename());
 		
 		for(int i=0; i<fileArray.length;i++) {
 		
@@ -86,23 +85,91 @@ public class ProductController {
 			System.out.println("저장될 파일이름 : "+fileName);
 		}
 				
-		System.out.println("저장될 파일이름 : "+fileName);
+		
 		product.setFileName(fileName);
 		product.setManuDate(product.getManuDate().replace("-", ""));
 		productService.addProduct(product);
 		
-		
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject(product);
+		model.addAttribute(product);
 		
 		return "forward:/product/readProduct.jsp";
 	}
+//*/
+/*	
+	@RequestMapping(value="addProduct", method=RequestMethod.POST )
+	public String addProduct( HttpServletRequest request, HttpServletResponse response ) throws Exception {
 
-
-	//*/
-///*
+		if(FileUpload.isMultipartContent(request)) {
+			
+			String temDir = "C:\\workspace\\01.Model@MVCShop(ins)\\src\\main\\webapp\\images\\uploadFiles\\";
+			//String temDir2 = "/uploadFiles/"
+			
+			DiskFileUpload fileUpload = new DiskFileUpload();
+			fileUpload.setRepositoryPath(temDir);
+			fileUpload.setFileSizeMax(1024*1024*10);
+			fileUpload.setSizeThreshold(1024*100);
+			
+			if(request.getContentLength() < fileUpload.getSizeMax()) {
+				Product product = new Product();
+				
+				StringTokenizer token = null;
+				
+				List fileItemList = fileUpload.parseRequest(request);
+				int Size = fileItemList.size();
+				for(int i=0; i<Size; i++) {
+					FileItem fileItem = (FileItem) fileItemList.get(i);
+					if(fileItem.isFormField()) {
+						if(fileItem.getFieldName().equals("manuDate")) {
+							token = new StringTokenizer(fileItem.getString("euc-kr"), "-");
+							String manuDate = token.nextToken()+token.nextToken()+token.nextToken();
+							product.setManuDate(manuDate);
+						}
+						else if(fileItem.getFieldName().equals("prodName"))
+							product.setProdName(fileItem.getString("euc-kr"));
+						else if(fileItem.getFieldName().equals("prodDetail"))
+							product.setProdDetail(fileItem.getString("euc-kr"));
+						else if(fileItem.getFieldName().equals("price"))
+							product.setPrice(Integer.parseInt(fileItem.getString("euc-kr")));
+					}else { //파일형식이면...
+						if(fileItem.getSize()>0) { //파일을 저장하는 if
+							int idx = fileItem.getName().lastIndexOf("\\");
+							if(idx==-1) {
+								idx = fileItem.getName().lastIndexOf("/");
+							}
+							String fileName = fileItem.getName().substring(idx+1);
+							product.setFileName(fileName);
+							try {
+								File uploadFile = new File(temDir,fileName);
+								fileItem.write(uploadFile);
+							}catch (IOException e) {
+								System.out.println(e);
+							}
+						}else {
+							product.setFileName("../../images/empty.GIF");
+						}
+					}//else
+				}//for
+				
+				ProductServiceImpl service = new ProductServiceImpl();
+				service.addProduct(product);
+				
+				request.setAttribute("product", product);
+			}else {
+				int overSize = (request.getContentLength()/1000000);
+				System.out.println("<script>alert(파일의 크기는 1MB까지 입니다. 올리신 파일 용량은 )"+overSize+"MB 입니다.");
+				System.out.println("history.back();</script>");
+			}			
+		}else {
+			System.out.println("인코딩 타입이 multipart/form-data가 아닙니다..");
+		}
+		
+		return "forward:/product/getProduct.jsp";
+	}
+*/
+	
+///*	
 	@RequestMapping(value="addProduct", method=RequestMethod.POST)
-	public ModelAndView addProduct( @ModelAttribute("product") Product product) throws Exception {
+	public String addProduct( @ModelAttribute("product") Product product, Model model ) throws Exception {
 
 		System.out.println("/product/addProduct : POST");
 		//Business Logic
@@ -111,14 +178,12 @@ public class ProductController {
 		product.setManuDate(product.getManuDate().replace("-", ""));
 		productService.addProduct(product);
 		
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject(product);
-		modelAndView.setViewName("/product/readProduct.jsp");
+		model.addAttribute(product);
 		
-		return modelAndView;
+		return "forward:/product/readProduct.jsp";
 	}
-
-//*/	
+//*/
+	
 	@RequestMapping(value="getProduct", method=RequestMethod.GET)
 	public String getProduct( @RequestParam("prodNo") int prodNo , Model model ) throws Exception {
 		

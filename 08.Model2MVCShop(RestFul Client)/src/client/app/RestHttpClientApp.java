@@ -64,12 +64,17 @@ public class RestHttpClientApp {
 //		RestHttpClientApp.getPurchaseTest_JsonSimple();	
 //		RestHttpClientApp.updatePurchaseTest_JsonSimple();
 //		RestHttpClientApp.updateTranCodeTest_JsonSimple();		
+//		RestHttpClientApp.listPurchaseTest_JsonSimple();
+//		RestHttpClientApp.listSalesTest_JsonSimple();
+		
+		
 		
 //		RestHttpClientApp.addPurchaseTest_Codehaus();		
 //		RestHttpClientApp.getPurchaseTest_Codehaus();			
 //		RestHttpClientApp.updatePurchaseTest_Codehaus();			
 //		RestHttpClientApp.updateTranCodeTest_Codehaus();			
-
+//		RestHttpClientApp.listPurchaseTest_Codehaus();	
+//		RestHttpClientApp.listSalesTest_Codehaus();	
 
 		
 	}
@@ -802,7 +807,8 @@ public class RestHttpClientApp {
 		json.put("price", 500);
 		json.put("prodDetail", "업데이트");
 		json.put("prodName", "업데이트");
-		json.put("prodNo", 10008);
+		json.put("prodNo", 10035);
+		json.put("prodStock", 30);
 		
 		
 		System.out.println(json.toString());
@@ -828,7 +834,7 @@ public class RestHttpClientApp {
 
 	}
 	
-	public static void updateProduct_Codehaus() throws Exception {
+	public static void updateProductTest_Codehaus() throws Exception {
 
 		// HttpClient : Http Protocol 의 client 추상화
 		HttpClient httpClient = new DefaultHttpClient();
@@ -844,7 +850,8 @@ public class RestHttpClientApp {
 		product.setPrice(1000);
 		product.setProdDetail("ddd");
 		product.setProdName("업데이트22");
-		product.setProdNo(10009);
+		product.setProdNo(10036);
+		product.setProdStock(20);
 		
 		System.out.println(product);
 		
@@ -958,7 +965,7 @@ public class RestHttpClientApp {
 	}	
 //================================================================//	
 ///////////////////////////////////////////////////////////////////////////
-////PRODUCT////////////////////////////////////////////////////////////////
+////PURCHASE////////////////////////////////////////////////////////////////
 //=======================================================================//
 
 	public static void addPurchaseTest_JsonSimple() throws Exception {
@@ -981,7 +988,7 @@ public class RestHttpClientApp {
 		map1.put("userId", "user12");
 		
 		Map map2 = new HashMap();
-		map2.put("prodNo", 10001);
+		map2.put("prodNo", 10036);
 		
 		JSONObject json = new JSONObject();
 		json.put("buyer", map1);
@@ -993,6 +1000,7 @@ public class RestHttpClientApp {
 		json.put("receiverName", "SCOTT");
 		json.put("receiverPhone", "");
 		json.put("tranCode", "001");
+		json.put("buyNum", 2);
 		
 		HttpEntity httpEntity01 = new StringEntity(json.toString(),"utf-8");
 
@@ -1030,10 +1038,10 @@ public class RestHttpClientApp {
 		httpPost.setHeader("Content-Type", "application/json");
 		
 		User user = new User();
-		user.setUserId("user10");
+		user.setUserId("user12");
 		
 		Product product = new Product();
-		product.setProdNo(10002);
+		product.setProdNo(10035);
 		
 		Purchase purchase = new Purchase();
 		purchase.setBuyer(user);
@@ -1045,7 +1053,7 @@ public class RestHttpClientApp {
 		purchase.setReceiverName("SCOTT");
 		purchase.setReceiverPhone("");
 		purchase.setTranCode("001");
-		
+		purchase.setBuyNum(3);
 		
 		
 		
@@ -1089,7 +1097,7 @@ public class RestHttpClientApp {
 		// HttpClient : Http Protocol 의 client 추상화
 		HttpClient httpClient = new DefaultHttpClient();
 
-		String url = "http://127.0.0.1:8080/purchase/json/getPurchase/10003";
+		String url = "http://127.0.0.1:8080/purchase/json/getPurchase/10013";
 		HttpPost httpPost = new HttpPost(url);
 		httpPost.setHeader("Accept", "application/json");
 		httpPost.setHeader("Content-Type", "application/json");
@@ -1128,7 +1136,7 @@ public class RestHttpClientApp {
 		// HttpClient : Http Protocol 의 client 추상화
 		HttpClient httpClient = new DefaultHttpClient();
 
-		String url = "http://127.0.0.1:8080/purchase/json/getPurchase/10003";
+		String url = "http://127.0.0.1:8080/purchase/json/getPurchase/10013";
 		HttpPost httpPost = new HttpPost(url);
 		httpPost.setHeader("Accept", "application/json");
 		httpPost.setHeader("Content-Type", "application/json");
@@ -1182,7 +1190,7 @@ public class RestHttpClientApp {
 		json.put("divyAddr", "광교");
 		json.put("divyRequest", "업데이트");
 		json.put("divyDate", "");
-		json.put("tranNo", 10003);
+		json.put("tranNo", 10013);
 		
 		
 		System.out.println(json.toString());
@@ -1225,7 +1233,7 @@ public class RestHttpClientApp {
 		purchase.setPaymentOption("1");
 		purchase.setReceiverName("태호르");
 		purchase.setReceiverPhone("");
-		purchase.setTranNo(10003);
+		purchase.setTranNo(10014);
 		
 		System.out.println(purchase);
 		
@@ -1265,7 +1273,7 @@ public class RestHttpClientApp {
 		// HttpClient : Http Protocol 의 client 추상화
 		HttpClient httpClient = new DefaultHttpClient();
 
-		String url = "http://127.0.0.1:8080/purchase/json/updateTranCode/10003";
+		String url = "http://127.0.0.1:8080/purchase/json/updateTranCode/10013";
 		HttpPost httpPost = new HttpPost(url);
 		httpPost.setHeader("Accept", "application/json");
 		httpPost.setHeader("Content-Type", "application/json");
@@ -1304,7 +1312,7 @@ public class RestHttpClientApp {
 		// HttpClient : Http Protocol 의 client 추상화
 		HttpClient httpClient = new DefaultHttpClient();
 
-		String url = "http://127.0.0.1:8080/purchase/json/updateTranCode/10003";
+		String url = "http://127.0.0.1:8080/purchase/json/updateTranCode/10013";
 		HttpPost httpPost = new HttpPost(url);
 		httpPost.setHeader("Accept", "application/json");
 		httpPost.setHeader("Content-Type", "application/json");
@@ -1339,5 +1347,164 @@ public class RestHttpClientApp {
 	}
 	
 //================================================================//		
+//================================================================//	
+	public static void listPurchaseTest_JsonSimple() throws Exception{
+		
+		// HttpClient : Http Protocol 의 client 추상화 
+		HttpClient httpClient = new DefaultHttpClient();
+		
+		String url = "http://127.0.0.1:8080/purchase/json/listPurchase/user12";
+		HttpPost httpPost = new HttpPost(url);
+		httpPost.setHeader("Accept", "application/json");
+		httpPost.setHeader("Content-Type", "application/json");
+		
+		
+		JSONObject json = new JSONObject();
+		json.put("CurrentPage", 1);
+		HttpEntity httpEntity01 = new StringEntity(json.toString(),"utf-8");
+
+		System.out.println("json.toString"+json.toString());
+		
+		httpPost.setEntity(httpEntity01);
+		HttpResponse httpResponse = httpClient.execute(httpPost);
+		
+		//==> Response 확인
+		System.out.println(httpResponse);
+		System.out.println();
+
+		//==> Response 중 entity(DATA) 확인
+		HttpEntity httpEntity = httpResponse.getEntity();
+		
+		//==> InputStream 생성
+		InputStream is = httpEntity.getContent();
+		BufferedReader br = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+		
+		System.out.println("[ Server 에서 받은 Data 확인 ] ");
+		String serverData = br.readLine();
+		System.out.println(serverData);
 	
+	}
+	
+	public static void listPurchaseTest_Codehaus() throws Exception{
+		
+		// HttpClient : Http Protocol 의 client 추상화 
+		HttpClient httpClient = new DefaultHttpClient();
+		
+		String url = "http://127.0.0.1:8080/purchase/json/listPurchase/user12";
+		HttpPost httpPost = new HttpPost(url);
+		httpPost.setHeader("Accept", "application/json");
+		httpPost.setHeader("Content-Type", "application/json");
+		
+		Search search = new Search();
+		search.setCurrentPage(1);
+		
+		System.out.println(search);
+		
+		ObjectMapper objectMapper01 = new ObjectMapper();
+		String jsonValue = objectMapper01.writeValueAsString(search);
+		
+		System.out.println(jsonValue);
+		
+		HttpEntity httpEntity01 = new StringEntity(jsonValue,"utf-8");
+		
+		httpPost.setEntity(httpEntity01);
+		HttpResponse httpResponse = httpClient.execute(httpPost);
+		
+		//==> Response 확인
+		System.out.println(httpResponse);
+		System.out.println();
+
+		//==> Response 중 entity(DATA) 확인
+		HttpEntity httpEntity = httpResponse.getEntity();
+		
+		//==> InputStream 생성
+		InputStream is = httpEntity.getContent();
+		BufferedReader br = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+		
+		//==> 다른 방법으로 serverData 처리 
+		System.out.println("[ Server 에서 받은 Data 확인 ] ");
+		String serverData = br.readLine();
+		System.out.println(serverData);
+	}	
+//================================================================//	
+//================================================================//	
+	public static void listSalesTest_JsonSimple() throws Exception{
+		
+		// HttpClient : Http Protocol 의 client 추상화 
+		HttpClient httpClient = new DefaultHttpClient();
+		
+		String url = "http://127.0.0.1:8080/purchase/json/listSales";
+		HttpPost httpPost = new HttpPost(url);
+		httpPost.setHeader("Accept", "application/json");
+		httpPost.setHeader("Content-Type", "application/json");
+		
+		
+		JSONObject json = new JSONObject();
+		json.put("CurrentPage", 1);
+		HttpEntity httpEntity01 = new StringEntity(json.toString(),"utf-8");
+
+		System.out.println("json.toString"+json.toString());
+		
+		httpPost.setEntity(httpEntity01);
+		HttpResponse httpResponse = httpClient.execute(httpPost);
+		
+		//==> Response 확인
+		System.out.println(httpResponse);
+		System.out.println();
+
+		//==> Response 중 entity(DATA) 확인
+		HttpEntity httpEntity = httpResponse.getEntity();
+		
+		//==> InputStream 생성
+		InputStream is = httpEntity.getContent();
+		BufferedReader br = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+		
+		System.out.println("[ Server 에서 받은 Data 확인 ] ");
+		String serverData = br.readLine();
+		System.out.println(serverData);
+	
+	}
+	
+	public static void listSalesTest_Codehaus() throws Exception{
+		
+		// HttpClient : Http Protocol 의 client 추상화 
+		HttpClient httpClient = new DefaultHttpClient();
+		
+		String url = "http://127.0.0.1:8080/purchase/json/listSales";
+		HttpPost httpPost = new HttpPost(url);
+		httpPost.setHeader("Accept", "application/json");
+		httpPost.setHeader("Content-Type", "application/json");
+		
+		Search search = new Search();
+		search.setCurrentPage(1);
+		
+		System.out.println(search);
+		
+		ObjectMapper objectMapper01 = new ObjectMapper();
+		String jsonValue = objectMapper01.writeValueAsString(search);
+		
+		System.out.println(jsonValue);
+		
+		HttpEntity httpEntity01 = new StringEntity(jsonValue,"utf-8");
+		
+		httpPost.setEntity(httpEntity01);
+		HttpResponse httpResponse = httpClient.execute(httpPost);
+		
+		//==> Response 확인
+		System.out.println(httpResponse);
+		System.out.println();
+
+		//==> Response 중 entity(DATA) 확인
+		HttpEntity httpEntity = httpResponse.getEntity();
+		
+		//==> InputStream 생성
+		InputStream is = httpEntity.getContent();
+		BufferedReader br = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+		
+		//==> 다른 방법으로 serverData 처리 
+		System.out.println("[ Server 에서 받은 Data 확인 ] ");
+		String serverData = br.readLine();
+		System.out.println(serverData);
+	}	
+//================================================================//	
 }
