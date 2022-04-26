@@ -1,20 +1,64 @@
 <%@ page contentType="text/html; charset=euc-kr" %>
-
+<%@ page pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
 <head>
+<meta charset="EUC-KR">
 <title>구매 목록조회</title>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
-<script type="text/javascript">
-	// 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용  
-	function fncGetList(currentPage) {
-		document.getElementById("currentPage").value = currentPage;
-	   	document.detailForm.submit();		
-	}
-</script>
+	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript">
+
+
+		function fncGetList(currentPage) {
+			console.log(currentPage);
+			$("#currentPage").val(currentPage)
+			$("form").attr("method" , "POST").attr("action" , "/purchase/listPurchase").submit();
+		}
+		
+		
+
+		 $(function() {
+				 
+			 
+			$( "td.view" ).on("click" , function() {
+				console.log('상세보기');
+				var message = $(this).attr("value");
+				console.log(message);
+					self.location ="/purchase/getPurchase?tranNo="+message;
+			});
+			
+			$( "td.divy" ).on("click" , function() {
+				console.log('물건도착');
+				var message1 = $(this).attr("value1");
+				console.log(message1);
+				var message2 = $(this).attr("value2");
+				console.log(message2);
+				
+				self.location ="/purchase/updateTranCode?tranNo="+message1+"&tranCode="+message2;
+			});
+			
+			$( "td.cancel" ).on("click" , function() {
+				console.log('구매취소');
+				var message1 = $(this).attr("value1");
+				console.log(message1);
+				var message2 = $(this).attr("value2");
+				console.log(message2);
+				
+				self.location ="/purchase/cancelOrder?tranNo="+message1+"&tranCode="+message2;
+			});
+			
+			
+			$( "td.view" ).css("color" , "red");
+			$( "td.divy" ).css("color" , "red");
+			$( "td.cancel" ).css("color" , "red");
+			
+			
+		});	
+	</script>		
 
 </head>
 
@@ -22,7 +66,7 @@
 
 <div style="width:98%; margin-left:10px;">
 
-<form name="detailForm" action="/purchase/listPurchase" method="post">
+<form name="detailForm">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -68,10 +112,13 @@
 		<tr class="ct_list_pop">
 			<td align="center">${ i }</td>
 			<td></td>
-			<td align="center"><a href="/purchase/getPurchase?tranNo=${purchase.tranNo }">상세보기</a></td>		
+			<td align="center" class="view" value="${purchase.tranNo }">상세보기</td>		
 			<td></td>
 			
 			<c:choose>
+				<c:when test="${purchase.tranCode.equals('000')}">
+					<td align="center">구매 취소된 상품입니다.</td>
+				</c:when>
 				<c:when test="${purchase.tranCode.equals('001')}">
 					<td align="center">현재 구매완료 상태입니다.</td>
 				</c:when>
@@ -85,7 +132,13 @@
 			<td></td>
 			
 			<c:if test="${purchase.tranCode.equals('002')}">
-				<td align="center"><a href="/purchase/updateTranCode?tranNo=${purchase.tranNo }&tranCode=${purchase.tranCode}">물건도착</a></td>
+				<td align="center" class="divy" value1="${purchase.tranNo }" value2="${purchase.tranCode}">물건도착</td>
+			</c:if>
+			<c:if test="${purchase.tranCode.equals('001')}">
+				<td align="center" class="cancel"  value1="${purchase.tranNo }" value2="${purchase.tranCode}">구매취소</a>
+			</c:if>
+			<c:if test="${purchase.tranCode.equals('000')}">
+				<td align="center">구매취소완료</td>
 			</c:if>
 			
 		</tr>

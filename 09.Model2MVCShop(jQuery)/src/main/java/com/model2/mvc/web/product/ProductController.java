@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -95,77 +96,7 @@ public class ProductController {
 		return "forward:/product/readProduct.jsp";
 	}
 //*/
-/*	
-	@RequestMapping(value="addProduct", method=RequestMethod.POST )
-	public String addProduct( HttpServletRequest request, HttpServletResponse response ) throws Exception {
 
-		if(FileUpload.isMultipartContent(request)) {
-			
-			String temDir = "C:\\workspace\\01.Model@MVCShop(ins)\\src\\main\\webapp\\images\\uploadFiles\\";
-			//String temDir2 = "/uploadFiles/"
-			
-			DiskFileUpload fileUpload = new DiskFileUpload();
-			fileUpload.setRepositoryPath(temDir);
-			fileUpload.setFileSizeMax(1024*1024*10);
-			fileUpload.setSizeThreshold(1024*100);
-			
-			if(request.getContentLength() < fileUpload.getSizeMax()) {
-				Product product = new Product();
-				
-				StringTokenizer token = null;
-				
-				List fileItemList = fileUpload.parseRequest(request);
-				int Size = fileItemList.size();
-				for(int i=0; i<Size; i++) {
-					FileItem fileItem = (FileItem) fileItemList.get(i);
-					if(fileItem.isFormField()) {
-						if(fileItem.getFieldName().equals("manuDate")) {
-							token = new StringTokenizer(fileItem.getString("euc-kr"), "-");
-							String manuDate = token.nextToken()+token.nextToken()+token.nextToken();
-							product.setManuDate(manuDate);
-						}
-						else if(fileItem.getFieldName().equals("prodName"))
-							product.setProdName(fileItem.getString("euc-kr"));
-						else if(fileItem.getFieldName().equals("prodDetail"))
-							product.setProdDetail(fileItem.getString("euc-kr"));
-						else if(fileItem.getFieldName().equals("price"))
-							product.setPrice(Integer.parseInt(fileItem.getString("euc-kr")));
-					}else { //파일형식이면...
-						if(fileItem.getSize()>0) { //파일을 저장하는 if
-							int idx = fileItem.getName().lastIndexOf("\\");
-							if(idx==-1) {
-								idx = fileItem.getName().lastIndexOf("/");
-							}
-							String fileName = fileItem.getName().substring(idx+1);
-							product.setFileName(fileName);
-							try {
-								File uploadFile = new File(temDir,fileName);
-								fileItem.write(uploadFile);
-							}catch (IOException e) {
-								System.out.println(e);
-							}
-						}else {
-							product.setFileName("../../images/empty.GIF");
-						}
-					}//else
-				}//for
-				
-				ProductServiceImpl service = new ProductServiceImpl();
-				service.addProduct(product);
-				
-				request.setAttribute("product", product);
-			}else {
-				int overSize = (request.getContentLength()/1000000);
-				System.out.println("<script>alert(파일의 크기는 1MB까지 입니다. 올리신 파일 용량은 )"+overSize+"MB 입니다.");
-				System.out.println("history.back();</script>");
-			}			
-		}else {
-			System.out.println("인코딩 타입이 multipart/form-data가 아닙니다..");
-		}
-		
-		return "forward:/product/getProduct.jsp";
-	}
-*/
 	
 ///*	
 	@RequestMapping(value="addProduct", method=RequestMethod.POST)
@@ -185,13 +116,44 @@ public class ProductController {
 //*/
 	
 	@RequestMapping(value="getProduct", method=RequestMethod.GET)
-	public String getProduct( @RequestParam("prodNo") int prodNo , Model model ) throws Exception {
+	public String getProduct( @RequestParam("prodNo") int prodNo , HttpServletRequest request, 
+										HttpServletResponse response, Model model ) throws Exception {
 		
 		System.out.println("/product/getProduct : GET");
 		//Business Logic
 		Product product = productService.getProduct(prodNo);
 		// Model 과 View 연결
 		model.addAttribute("product", product);
+		
+		
+		Cookie[] cookies = request.getCookies();
+		
+		String img = product.getFileName();
+		String pn = "/"+prodNo+"&"+img;
+		String first = prodNo+"&"+img;
+		
+		if (cookies!=null && cookies.length > 0) {
+			for (int i = 0; i < cookies.length; i++) {
+				Cookie cookie = cookies[i];
+				
+				if(!cookie.getName().equals("history")) {
+					Cookie prodCookie = new Cookie("history",first);
+					response.addCookie(prodCookie);
+					
+				}else if (cookie.getName().equals("history")) {
+					
+					String str1 = cookie.getValue()+ pn;
+					
+					Cookie prodCookie02 = new Cookie("history",str1);
+					response.addCookie(prodCookie02);
+					
+					System.out.println("Not NULL일 때 저장된 prod쿠키값"+cookie.getValue());
+					System.out.println("Not NULL일 때 저장될 prod쿠키값"+str1);
+				}
+				
+				
+			}
+		}
 		
 		return "forward:/product/getProduct.jsp";
 	}

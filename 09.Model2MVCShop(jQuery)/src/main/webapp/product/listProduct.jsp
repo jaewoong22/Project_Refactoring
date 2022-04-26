@@ -252,7 +252,7 @@
 					<td align="center">판매중 </td>
 				</c:when>
 				<c:otherwise>
-					<td align="center">재고없음</td>
+					<td align="center" style="color:red">재고없음</td>
 				</c:otherwise>
 			</c:choose>
 			<c:if test="${user.role.equals('admin') && param.menu.equals('manage')}">
