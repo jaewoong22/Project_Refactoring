@@ -22,7 +22,7 @@
 			 
 			//==> login Event 연결처리부분
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		 	$( "td[width='115']:contains('login')" ).on("click" , function() {
+		 	$( "td.log:contains('login')" ).on("click" , function() {
 				//Debug..
 				//alert(  $( "td[width='115']:contains('login')" ).html() );
 				$(window.parent.frames["rightFrame"].document.location).attr("href","/user/login");
@@ -31,7 +31,7 @@
 			
 			//==> login Event 연결처리부분
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		 	$( "td[width='56']:contains('logout')" ).on("click" , function() {
+		 	$( "td.log:contains('logout')" ).on("click" , function() {
 				//Debug..
 				//alert(  $( "td[width='56']:contains('logout')" ).html() );
 				$(window.parent.document.location).attr("href","/user/logout");
@@ -50,28 +50,25 @@
 	<td height="10" >&nbsp;</td>
   </tr>
   <tr>
-    <td width="800" height="30"><h2><a href="../main.jsp" target="rightFrame" style="text-decoration-line : none; color:black">&nbsp;Model2 MVC Shop </a></h2></td>
+    <td width="90%" height="30"><h2><a href="../main.jsp" target="rightFrame" style="text-decoration-line : none; color:black">&nbsp;Model2 MVC Shop </a></h2></td>
   </tr>
   <tr>
-    <td height="20" align="right" background="/images/img_bg.gif">
-	    <table width="200" border="0" cellspacing="0" cellpadding="0">
+    <td height="20" align="right" background="/images/img_bg.gif" colspan="1">
+	    <table align="right" width="200" border="0" cellspacing="0" cellpadding="0">
 	        <tr> 
-	        	<td></td>
-	          <td width="115">
+	          <td width="150" align="right" class="log">
 		          <c:if test="${ empty user }">
-		              <!-- ////////////////// jQuery Event 처리로 변경됨 ///////////////////////// 
-						<a href="/user/login" target="rightFrame">login</a>	
-						////////////////////////////////////////////////////////////////////////////////////////////////// -->
-						login
-		           </c:if>   
-	          </td>
-	          <td width="14">&nbsp;</td>
-	          <td width="56">
+		              login
+		           </c:if>
 		          <c:if test="${ ! empty user }">
-		          		 <!-- ////////////////// jQuery Event 처리로 변경됨 ///////////////////////// 
-		            	<a href="/logout.do" target="_parent">logout</a>
-						////////////////////////////////////////////////////////////////////////////////////////////////// -->
-		            	logout
+		          	<c:choose>
+			          	<c:when test="${user.role.equals('admin') }">
+			          	<b>관리자</b> 님 | logout
+			          	</c:when>
+		          		<c:otherwise>
+		          		<b> ${user.userName }</b> 님 | logout
+		          		 </c:otherwise>
+		          	</c:choose>
 		           </c:if>
 	          </td>
 	        </tr>

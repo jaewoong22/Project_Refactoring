@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -116,7 +117,7 @@ public class ProductController {
 //*/
 	
 	@RequestMapping(value="getProduct", method=RequestMethod.GET)
-	public String getProduct( @RequestParam("prodNo") int prodNo , HttpServletRequest request, 
+	public String getProduct( @RequestParam("prodNo") int prodNo , @CookieValue(value="history", required=false) Cookie cookie,  
 										HttpServletResponse response, Model model ) throws Exception {
 		
 		System.out.println("/product/getProduct : GET");
@@ -126,33 +127,26 @@ public class ProductController {
 		model.addAttribute("product", product);
 		
 		
-		Cookie[] cookies = request.getCookies();
-		
 		String img = product.getFileName();
-		String pn = "/"+prodNo+"&"+img;
-		String first = prodNo+"&"+img;
+		String prod = product.getProdName();
+		String pn = "/"+prodNo+"&"+img+"&"+prod;
+		String first = prodNo+"&"+img+"&"+prod;
 		
-		if (cookies!=null && cookies.length > 0) {
-			for (int i = 0; i < cookies.length; i++) {
-				Cookie cookie = cookies[i];
-				
-				if(!cookie.getName().equals("history")) {
-					Cookie prodCookie = new Cookie("history",first);
-					response.addCookie(prodCookie);
+		if (cookie == null) {
+			
+			Cookie prodCookie = new Cookie("history",first);
+			response.addCookie(prodCookie);
 					
-				}else if (cookie.getName().equals("history")) {
-					
-					String str1 = cookie.getValue()+ pn;
-					
-					Cookie prodCookie02 = new Cookie("history",str1);
-					response.addCookie(prodCookie02);
-					
-					System.out.println("Not NULL일 때 저장된 prod쿠키값"+cookie.getValue());
-					System.out.println("Not NULL일 때 저장될 prod쿠키값"+str1);
-				}
-				
-				
-			}
+		}else{
+	
+			String str1 = cookie.getValue()+ pn;
+			
+			Cookie prodCookie02 = new Cookie("history",str1);
+			prodCookie02.setPath("/");
+			response.addCookie(prodCookie02);
+			
+			System.out.println("Not NULL일 때 저장된 prod쿠키값"+cookie.getValue());
+			System.out.println("Not NULL일 때 저장될 prod쿠키값"+str1);
 		}
 		
 		return "forward:/product/getProduct.jsp";
