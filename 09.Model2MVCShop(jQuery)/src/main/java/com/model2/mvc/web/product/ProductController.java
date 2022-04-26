@@ -135,6 +135,7 @@ public class ProductController {
 		if (cookie == null) {
 			
 			Cookie prodCookie = new Cookie("history",first);
+			prodCookie.setPath("/");
 			response.addCookie(prodCookie);
 					
 		}else{
