@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PurchaseMapper">
+ 	
+ 	
+	<resultMap id="purchaseSelectMap" type="purchase">
+		<result property="tranNo" 				column="TRAN_NO" 			jdbcType="INTEGER"/>
+  		<result property="purchaseProd.prodNo" 	column="PROD_NO" 			jdbcType="INTEGER"/>
+  		<result property="buyer.userId" 		column="BUYER_ID"			jdbcType="VARCHAR"/>
+  		<result property="paymentOption"		column="PAYMENT_OPTION" 	jdbcType="CHAR"/>
+  		<result property="receiverName" 		column="RECEIVER_NAME" 		jdbcType="VARCHAR"/>
+  		<result property="receiverPhone" 		column="RECEIVER_PHONE" 	jdbcType="VARCHAR"/>
+  		<result property="divyAddr" 			column="demailaddr" 		jdbcType="VARCHAR"/>
+  		<result property="divyRequest" 			column="DLVY_REQUEST" 		jdbcType="VARCHAR"/>
+  		<result property="tranCode" 			column="TRAN_STATUS_CODE" 	jdbcType="CHAR"/>
+  		<result property="orderDate" 			column="ORDER_DATA" 		jdbcType="DATE"/>  		 
+  		<result property="divyDate" 			column="DLVY_DATE"			jdbcType="DATE"/>
+  		<result property="buyNum" 				column="BUY_NUM" 			jdbcType="INTEGER"/>
+		
+	</resultMap>
+	
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addPurchase"		parameterType="purchase" >
+	 	INSERT
+		INTO transaction (tran_no, prod_no, buyer_id, payment_option, receiver_name, receiver_phone, demailaddr, dlvy_request, buy_num, tran_status_code, order_data, dlvy_date) 
+		VALUES	 (	seq_transaction_tran_no.NEXTVAL , 
+					#{purchaseProd.prodNo}, 
+					#{buyer.userId} , 
+					#{paymentOption}, 
+					#{receiverName}, 
+					#{receiverPhone},
+					#{divyAddr}, 
+					#{divyRequest}, 
+					#{buyNum}, 
+					#{tranCode}, 
+					sysdate, 
+					#{divyDate} )
+	 </insert>
+	 
+	 <!-- SQL : SELECT ONE -->
+	 <select 	id="getPurchase"	parameterType="int"	resultMap="purchaseSelectMap">
+		SELECT * 
+		FROM transaction
+		WHERE tran_no = #{value}
+	 </select>
+	 
+	 
+	 
+	 <!-- SQL : UPDATE -->
+	 <update	id="updatePurchase"	parameterType="purchase" >
+	   	UPDATE transaction
+	   	<set>
+	   		buy_num = #{buyNum}, 
+			payment_option	= #{paymentOption},
+			receiver_name = #{receiverName} ,
+			receiver_phone	=	#{receiverPhone},
+			demailaddr = #{divyAddr},
+			dlvy_request = #{divyRequest},
+			dlvy_date= #{divyDate}
+	   	</set>
+	   	WHERE tran_no = #{tranNo}
+	 </update>
+	 
+	 
+	 
+	 
+	 <!-- SQL : UPDATE TranCode -->
+	 <update	id="updateTranCode"	parameterType="purchase" >
+	   	UPDATE transaction
+	   	<set>
+	   		tran_status_code = #{tranCode}
+	   	</set>
+	   		WHERE tran_no = #{tranNo}
+	 </update>
+	 
+	 
+	  <!-- SQL : UPDATE Stock -->
+	 <update	id="updateStock"	parameterType="map" >
+	   		UPDATE product
+	   	<set>
+	   		prod_stock = prod_stock - #{buyNum}
+	   	</set>
+	   		WHERE prod_no= #{prodNo}
+	 </update>	
+	 
+	  <!-- SQL : UPDATE cancelOrder -->
+	 <update	id="cancelOrder"	parameterType="map" >
+	   	UPDATE product
+	   	<set>
+	   		prod_stock = prod_stock + #{buyNum}
+	   	</set>
+	   		WHERE prod_no= #{prodNo}
+	 </update>	 
+		 
+		 
+		 
+	<!-- SQL : SELECT LIST -->
+	<select  id="getPurchaseList"  parameterType="map"	resultMap="purchaseSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT p.prod_name, t.* 
+											FROM product p, transaction t
+												<where>
+													p.prod_no=t.prod_no(+)
+													<choose>
+														<when test="buyerId == 'admin'">
+															AND t.tran_no IS NOT NULL
+														</when>
+														<otherwise>
+															AND t.buyer_id=#{buyerId}
+														</otherwise>
+													</choose>
+													</where>
+											ORDER BY t.tran_no ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
+	 	
+	
+	<!-- SQL : SELECT ROW Count -->	 
+	 <select  id="getTotalCount"  parameterType="map"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT p.prod_name, t.* 
+											FROM product p, transaction t
+												<where>
+													p.prod_no=t.prod_no(+)
+													<choose>
+														<when test="buyerId == 'admin'">
+															AND t.tran_no IS NOT NULL
+														</when>
+														<otherwise>
+															AND t.buyer_id=#{buyerId}
+														</otherwise>
+													</choose>
+													</where>
+											ORDER BY t.tran_no ) countTable						
+	 </select>
+	 
+	 <!-- ////////////////////////////////////////////////////////////////////////////// -->
+	 
+	 <!-- SQL : SELECT LIST -->
+	<select  id="getSalesList"  parameterType="search"	resultMap="purchaseSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT p.prod_name, t.* 
+										FROM product p, transaction t
+										WHERE p.prod_no=t.prod_no(+) 
+											AND t.tran_no IS NOT NULL 
+										<if test="orderCondition == null">
+											ORDER BY t.tran_no DESC 
+										</if>
+										<if test="orderCondition != null">
+											<choose>
+												<when test="orderCondition == 0">
+													ORDER BY t.tran_no DESC 
+												</when>
+												<when test="orderCondition == 5">
+													AND NVL(t.tran_status_code,'000')='001' 
+													ORDER BY t.tran_no DESC 
+												</when>
+												<when test="orderCondition == 6">
+													AND NVL(t.tran_status_code,'000')='002' 
+													ORDER BY t.tran_no DESC 
+												</when>
+												<otherwise>
+													AND NVL(t.tran_status_code,'000')='003' 
+													 ORDER BY t.tran_no DESC 
+												</otherwise>
+											</choose>
+										</if>
+									) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
+	 	
+	
+	<!-- SQL : SELECT ROW Count -->	 
+	 <select  id="getTotalCount2"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(							SELECT p.prod_name, t.* 
+										FROM product p, transaction t
+										WHERE p.prod_no=t.prod_no(+) 
+											AND t.tran_no IS NOT NULL 
+										<if test="orderCondition == null">
+											ORDER BY t.tran_no DESC 
+										</if>
+										<if test="orderCondition != null">
+											<choose>
+												<when test="orderCondition == 0">
+													ORDER BY t.tran_no DESC 
+												</when>
+												<when test="orderCondition == 5">
+													AND NVL(t.tran_status_code,'000')='001' 
+													ORDER BY t.tran_no DESC 
+												</when>
+												<when test="orderCondition == 6">
+													AND NVL(t.tran_status_code,'000')='002' 
+													ORDER BY t.tran_no DESC 
+												</when>
+												<otherwise>
+													AND NVL(t.tran_status_code,'000')='003' 
+													 ORDER BY t.tran_no DESC 
+												</otherwise>
+											</choose>
+										</if>
+										
+											 ) countTable						
+	 </select>
+	 
+</mapper>
