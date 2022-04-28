@@ -55,14 +55,7 @@
 					self.location ="/product/updateProduct?menu=${param.menu}&prodNo="+message;
 			});
 			
-			/* 
-			$( "td.search" ).on("click" , function() {
-				console.log('구매하기');
-				var message = $(this).attr("value");
-				console.log(message);
-				self.location ="/product/getProduct?menu=${param.menu}&prodNo="+message;
-			});
-			//*/
+		
 
 			$( ".ct_list_pop td:nth-child(3)" ).css("color" , "#f08080");
 			$( "td.manage" ).css("color" , "#f08080");
@@ -131,20 +124,142 @@
 	   		$( "#prodname" ).autocomplete({
 	   		      source: list,
 	   		      
-		   		  select: function(event, ui) {
-		               console.log(ui.item);	
-		           },
-		           focus: function(event, ui) {
-		               return false;
-					}
 	   		 });
 	   		
+	   		/*
+	   		  select: function(event, ui) {
+	               console.log(ui.item);	
+	           },
+	           focus: function(event, ui) {
+	               return false;
+				}
+	           //*/
 	   		
-	   		
-	   		//================================================================
+	   		//================================================================	
 	   			
-	   		
-	   		
+	   		var currentpage = $("#cv").val();
+	   		console.log(currentpage);
+
+
+		//================================================================		
+
+/*
+	   	 $( "#test" ).on("click" , function() {
+	   		var page = $("#cv").val();
+	   		console.log(page);
+	         $.ajax( 
+	               {
+	            	  url : "/product/json/listProduct?&menu=${param.menu }" ,
+	                  method : "POST" ,
+	                  data : JSON.stringify({
+	                	  currentPage : page 
+	                  }), 
+	                  dataType : "json" ,
+	                  headers : {
+	                     "Accept" : "application/json",
+	                     "Content-Type" : "application/json"
+	                  },
+	                  success : function(JSONData , status) {
+	                	  
+	                     var displayValue = "<table class='display' height='180'>"
+	                     					  +"<tr>"
+	                                          +"<td width='300px'>"
+	                                          +"<h4>&emsp;"
+	                                          +"결과	: "+JSONData.list;
+	                                          +"</h4>"
+	                                          +"</td>"
+	                                          +"</tr>"	                                          
+	                                          +"</table>";
+	                                          
+	                     //Debug...                           
+	                     //alert(displayValue);
+	                     
+	                     $( "#"+page+"" ).html(displayValue);
+	                     
+	                     
+	                  }
+	            });
+  			 });
+
+//*/
+
+
+	   //================================================================
+			
+///*	   		
+			var currentpage = $("#cv").val();
+	   		console.log(currentpage);
+
+			$(document).ready(function(){
+			    start.init();
+			});
+			var start = {
+			        param : {
+			            curPage : 1
+			        },
+			        
+			        init : function() {
+			           this.testData();
+			           this.testEvent();
+			        },
+			       testData : function() {
+			            this.setListItems(""); // 첫 진입시 데이터 셋팅
+			        },
+			       testEvent : function() {
+			            // 무한 스크롤
+			            $(window).scroll(function() {
+			                // 맨 밑으로 스크롤이 갔을경우 if문을 탑니다.
+			                if($(window).scrollTop() == $(document).height() - $(window).height()) { 
+			                    start.param.curPage++; // 현재 페이지에서 +1 처리.
+			                    
+			                    start.testAjax(); //ajax 호출
+			                } 
+			            }); 
+			        },
+			        // 무한 스크롤 ajax 요청
+			        testAjax : function() {
+			            $.ajax({
+			                
+			                  url : "/product/json/listProduct?&menu=${param.menu }" ,
+			                  method : "POST" ,
+			                  data : JSON.stringify(start.param), 
+			                  dataType : "json" ,
+			                  headers : {
+			                     "Accept" : "application/json",
+			                     "Content-Type" : "application/json"
+			                  },
+			                success : function(JSONData , status) {
+			                	  
+			                     //alert(JSONData.list[0].prodName);
+			                     start.setListItems(JSONData.list);
+			                    			                     
+			                  }
+			            });
+			        },
+			        
+			        ///*
+			        // 테스트 데이터 setting
+			        setListItems : function (JSONData) {
+			            $.each(JSONData, function(i, product) {
+			                
+			            	console.log(product.prodName);
+			                // 부모 엘리먼트에 append 할 데이터를 셋팅한다.
+			               // alert(product.prodName);
+			                var $li = $('<li>').append($('<div>').text(product.prodName));
+			                                                    
+			                
+			                // 부모 엘리먼트에 append
+			                $('#jj').append($li);
+			            })
+			        }
+			        
+			        //*/
+			}
+//*/
+	   		//=================================================================
+
+
+
 		});	
 		 
 		
@@ -157,6 +272,8 @@
 <div style="width:98%; margin-left:10px;">
 
 <form name="detailForm">
+
+<input type="hidden" id="cv" value="${search.currentPage }"/>
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -272,7 +389,7 @@
 	</tr>
 </table>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;"  id="scrollTable">
 	<tr>
 		<td colspan="11" >
 			전체   ${resultPage.totalCount } 건수,	현재 ${resultPage.currentPage} 페이지
@@ -285,7 +402,7 @@
 		<td class="ct_line02"></td>
 		<td class="ct_list_b" width="150">가격</td>
 		<td class="ct_line02"></td>
-		<td class="ct_list_b">등록일</td>
+		<td class="ct_list_b" id="test">등록일</td>
 		<td class="ct_line02"></td>
 		<td class="ct_list_b">현재상태</td>
 		<c:if test="${user.role.equals('admin') && param.menu.equals('manage')}">
@@ -321,7 +438,7 @@
 				</c:if>
 			
 			<td></td>
-			<td align="center">${product.price}</td>
+			<td align="center" >${product.price}</td>
 			<td></td>
 			<td align="center">${product.regDate}
 			</td>		
@@ -346,61 +463,18 @@
 		<tr>
 			<td id="${product.prodNo}" colspan="11" bgcolor="#f5f5f5" height="1"></td>
 		</tr>
+		<tr>
+			<td id="kkkkkk" colspan="11" bgcolor="#f5f5f5" height="1"></td>
+		</tr>
+		<tr>
+			<td id="jj" colspan="11" bgcolor="#f5f5f5" height="1"></td>
+		</tr>
 	</c:forEach>
+	
 </table>
-<table>
-<tr>
-<td><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
-<td><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></td>
 
 
-</tr>
-</table>
+
 <!-- PageNavigation Start... -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0"	style="margin-top:10px;">
 	<tr>
