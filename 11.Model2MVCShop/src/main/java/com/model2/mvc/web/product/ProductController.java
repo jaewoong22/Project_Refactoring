@@ -66,8 +66,7 @@ public class ProductController {
 		
 		System.out.println("/product/addProduct : POST");
 		
-		String temDir = "C:\\workspace2\\11.Model2MVCShop\\src\\main\\webapp\\images\\uploadFiles\\";
-		//String temDir = "C:\\Users\\pjn39\\git\\Project_Refactoring\\07.Model2MVCShop(Alpha)\\src\\main\\webapp\\images\\uploadFiles\\";
+		String temDir = "C:\\Users\\bitcamp\\git\\Project_Refactoring\\11.Model2MVCShop\\src\\main\\webapp\\images\\uploadFiles";
 		
 		String fileName = "";
 	
@@ -89,9 +88,7 @@ public class ProductController {
 				
 		String manuDate = "";
 		String[]  manuDates = product.getManuDate().split("/");
-		for(int i=manuDates.length-1; i>=0; i--) {
-			manuDate += manuDates[i];
-		}
+		manuDate = manuDates[2]+manuDates[0]+manuDates[1];
 		
 		System.out.println(manuDate);
 		
@@ -190,10 +187,12 @@ public class ProductController {
 
 		System.out.println("/product/updateProduct : POST");
 		
-		String temDir = "C:\\workspace2\\11.Model2MVCShop\\src\\main\\webapp\\images\\uploadFiles\\";
+		String temDir = "C:\\Users\\bitcamp\\git\\Project_Refactoring\\11.Model2MVCShop\\src\\main\\webapp\\images\\uploadFiles";
 		
 		String fileName = "";
 	
+		System.out.println("prodNo"+product.getProdNo());
+		
 		
 		for(int i=0; i<fileArray.length;i++) {
 		
@@ -210,10 +209,11 @@ public class ProductController {
 			System.out.println("저장될 파일이름 : "+fileName);
 		}
 		
-		String manuDate = "";
-		String[]  manuDates = product.getManuDate().split("/");
-		for(int i=manuDates.length-1; i>=0; i--) {
-			manuDate += manuDates[i];
+		String manuDate = product.getManuDate();
+		
+		if(product.getManuDate().contains("/")) {
+			String[]  manuDates = product.getManuDate().split("/");
+			manuDate = manuDates[2]+manuDates[0]+manuDates[1];
 		}
 		
 		System.out.println(manuDate);

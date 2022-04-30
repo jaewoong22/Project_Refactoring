@@ -74,8 +74,7 @@ body>div.container {
 			return;
 		}
 
-		$("form").attr("method", "POST").attr("action", "/product/updateProduct")
-				.submit();
+		$("form").attr("method", "POST").attr("enctype","multipart/form-data").attr("action", "/product/updateProduct").submit();
 		//document.detailForm.action='/product/addProduct';
 		//document.detailForm.submit();
 	}
@@ -96,7 +95,7 @@ body>div.container {
 	})
 
 	$(function() {
-		$("a[href='#' ]").on("click", function() {
+		$("button.btn-default").on("click", function() {
 			// resetData();
 			history.go(-1);
 		})
@@ -119,46 +118,47 @@ body>div.container {
 
 		<form class="form-horizontal" enctype="multipart/form-data">
 		
-
+			<input type="hidden" name="prodNo" value="${product.prodNo }">
+			
 			<div class="form-group">
 		    <label for="prodName" class="col-sm-offset-1 col-sm-3 control-label">상품명</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="prodName" name="prodName" placeholder="상품명">
+		      <input type="text" class="form-control" id="prodName" name="prodName" value="${product.prodName }">
 		    </div>
 		  </div>
 
 			<div class="form-group">
 		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">상품상세정보</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="prodDetail" name="prodDetail" placeholder="상품상세정보 입력">
+		      <input type="text" class="form-control" id="prodDetail" name="prodDetail" value="${product.prodDetail }">
 		    </div>
 		  </div>
 
 			<div class="form-group">
 			    <label for="prodStock" class="col-sm-offset-1 col-sm-3 control-label">상품재고량</label>
 			    <div class="col-sm-4">
-			      <input type="text" class="form-control" id="prodStock" name="prodStock" placeholder="개수입력">
+			      <input type="text" class="form-control" id="prodStock" name="prodStock" value="${product.prodStock }">
 			    </div>
 			  </div>
 
 			<div class="form-group">
 				<label for="manuDate" class="col-sm-offset-1 col-sm-3 control-label">제조일자</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="manuDate" name="manuDate" placeholder="2022-01-01">
+					<input type="text" class="form-control" id="manuDate" name="manuDate" value="${product.manuDate }">
 				</div>
 			</div>
 
 			<div class="form-group">
 		    <label for="price" class="col-sm-offset-1 col-sm-3 control-label">가격</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="price" name="price" placeholder="가격">
+		      <input type="text" class="form-control" id="price" name="price" value="${product.price }">
 		    </div>
 		  </div>
 
 			<div class="form-group">
 		    <label for="fileName" class="col-sm-offset-1 col-sm-3 control-label">상품이미지</label>
 		    <div class="col-sm-4">
-		      <input type="file" id="fileName" name="uploadfiles[]" multiple="multiple" >
+		      <input type="file" id="fileName" name="uploadfiles[]" multiple="multiple"  value="${product.fileName }">
 		    </div>
 		  </div>
 		  

@@ -66,7 +66,9 @@ public class ProductServiceImpl implements ProductService{
 	//
 
 	public void updateProduct(Product product) throws Exception {
+		System.out.println("µé¾î°¨: " + product);
 		productDao.updateProduct(product);
+		System.out.println("³ª¿È");
 	}
 
 	

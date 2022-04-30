@@ -59,10 +59,16 @@
 			});
 			 
 			
-			 $( "a.btn-primary" ).on("click" , function() {
+			 $( "a.btn-info" ).on("click" , function() {
 				 var prodNo =$(this).attr("value");
 				 console.log('수정하기');
 				 self.location = "/product/updateProduct?prodNo="+prodNo
+			});
+			 
+			 $( "a.btn-primary" ).on("click" , function() {
+				 var prodNo =$(this).attr("value");
+				 console.log('구매하기');
+				 self.location = "/product/getProduct?menu=search&prodNo="+prodNo
 			});
 			
 
@@ -216,7 +222,7 @@
 			        
 			        
 			        <c:if test="${param.menu.equals('manage') }">
-			        <a class="btn btn-primary btn"  role="button" value="${product.prodNo}">수정하기</a>			        
+			        <a class="btn btn-info btn"  role="button" value="${product.prodNo}">수정하기</a>			        
 			        </c:if>
 			        <c:if test="${param.menu.equals('search') }">
 			        	<c:choose>
@@ -224,7 +230,7 @@
 			        			<a class="btn btn-defualt btn disabled" role="button" >재고없음</a>
 			        		</c:when>
 			        		<c:otherwise>
-			        			<a class="btn btn-primary btn" href="/product/getProduct?prodNo=${product.prodNo}" role="button" value="${product.prodNo}">구매하기</a>
+			        			<a class="btn btn-primary btn" role="button" value="${product.prodNo}">구매하기</a>
 			        		</c:otherwise>
 			        	</c:choose>			        
 			        </c:if>

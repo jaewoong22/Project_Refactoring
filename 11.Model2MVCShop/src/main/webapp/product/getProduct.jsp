@@ -37,12 +37,12 @@
 	
 	$(function() {	
 		
-		 $( "#check" ).on("click" , function() {
+		 $( "button.btn-default" ).on("click" , function() {
 			 history.go(-1);
 		});
 		 
-		 $( "#buy" ).on("click" , function() {
-			 history.go(-1);
+		 $( "button.btn-primary" ).on("click" , function() {
+			 self.location = "/purchase/addPurchase?prodNo=${product.prodNo}&menu=${param.menu}"
 		});
 		 
 	});
@@ -60,7 +60,12 @@
 	<div class="container">
 	
 		<div class="page-header">
+			<c:if test="${empty param.menu }">
 	       <h3 class=" text-info">상품상세조회</h3>
+	       </c:if>
+	       <c:if test="${!empty param.menu }">
+	       	<h3 class=" text-info">상품구매하기</h3>
+	       </c:if>
 	    </div>
 	
 		<div class="row">
@@ -159,8 +164,13 @@
 		
 		<div class="row">
 	  		<div class="col-md-12 text-right ">
+	  			<c:if test="${empty param.menu }">
 	  			<button type="button" class="btn btn-default" id="check">확인</button>
-	  			<button type="button" class="btn btn-primary" id="buy">구매</button>
+	  			</c:if>
+	  			<c:if test="${!empty param.menu }">
+	  				<button type="button" class="btn btn-default" id="check">취소</button>
+	  				<button type="button" class="btn btn-primary" id="buy" value1="${product.prodNo }" value2="${param.menu }">구매</button>
+	  			</c:if>
 	  		</div>
 		</div>
 		
