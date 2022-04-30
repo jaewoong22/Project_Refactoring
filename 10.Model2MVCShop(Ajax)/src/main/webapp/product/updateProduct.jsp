@@ -39,7 +39,7 @@ function fncUpdateProduct(){
 
 	console.log(name);
 	
-	$("form").attr("method", "POST").attr("action", "/product/updateProduct").submit();
+	$("form").attr("method", "POST").attr("action", "/product/updateProduct").attr("enctype", "multipart/form-data").submit();
 	
 }
 
@@ -175,7 +175,7 @@ $(function() {
 		<td width="104" class="ct_write">상품이미지</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<input	type="file" name="fileName" class="ct_input_g" 
+			<input	type="file" class="ct_input_g" name="uploadfiles[]" multiple="multiple"  
 						style="width: 200px; height: 25px" maxLength="13" value="${product.fileName }" />
 		</td>
 	</tr>
