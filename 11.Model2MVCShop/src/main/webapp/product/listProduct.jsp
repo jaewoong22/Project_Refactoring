@@ -96,6 +96,14 @@
             padding-top : 50px;
         }
         
+       #image {
+			width: 250px;
+		 	height:250px;
+       }   
+       
+       div.thumbnail {
+       		height:400px;
+       }
     </style>
 	
 </head>
@@ -192,17 +200,17 @@
 			    <c:when test="${product.fileName.contains('&')}">
 				    <c:choose>
 					<c:when test="${product.fileName.contains('mp4')}">
-						<img src="/images/noimage.jpg" width="250" height="250" >
+						<img src="/images/noimage.jpg">
 					</c:when>
 					<c:otherwise>
 						<c:forEach var="name" items="${product.fileName.split('&')[0]}">
-							<img src="/images/uploadFiles/${name}" width="250" height="250" >
+							<img src="/images/uploadFiles/${name}" >
 						</c:forEach>
 					</c:otherwise>
 					</c:choose>
 			    </c:when>
 			    <c:otherwise>
-					<img src="/images/uploadFiles/${product.fileName}" width="250" height="250">
+					<img src="/images/uploadFiles/${product.fileName}" class="img-responsive img-rounded" id="image">
 				</c:otherwise>
 				</c:choose>
 			    

@@ -37,7 +37,7 @@
 				if (!h[i].equals("null")) {
 					String[] t = h[i].split("&");
 					%>
-						<%= t[2] %><br/>
+						<%= t[2].replace("_"," ") %><br/>
 						<a href="/product/getProduct?prodNo=<%=t[0]%>&menu=search"	target="rightFrame" >
 						<img src="/images/uploadFiles/<%=t[1] %>" width="100" height="100" align="absmiddle"/>
 						</a>

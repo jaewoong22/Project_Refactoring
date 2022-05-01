@@ -62,6 +62,7 @@ body>div.container {
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "button.btn.btn-primary" ).on("click" , function() {
+				console.log('구매');
 				fncAddPurchase();
 			});
 		});	
@@ -81,10 +82,9 @@ body>div.container {
 		function fncAddPurchase() {
 			
 			var purchaseCount=$("input[name='purchaseCount']").val();
-			var total=$("input[name='total']").val();
+			var buyNum=$("input[name='buyNum']").val();
 
-			if (purchaseCount > total) {
-				console.log("아");
+			if (purchaseCount > buyNum) {
 				alert("구매 가능 개수가 초과되었습니다");
 				return;
 			}
@@ -164,9 +164,9 @@ body>div.container {
 		  
 		  	  
 		  <div class="form-group">
-		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">구매자아이디</label>
+		    <label for="buyerId" class="col-sm-offset-1 col-sm-3 control-label">구매자아이디</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="userId" name="userId" placeholder="아이디" value="${user.userId}" readonly>
+		      <input type="text" class="form-control" id="buyerId" name="buyerId" placeholder="${user.userId}" value="${user.userId}" readonly>
 		    </div>
 		  </div>
 		  

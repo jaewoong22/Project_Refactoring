@@ -132,7 +132,7 @@ public class ProductController {
 		
 		
 		String img = product.getFileName();
-		String prod = product.getProdName();
+		String prod = product.getProdName().replace(" ", "_");
 		String pn = "/"+prodNo+"&"+img+"&"+prod;
 		String first = prodNo+"&"+img+"&"+prod;
 		

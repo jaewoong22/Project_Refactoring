@@ -103,11 +103,14 @@
 		                  },
 		                  success : function(JSONData , status) {
 		                	  
-		                     var displayValue = "<table class='display' height='180' align='center'>"
-		                     					  +"<tr>"
-		                                          +"<td>"
-		                                          +"<h4><br/>&emsp;"
-		                                          +"상품명	: "+JSONData.purchaseProd.prodName+"<br/>&emsp;"
+		                	  var displayValue = "<table class='display' width='500' height='180'>"
+				            					  +"<tr>"
+				             					  +"<td>&emsp;"
+				             					  +"<img src='/images/uploadFiles/"+JSONData.purchaseProd.fileName+"' width='125' height='125' />"
+				                                  +"</td>"
+				                                  +"<td>"
+				                                  +"<h5>&emsp;"
+				                                  +"상품명	: "+JSONData.purchaseProd.prodName+"<br/>&emsp;"
 		                                          +"구매자아이디	: "+JSONData.buyer.userId+"<br/>&emsp;"
 		                                          +"구매방법	: "+JSONData.paymentOption+"<br/>&emsp;"
 		                                          +"구매자이름 	: "+JSONData.receiverName+"<br/>&emsp;"
@@ -116,14 +119,12 @@
 		                                          +"구매요청사항	: "+JSONData.divyRequest+"<br/>&emsp;"
 		                                          +"배송희망일	: "+JSONData.divyDate+"<br/>&emsp;"
 		                                          +"주문일	: "+JSONData.orderDate
-		                                          +"</h4>"
-		                                          +"</td>"
-		                                          +"</tr>"	                                          
-		                                          +"</table>";
-		                                          
-		                     //Debug...                           
-		                     //alert(displayValue);
-		                     $("table.display").remove();
+				                                  +"</h5>"
+				                                  +"</td>"
+				                                  +"</tr>"	                                          
+				                                  +"</table>";
+				                                  
+				             $("table.display").remove();                     
 		                     $( "#"+tranNo+"" ).html(displayValue);
 		                  }
 		            });

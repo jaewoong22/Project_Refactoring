@@ -84,6 +84,11 @@ public class PurchaseController {
 		User user = userService.getUser(buyerId);
 		Product product = productService.getProduct(prodNo);
 		
+		String divyDate = "";
+		String[]  divyDates = purchase.getDivyDate().split("/");
+		divyDate = divyDates[2]+divyDates[0]+divyDates[1];
+		
+		purchase.setDivyDate(divyDate);
 		purchase.setBuyer(user);
 		purchase.setPurchaseProd(product);
 		purchase.setTranCode("001");
@@ -112,6 +117,11 @@ public class PurchaseController {
 		System.out.println("/purchase/getPurchase : GET ");
 		
 		Purchase purchase = purchaseService.getPurchase(tranNo);
+		User user = userService.getUser(purchase.getBuyer().getUserId());
+		Product product = productService.getProduct(purchase.getPurchaseProd().getProdNo());
+		
+		purchase.setBuyer(user);
+		purchase.setPurchaseProd(product);
 
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("/purchase/getPurchase.jsp");
@@ -142,6 +152,11 @@ public class PurchaseController {
 		System.out.println("/purchase/updatePurchase : POST ");
 		//Business Logic
 		
+		String divyDate = "";
+		String[]  divyDates = purchase.getDivyDate().split("/");
+		divyDate = divyDates[2]+divyDates[0]+divyDates[1];
+		
+		purchase.setDivyDate(divyDate);
 		purchase.setTranNo(tranNo);
 		purchaseService.updatePurchase(purchase);
 		

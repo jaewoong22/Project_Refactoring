@@ -39,12 +39,13 @@
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
-			 $( "td.ct_btn01:contains('확인')" ).on("click" , function() {
-				history.go(-1);
+			 $( "button.btn.btn-default" ).on("click" , function() {
+				 self.location = "/purchase/listPurchase"
 			});
 			
 			 $( "#update" ).on("click" , function() {
 					self.location = "/purchase/updatePurchase?tranNo=${purchase.tranNo}"
+					
 			});
 			 
 		});
@@ -110,6 +111,13 @@
 		<hr/>
 		
 		<div class="row">
+	  		<div class="col-xs-4 col-md-4"><strong>구매수량</strong></div>
+			<div class="col-xs-8 col-md-8">${purchase.buyNum }</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
 	  		<div class="col-xs-4 col-md-4"><strong>구매자아이디</strong></div>
 			<div class="col-xs-8 col-md-8">${purchase.buyer.userId}</div>
 		</div>
@@ -119,7 +127,12 @@
 		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-4"><strong>구매방법</strong></div>
-			<div class="col-xs-8 col-md-8">${purchase.paymentOption }</div>
+	  		<c:if test="${purchase.paymentOption.contains('1')}">
+	  			<div class="col-xs-8 col-md-8">현금구매</div>
+	  		</c:if>
+	  		<c:if test="${purchase.paymentOption.contains('2')}">
+	  			<div class="col-xs-8 col-md-8">신용구매</div>
+	  		</c:if>
 		</div>
 		
 		<hr/>

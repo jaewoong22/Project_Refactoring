@@ -44,7 +44,6 @@
 
 <style>
 body>div.container {
-	border: 3px solid #D6CDB7;
 	margin-top: 150px;
 }
 </style>

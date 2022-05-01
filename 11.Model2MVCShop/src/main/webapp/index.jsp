@@ -37,7 +37,7 @@
 		//============= 회원원가입 화면이동 =============
 		$( function() {
 			//==> 추가된부분 : "addUser"  Event 연결
-			$("a[href='#' ]:contains('회원가입')").on("click" , function() {
+			$("a[href='#' ]:contains('JOIN')").on("click" , function() {
 				self.location = "/user/addUser"
 			});
 		});
@@ -45,7 +45,10 @@
 		//============= 로그인 화면이동 =============
 		$( function() {
 			//==> 추가된부분 : "addUser"  Event 연결
-			$("a[href='#' ]:contains('로 그 인')").on("click" , function() {
+			$("a[href='#' ]:contains('LOGIN')").on("click" , function() {
+				self.location = "/user/login"
+			});
+			$("a[href='#' ]:contains(' LOGIN')").on("click" , function() {
 				self.location = "/user/login"
 			});
 		});
@@ -61,8 +64,21 @@
 		
         <div class="container">
         
-        	<a class="navbar-brand" href="#">Model2 MVC Shop</a>
-			
+        	<a class="navbar-brand" href="#">Home Deco</a>
+        	
+        	<ul class="nav navbar-nav">
+        	<li class="dropdown">
+	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+	                         <span ><b>상품구매</b></span>
+	                         <span class="caret"></span>
+	                     </a>
+	                     <ul class="dropdown-menu">
+	                         <li><a href="#">상품검색</a></li>
+	                         <li class="divider"></li>
+	                         <li><a href="#">최근 본 상품</a></li>
+	                     </ul>
+	                 </li>
+			</ul>
 			<!-- toolBar Button Start //////////////////////// -->
 			<div class="navbar-header">
 			    <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#target">
@@ -76,8 +92,9 @@
 			
 			<div class="collapse navbar-collapse"  id="target">
 	             <ul class="nav navbar-nav navbar-right">
-	                 <li><a href="#">회원가입</a></li>
-	                 <li><a href="#">로 그 인</a></li>
+	                 <li><a href="#"><span class="glyphicon glyphicon-log-in" aria-hidden="true"/> LOGIN</a></li>
+	                 <li><a href="#" class="disabled">|</a></li>
+	                 <li><a href="#">JOIN</a></li>
 	           	</ul>
 	       </div>
    		
@@ -86,53 +103,53 @@
    	<!-- ToolBar End /////////////////////////////////////-->
    	
 	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
-		
-		<!-- 다단레이아웃  Start /////////////////////////////////////-->
-		<div class="row">
-	
-			<!--  Menu 구성 Start /////////////////////////////////////-->     	
-			<div class="col-md-3">
-		        
-		       	<!--  회원관리 목록에 제목 -->
-				<div class="panel panel-default">
-					<div class="panel-heading">
-							<i class="glyphicon glyphicon-shopping-cart"></i> 상품구매
-	    			</div>
-					<ul class="list-group">
-						 <li class="list-group-item"><a href="./product/listProduct">상품검색</a></li>
-						 <li class="list-group-item">
-						 	<a href="./history.jsp">최근본상품</a>
-						 </li>
-					</ul>
-				</div>
-				
-			</div>
-			<!--  Menu 구성 end /////////////////////////////////////-->   
-
-	 	 	<!--  Main start /////////////////////////////////////-->   		
-	 	 	<div class="col-md-9">
-				<div class="jumbotron">
-			  		<h1>Model2 MVC Shop</h1>
-			  		<p>로그인 후 사용가능...</p>
-			  		<p>로그인 전 검색만 가능합니다.</p>
-			  		<p>회원가입 하세요.</p>
-			  		
-			  		<div class="text-center">
-			  			<a class="btn btn-info btn-lg" href="#" role="button">회원가입</a>
-			  			<a class="btn btn-info btn-lg" href="#" role="button">로 그 인</a>
-			  		</div>
-			  	
-			  	</div>
-	        </div>
-	   	 	<!--  Main end /////////////////////////////////////-->   		
-	 	 	
-		</div>
-		<!-- 다단레이아웃  end /////////////////////////////////////-->
-		
-	</div>
-	<!--  화면구성 div end /////////////////////////////////////-->
-
+<div class="container">
+	<div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner" role="listbox">
+        <div class="item active">
+          <img class="first-slide" src="/images/homedeco/main01.jpg"  alt="First slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h2 align="left" style="color:black;">니치향수를 담은<br/>프리미엄 홈케어</h2>
+              <h4 align="left" style="color:black">PERFUME</h4>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img class="second-slide" src="/images/homedeco/main03.jpg" alt="Second slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h2 align="left" style="color:black;">색채의<br/>아름다움</h2>
+              <h4 align="left" style="color:black;">POTTERY</h4>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img class="third-slide" src="/images/homedeco/main04.jpg" alt="Third slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h2 align="left">내 방 안에<br/>작은 따스함</h2>
+              <h4 align="left">LAMP</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div><!-- /.carousel -->
+</div>
 </body>
 
 </html>

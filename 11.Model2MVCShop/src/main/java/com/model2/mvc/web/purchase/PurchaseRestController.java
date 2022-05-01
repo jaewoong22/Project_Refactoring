@@ -103,8 +103,14 @@ public class PurchaseRestController {
 	@RequestMapping(value="json/getPurchase/{tranNo}", method=RequestMethod.GET)
 	public Purchase getPurchase( @PathVariable int tranNo ) throws Exception {
 		
+		Purchase purchase = purchaseService.getPurchase(tranNo);
+		User user = userService.getUser(purchase.getBuyer().getUserId());
+		Product product = productService.getProduct(purchase.getPurchaseProd().getProdNo());
 		
-		return purchaseService.getPurchase(tranNo);
+		purchase.setBuyer(user);
+		purchase.setPurchaseProd(product);
+		
+		return purchase;
 	}
 	
 	
@@ -112,6 +118,11 @@ public class PurchaseRestController {
 	@RequestMapping( value="json/updatePurchase", method=RequestMethod.POST )
 	public Purchase updatePurchase( @RequestBody Purchase purchase) throws Exception{
 
+		User user = userService.getUser(purchase.getBuyer().getUserId());
+		Product product = productService.getProduct(purchase.getPurchaseProd().getProdNo());
+		
+		purchase.setBuyer(user);
+		purchase.setPurchaseProd(product);
 		purchaseService.updatePurchase(purchase);
 		
 		return purchaseService.getPurchase(purchase.getTranNo());

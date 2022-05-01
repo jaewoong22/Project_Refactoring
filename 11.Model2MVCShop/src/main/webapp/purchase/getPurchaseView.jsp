@@ -1,159 +1,196 @@
 <%@ page contentType="text/html; charset=euc-kr" %>
 <%@ page pageEncoding="EUC-KR"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="EUC-KR">
-<link rel="stylesheet" href="/css/admin.css" type="text/css">
-
-<script type="text/javascript" src="../javascript/calendar.js">
-</script>
-	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-<script type="text/javascript">
-
-$(function() {
+	<meta charset="EUC-KR">
 	
-	$( "td.ct_btn01:contains('확인')" ).on("click" , function() {
-		 self.location = "/product/listProduct?menu=search"
-	});
+	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
-});
-
-</script>
+	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	
+	<!-- Bootstrap Dropdown Hover CSS -->
+   <link href="/css/animate.min.css" rel="stylesheet">
+   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+   
+    <!-- Bootstrap Dropdown Hover JS -->
+   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+	
+	<!--  ///////////////////////// CSS ////////////////////////// -->
+	<style>
+ 		body {
+            padding-top : 50px;
+        }
+     </style>
+    
+     <!--  ///////////////////////// JavaScript ////////////////////////// -->
+	<script type="text/javascript">
+		
+		//==> 추가된부분 : "수정" "확인"  Event 연결 및 처리
+		 $(function() {
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
+			 $( "button.btn.btn-default" ).on("click" , function() {
+				 self.location = "/product/listProduct?menu=search"
+			});
+			
+			 
+		});
+		
+	</script>
+	
+	
 </head>
 
 <body>
 
+	<!-- ToolBar Start /////////////////////////////////////-->
+	<jsp:include page="/layout/toolbar.jsp" />
+   	<!-- ToolBar End /////////////////////////////////////-->
+	
+	<!--  화면구성 div Start /////////////////////////////////////-->
+	<div class="container">
+	
+		<div class="page-header">
+	       <h3 class=" text-info">구매정보조회</h3>
+	    </div>
+	
+		<div class="row">
+		<div class="col-xs-12 col-md-12" align="center">
+		
+		<c:choose>
+		
+		<c:when test="${purchase.purchaseProd.fileName.contains('&')}">
+		
+			<td class="ct_write01">
+				<c:choose>
+				<c:when test="${purchase.purchaseProd.fileName.contains('mp4')}">
+					<c:forEach var="name" items="${purchase.purchaseProd.fileName.split('&')}">
+						<video width="400" height="300" controls autoplay src="/images/uploadFiles/${name}" type="video/mp4"></video>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<c:forEach var="name" items="${purchase.purchaseProd.fileName.split('&')}">
+						<img src="/images/uploadFiles/${name}" width="300" height="300" align="absmiddle"/>
+					</c:forEach>
+				</c:otherwise>
+				</c:choose>		
+		
+			</td>
+		
+		</c:when>
+		
+		<c:otherwise>
+			<img src="/images/uploadFiles/${purchase.purchaseProd.fileName}" width="300" height="300" align="absmiddle"/>
+		</c:otherwise>
+		</c:choose>
 
-<table width="600" border="0" cellspacing="0" cellpadding="0"	align="center" style="margin-top: 13px;">
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">
-			상품번호 
-		</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${purchase.purchaseProd.prodNo }</td>
-	</tr>
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
+		</div>
+		</div>
+
+		<hr/>
 	
-	<tr>
-		<td width="104" class="ct_write">
-			구매자아이디 
-		</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${purchase.buyer.userId}</td>
-	</tr>
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">
-			구매개수 
-		</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${purchase.buyNum }</td>
-	</tr>
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	
-	<tr>
-		<td width="104" class="ct_write">
-			구매방법 
-		</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<c:if test="${purchase.paymentOption.equals('1') }">
-				현금구매
-			</c:if>
-			<c:if test="${purchase.paymentOption.equals('2') }">
-				신용구매
-			</c:if>
-		</td>
-	</tr>
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">
-			구매자이름 
-		</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${purchase.receiverName }</td>
-	</tr>
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">
-			구매자연락처
-		</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${purchase.receiverPhone }</td>
-	</tr>
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">
-			구매자주소 
-		</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${purchase.divyAddr }</td>
-	</tr>
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">
-			구매요청사항 
-		</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${purchase.divyRequest }</td>
-	</tr>
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">
-			배송희망날짜 
-		</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${purchase.divyDate }</td>
-	</tr>
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-</table>
-<table width="100%" border="0" cellspacing="0" cellpadding="0"	style="margin-top:10px;">
-	<tr>
-		<td width="53%"></td>
-		<td align="right">
-			<table border="0" cellspacing="0" cellpadding="0">
-				<tr>
-				
-					
-					<td width="17" height="23">
-						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
-					</td>
-					
-					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						확인
-					</td>
-					
-					<td width="14" height="23">
-						<img src="/images/ct_btnbg03.gif" width="14" height="23">
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-</table>
+		<div class="row">
+	  		<div class="col-xs-4 col-md-4"><strong>상품번호</strong></div>
+			<div class="col-xs-8 col-md-8">${purchase.purchaseProd.prodNo }</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-4"><strong>구매수량</strong></div>
+			<div class="col-xs-8 col-md-8">${purchase.buyNum }</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-4"><strong>구매자아이디</strong></div>
+			<div class="col-xs-8 col-md-8">${purchase.buyer.userId}</div>
+		</div>
+		
+		<hr/>
+		
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-4"><strong>구매방법</strong></div>
+	  		<c:if test="${purchase.paymentOption.contains('1')}">
+	  			<div class="col-xs-8 col-md-8">현금구매</div>
+	  		</c:if>
+	  		<c:if test="${purchase.paymentOption.contains('2')}">
+	  			<div class="col-xs-8 col-md-8">신용구매</div>
+	  		</c:if>
+		</div>
+		
+		<hr/>
+			
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-4"><strong>구매자이름</strong></div>
+			<div class="col-xs-8 col-md-8">${purchase.receiverName }</div>
+		</div>
+		
+		<hr/>
+		
+		
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-4"><strong>구매자연락처</strong></div>
+			<div class="col-xs-8 col-md-8">${purchase.receiverPhone }</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-4"><strong>구매자주소</strong></div>
+			<div class="col-xs-8 col-md-8">${purchase.divyAddr }</div>
+		</div>
+		
+		<hr/>
+		
+		
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-4"><strong>구매요청사항</strong></div>
+			<div class="col-xs-8 col-md-8">${purchase.divyRequest }</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-4"><strong>배송희망일</strong></div>
+			<div class="col-xs-8 col-md-8">${purchase.divyDate }</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-4"><strong>주문일</strong></div>
+			<div class="col-xs-8 col-md-8">${purchase.orderDate }</div>
+		</div>
+		
+		
+		
+		
+		<div class="row">
+	  		<div class="col-md-12 text-right ">
+	  		
+	  			<button type="button" class="btn btn-default" id="check">확인</button>
+		</div>
+		
+		<br/>
+		
+ 	</div>
+ 	<!--  화면구성 div Start /////////////////////////////////////-->
 
 </body>
 </html>
