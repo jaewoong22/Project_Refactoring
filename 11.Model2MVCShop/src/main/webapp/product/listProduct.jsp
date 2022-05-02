@@ -24,7 +24,10 @@
    <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
     <!-- Bootstrap Dropdown Hover JS -->
    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-   
+   <!-- font -->
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
    
    <!-- jQuery UI toolTip 사용 CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -59,13 +62,13 @@
 			});
 			 
 			
-			 $( "a.btn-info" ).on("click" , function() {
+			 $( "a.update" ).on("click" , function() {
 				 var prodNo =$(this).attr("value");
 				 console.log('수정하기');
 				 self.location = "/product/updateProduct?prodNo="+prodNo
 			});
 			 
-			 $( "a.btn-primary" ).on("click" , function() {
+			 $( "a.buy" ).on("click" , function() {
 				 var prodNo =$(this).attr("value");
 				 console.log('구매하기');
 				 self.location = "/product/getProduct?menu=search&prodNo="+prodNo
@@ -90,12 +93,24 @@
 		});	
 		 
 		
-	</script>		
-	<style>
-	  body {
-            padding-top : 50px;
-        }
-        
+	</script>	
+	 <!-- font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&family=Open+Sans:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+
+<style>
+body{
+	padding-top : 50px;
+	
+}
+
+div.row{
+	font-family: 'Nanum Myeongjo', serif;
+}
+ div.page-header{
+	font-family: 'Nanum Myeongjo', serif;
+}       
        #image {
 			width: 250px;
 		 	height:250px;
@@ -119,14 +134,14 @@
 	<div class="container">
 	
 		<div class="page-header text-info">
-	       <h3>상품목록조회</h3>
+	       <h3  style="color:#bc8f8f">상품목록조회</h3>
 	    </div>
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
 	    <div class="row">
 	    
 		    <div class="col-md-6 text-left">
-		    	<p class="text-primary">
+		    	<p class="text-primary" style="color:gray">
 		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
 		    	</p>
 		    </div>
@@ -200,11 +215,11 @@
 			    <c:when test="${product.fileName.contains('&')}">
 				    <c:choose>
 					<c:when test="${product.fileName.contains('mp4')}">
-						<img src="/images/noimage.jpg">
+						<img src="/images/noimage.jpg" id="image">
 					</c:when>
 					<c:otherwise>
 						<c:forEach var="name" items="${product.fileName.split('&')[0]}">
-							<img src="/images/uploadFiles/${name}" >
+							<img src="/images/uploadFiles/${name}" id="image">
 						</c:forEach>
 					</c:otherwise>
 					</c:choose>
@@ -225,12 +240,12 @@
 			        	</c:otherwise>
 			        </c:choose>
 			        <p align="right">
-			        <a class="btn btn-defualt btn"  role="button" value="${product.prodNo}">상세조회</a>
+			        <a class="btn btn-defualt btn"  role="button" value="${product.prodNo}" style="color:#bc8f8f">상세조회</a>
 			        
 			        
 			        
 			        <c:if test="${param.menu.equals('manage') }">
-			        <a class="btn btn-info btn"  role="button" value="${product.prodNo}">수정하기</a>			        
+			        <a class="btn btn-defualt btn update"  role="button" value="${product.prodNo}">수정하기</a>			        
 			        </c:if>
 			        <c:if test="${param.menu.equals('search') }">
 			        	<c:choose>
@@ -238,7 +253,7 @@
 			        			<a class="btn btn-defualt btn disabled" role="button" >재고없음</a>
 			        		</c:when>
 			        		<c:otherwise>
-			        			<a class="btn btn-primary btn" role="button" value="${product.prodNo}">구매하기</a>
+			        			<a class="btn btn-default btn buy" role="button" value="${product.prodNo}">구매하기</a>
 			        		</c:otherwise>
 			        	</c:choose>			        
 			        </c:if>

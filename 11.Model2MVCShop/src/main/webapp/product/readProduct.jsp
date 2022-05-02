@@ -11,6 +11,29 @@
 <script type="text/javascript" src="../javascript/calendar.js">
 </script>
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	
+ <!-- font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&family=Open+Sans:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+
+<style>
+body{
+	font-family: 'Nanum Myeongjo', serif;
+}
+div.page-header{
+	font-family: 'Nanum Myeongjo', serif;
+}
+body>div.container{
+	font-family: 'Nanum Myeongjo', serif;
+}
+div.row{
+	font-family: 'Nanum Myeongjo', serif;
+}
+</style>
+	
+	
+	
 <script type="text/javascript">
 
 
@@ -51,7 +74,7 @@ $(function() {
 		<td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left:10px;">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td width="93%" class="ct_ttl01">상품상세조회</td>
+					<td width="93%" class="ct_ttl01"  style="color:#bc8f8f">상품상세조회</td>
 					<td width="20%" align="right">&nbsp;</td>
 				</tr>
 			</table>

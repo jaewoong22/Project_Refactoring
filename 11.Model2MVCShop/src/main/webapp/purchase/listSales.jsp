@@ -35,15 +35,31 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<style>
-	  body {
-            padding-top : 50px;
-        }
-        
-        .jaewoong th{
-         text-align:center;
-        }
-    </style>
+ <!-- font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&family=Open+Sans:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+
+<style>
+body{
+	padding-top : 50px;
+	font-family: 'Nanum Myeongjo', serif;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.jaewoong th{
+	text-align:center;
+}
+ div.row{
+	font-family: 'Nanum Myeongjo', serif;
+}
+ div.page-header{
+	font-family: 'Nanum Myeongjo', serif;
+}  
+table {
+	font-family: 'Nanum Myeongjo', serif;
+}       
+</style>
 	<script type="text/javascript">
 
 
@@ -191,14 +207,14 @@
 	<div class="container">
 	
 		<div class="page-header text-info">
-	       <h3>회원목록조회</h3>
+	       <h3 style="color:#bc8f8f">판매목록조회</h3>
 	    </div>
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
 	    <div class="row">
 	    
 		    <div class="col-md-6 text-left">
-		    	<p class="text-primary">
+		    	<p class="text-primary" style="color:gray">
 		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
 		    	</p>
 		    </div>

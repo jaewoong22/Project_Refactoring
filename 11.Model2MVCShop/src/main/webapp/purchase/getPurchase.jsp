@@ -26,11 +26,18 @@
    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<style>
- 		body {
-            padding-top : 50px;
-        }
-     </style>
+ <!-- font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&family=Open+Sans:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+
+<style>
+body{
+	padding-top : 50px;
+	font-family: 'Nanum Myeongjo', serif;
+	font-family: 'Open Sans', sans-serif;
+}
+</style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
@@ -65,7 +72,7 @@
 	<div class="container">
 	
 		<div class="page-header">
-	       <h3 class=" text-info">상품상세조회</h3>
+	       <h3 class=" text-info" style="color:#bc8f8f">상품상세조회</h3>
 	    </div>
 	
 		<div class="row">

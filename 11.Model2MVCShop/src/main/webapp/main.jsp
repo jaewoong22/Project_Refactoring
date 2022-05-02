@@ -22,21 +22,26 @@
 	<!-- Bootstrap Dropdown Hover CSS -->
    <link href="/css/animate.min.css" rel="stylesheet">
    <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+  
    
     <!-- Bootstrap Dropdown Hover JS -->
    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
 	
 	<!--  CSS 추가 : 툴바에 화면 가리는 현상 해결 :  주석처리 전, 후 확인-->
-	<style>
-        body {
-            padding-top : 70px;
-        }
-        
-        div.carousel-caption{
-        font-family: 맑은 고딕;
-        }
-   	</style>
-   	
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap" rel="stylesheet">
+
+<style>
+body>div.container{
+	padding-top : 100px;
+	font-family: 'Nanum Myeongjo', serif;
+}
+div.carousel{
+	font-family: 'Nanum Myeongjo', ser
+}
+</style>  	
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	 	
 	
@@ -54,6 +59,7 @@
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
         <li data-target="#myCarousel" data-slide-to="1"></li>
         <li data-target="#myCarousel" data-slide-to="2"></li>
+		<li data-target="#myCarousel" data-slide-to="3"></li>
       </ol>
       <div class="carousel-inner" role="listbox">
         <div class="item active">
@@ -66,20 +72,29 @@
           </div>
         </div>
         <div class="item">
-          <img class="second-slide" src="/images/homedeco/main05.jpg" alt="Second slide">
+          <img class="second-slide" src="/images/homedeco/main08.jpg" alt="Second slide">
           <div class="container">
             <div class="carousel-caption">
-              <h2 align="left" style="color:black;">니치 향수를 담은<br/>프리미엄 홈케어</h2>
-              <h4 align="left" style="color:black;">DIFUSER</h4>
+              <h2 align="left" style="color:black;">편안하고<br/>실용적인<br/>소재</h2>
+              <h4 align="left" style="color:black;">RITTEN</h4>
             </div>
           </div>
         </div>
         <div class="item">
-          <img class="third-slide" src="/images/homedeco/main03.jpg" alt="Third slide">
+          <img class="third-slide" src="/images/homedeco/main09.jpg" alt="Third slide">
           <div class="container">
             <div class="carousel-caption">
-             <h2 align="left" style="color:black;">색채의<br/>아름다움</h2>
+             <h2 align="left" style="color:black;">색채의<br/>확장과 흐름</h2>
               <h4 align="left" style="color:black;">POTTERY</h4>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img class="fourth-slide" src="/images/homedeco/main11.jpg" alt="fourth slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h2 align="left" style="color:black;">니치 향수를 담은<br/>프리미엄 홈케어</h2>
+              <h4 align="left" style="color:black;">DIFUSER</h4>
             </div>
           </div>
         </div>

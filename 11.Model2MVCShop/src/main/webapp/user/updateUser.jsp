@@ -29,11 +29,17 @@
    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
    
 	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<style>
-		body {
-            padding-top : 50px;
-        }
-    </style>
+ <!-- font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&family=Open+Sans:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+
+<style>
+body>div.container{
+	padding-top : 50px;
+	font-family: 'Nanum Myeongjo', serif;
+}
+</style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
@@ -106,8 +112,8 @@
 	<div class="container">
 	
 		<div class="page-header text-center">
-	       <h3 class=" text-info">회원정보수정</h3>
-	       <h5 class="text-muted">내 정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
+	       <h3 class=" text-info" style="color:#bc8f8f">회원정보수정</h3>
+	       <h5 class="text-muted">내 정보를 <strong  style="color:brown">최신정보로 관리</strong>해 주세요.</h5>
 	    </div>
 	    
 	    <!-- form Start /////////////////////////////////////-->

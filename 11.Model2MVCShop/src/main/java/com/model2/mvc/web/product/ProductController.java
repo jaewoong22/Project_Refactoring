@@ -66,7 +66,7 @@ public class ProductController {
 		
 		System.out.println("/product/addProduct : POST");
 		
-		String temDir = "C:\\Users\\bitcamp\\git\\Project_Refactoring\\11.Model2MVCShop\\src\\main\\webapp\\images\\uploadFiles";
+		String temDir = "C:\\Users\\bitcamp\\git\\Project_Refactoring\\11.Model2MVCShop\\src\\main\\webapp\\images\\uploadFiles\\";
 		
 		String fileName = "";
 	
@@ -187,7 +187,7 @@ public class ProductController {
 
 		System.out.println("/product/updateProduct : POST");
 		
-		String temDir = "C:\\Users\\bitcamp\\git\\Project_Refactoring\\11.Model2MVCShop\\src\\main\\webapp\\images\\uploadFiles";
+		String temDir = "C:\\Users\\bitcamp\\git\\Project_Refactoring\\11.Model2MVCShop\\src\\main\\webapp\\images\\uploadFiles\\";
 		
 		String fileName = "";
 	

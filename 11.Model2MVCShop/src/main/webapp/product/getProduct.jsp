@@ -26,11 +26,23 @@
    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<style>
- 		body {
-            padding-top : 50px;
-        }
-     </style>
+ <!-- font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&family=Open+Sans:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+
+<style>
+body>div.container{
+	padding-top : 50px;
+	font-family: 'Nanum Myeongjo', serif;
+}
+div.row{
+	font-family: 'Nanum Myeongjo', serif;
+}
+div.page-header{
+	font-family: 'Nanum Myeongjo', serif;
+}
+</style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
@@ -61,10 +73,10 @@
 	
 		<div class="page-header">
 			<c:if test="${empty param.menu }">
-	       <h3 class=" text-info">상품상세조회</h3>
+	       <h3 class=" text-info"  style="color:#bc8f8f">상품상세조회</h3>
 	       </c:if>
 	       <c:if test="${!empty param.menu }">
-	       	<h3 class=" text-info">상품구매하기</h3>
+	       	<h3 class=" text-info" style="color:#bc8f8f">상품구매하기</h3>
 	       </c:if>
 	    </div>
 	

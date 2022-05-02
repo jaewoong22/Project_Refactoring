@@ -19,13 +19,30 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<style>
-       body > div.container{
-        	border: 3px solid #D6CDB7;
-            margin-top: 10px;
-        }
+
+ <!-- font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&family=Open+Sans:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+
+<style>
+body{
+	font-family: 'Nanum Myeongjo', serif;
+}
+body>div.container {
+	border: 3px solid #D6CDB7;
+	margin-top: 150px;
+	font-family: 'Nanum Myeongjo', serif;
+}
+h1.text-center {
+	font-family: 'Nanum Myeongjo', serif;
+}
+
+div.form-group{
+	font-family: 'Nanum Myeongjo', serif;
+}
     </style>
-    
+
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	
@@ -161,7 +178,7 @@
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<div class="navbar  navbar-default">
         <div class="container">
-        	<a class="navbar-brand" href="/index.jsp">Model2 MVC Shop</a>
+        	<a class="navbar-brand" href="/index.jsp">Home Deco</a>
    		</div>
    	</div>
    	<!-- ToolBar End /////////////////////////////////////-->
@@ -169,7 +186,7 @@
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<h1 class="bg-warning text-center">회 원 가 입</h1>
+		<h1 class="bg-warning text-center" style="color:#bc8f8f">회 원 가 입</h1>
 		
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal">
@@ -254,7 +271,7 @@
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >가 &nbsp;입</button>
+		      <button type="button" class="btn btn-primary"  >가&nbsp;입</button>
 			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
 		    </div>
 		  </div>

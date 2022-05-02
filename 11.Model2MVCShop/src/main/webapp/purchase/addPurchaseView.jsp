@@ -48,11 +48,20 @@
 <!-- jQuery UI toolTip 사용 JS-->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+ <!-- font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&family=Open+Sans:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+
 <style>
+
+
 body>div.container {
 	border: 3px solid #D6CDB7;
-	margin-top: 150px;
+	margin-top: 50px;
+	font-family: 'Nanum Myeongjo', serif;
 }
+
 </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -72,7 +81,7 @@ body>div.container {
 		$(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$("a[href='#' ]").on("click" , function() {
-				$("form")[0].reset();
+				history.go(-1);
 			});
 		});	
 	
@@ -113,7 +122,7 @@ body>div.container {
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<div class="navbar  navbar-default">
         <div class="container">
-        	<a class="navbar-brand" href="/index.jsp">Model2 MVC Shop</a>
+        	<a class="navbar-brand" href="/index.jsp">Home Deco</a>
    		</div>
    	</div>
    	<!-- ToolBar End /////////////////////////////////////-->
@@ -121,7 +130,7 @@ body>div.container {
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<h1 class="bg-defualt text-center">상품구매</h1>
+		<h1 class="bg-defualt text-center" style="color:#bc8f8f">상품구매</h1>
 		
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal">

@@ -42,9 +42,28 @@
 <!-- jQuery UI toolTip 사용 JS-->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap" rel="stylesheet">
+
 <style>
+body{
+	font-family: 'Nanum Myeongjo', serif;
+}
 body>div.container {
+	border: 3px solid #D6CDB7;
 	margin-top: 150px;
+	font-family: 'Nanum Myeongjo', serif;
+}
+h1.text-center {
+	font-family: 'Nanum Myeongjo', serif;
+}
+#prodDetail {
+	font-family: 'Nanum Myeongjo', serif;
+}
+div.form-group{
+	font-family: 'Nanum Myeongjo', serif;
 }
 </style>
 
@@ -113,7 +132,7 @@ body>div.container {
 
 	<div class="container">
 
-		<h1 class="bg-warning text-center">상품등록</h1>
+		<h1 class="text-center"  style="color:#bc8f8f">상품등록</h1>
 
 		<form class="form-horizontal" enctype="multipart/form-data">
 		

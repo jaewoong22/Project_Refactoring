@@ -5,7 +5,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
+ <!-- font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&family=Open+Sans:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 
+<style>
+body>div.container{
+	font-family: 'Nanum Myeongjo', serif;
+	font-family: 'Open Sans', sans-serif;
+}
+</style>
 
 <!-- ToolBar Start /////////////////////////////////////-->
 <div class="navbar  navbar-default navbar-fixed-top" >
@@ -36,7 +46,7 @@
 	              <c:if test="${sessionScope.user.role == 'admin'}">
 	              <li class="dropdown">
 	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-	                         <span ><b>회원관리</b></span>
+	                         <span >회원관리</span>
 	                         <span class="caret"></span>
 	                     </a>
 	                     <ul class="dropdown-menu">
@@ -53,7 +63,7 @@
 	               <c:if test="${sessionScope.user.role == 'admin'}">
 		              <li class="dropdown">
 		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-		                         <span ><b>판매상품관리</b></span>
+		                         <span >판매상품관리</span>
 		                         <span class="caret"></span>
 		                     </a>
 		                     <ul class="dropdown-menu">
@@ -68,7 +78,7 @@
 	              <!-- 구매관리 DrowDown -->
 	              <li class="dropdown">
 	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-	                         <span ><b>상품구매</b></span>
+	                         <span >상품구매</span>
 	                         <span class="caret"></span>
 	                     </a>
 	                     <ul class="dropdown-menu">
@@ -85,8 +95,8 @@
 	             
 	              <c:if test="${! empty sessionScope.user.role}">
 	              <ul class="nav navbar-nav navbar-right">
-	                 <li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"/> 내정보보기</a></li>
-	                <li><a href="#"> <span class="glyphicon glyphicon-log-out" aria-hidden="true"/> 로그아웃</a></li>
+	                 <li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"/> MyPage</a></li>
+	                <li><a href="#"> <span class="glyphicon glyphicon-log-out" aria-hidden="true"/> LOGOUT</a></li>
 	            </ul>
 	            </c:if>
 		</div>
@@ -103,7 +113,7 @@
 		//============= logout Event  처리 =============	
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		 	$("a:contains(' 로그아웃')").on("click" , function() {
+		 	$("a:contains(' LOGOUT')").on("click" , function() {
 				$(self.location).attr("href","/user/logout");
 				//self.location = "/user/logout"
 			}); 
@@ -124,7 +134,7 @@
 			$(self.location).attr("href","/user/getUser?userId=${sessionScope.user.userId}");
 		});
 		
-	 	$( "a:contains('내정보보기')" ).on("click" , function() {
+	 	$( "a:contains(' MyPage')" ).on("click" , function() {
 	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$(self.location).attr("href","/user/getUser?userId=${sessionScope.user.userId}");
 		});
