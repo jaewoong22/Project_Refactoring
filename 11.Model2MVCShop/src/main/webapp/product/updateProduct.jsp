@@ -1,4 +1,7 @@
-<%@ page contentType="text/html; charset=euc-kr"%>
+<%@ page contentType="text/html; charset=euc-kr" %>
+<%@ page pageEncoding="EUC-KR"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html lang="ko">
 <head>
@@ -173,15 +176,51 @@ div.form-group{
 		      <input type="text" class="form-control" id="price" name="price" value="${product.price }">
 		    </div>
 		  </div>
+		  
+		  
 
 			<div class="form-group">
 		    <label for="fileName" class="col-sm-offset-1 col-sm-3 control-label">상품이미지</label>
 		    <div class="col-sm-4">
-		      <input type="file" id="fileName" name="uploadfiles[]" multiple="multiple"  value="${product.fileName }">
+		    	<c:choose>
+		    	<c:when test="${product.fileName.contains('&')}">
+						<c:choose>
+						<c:when test="${product.fileName.contains('mp4')}">
+							<c:forEach var="name" items="${product.fileName.split('&')}">
+								<video width="400" height="300" controls autoplay src="/images/uploadFiles/${name}" type="video/mp4"  value="${name}"></video>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="name" items="${product.fileName.split('&')}">
+								<img src="/images/uploadFiles/${name}" width="300" height="300" align="absmiddle"/>
+								<input type="hidden" name="image" value="${name }"/>
+							</c:forEach>
+						</c:otherwise>
+						</c:choose>
+				</c:when>
+				<c:otherwise>
+					<img src="/images/uploadFiles/${product.fileName}" width="300" height="300" align="absmiddle" class="image" value="${fileName}"/>
+				</c:otherwise>
+		    	</c:choose>
+		    	
+		      <input type="file" id="fileName" name="uploadfiles[]" multiple="multiple" >
 		    </div>
 		  </div>
 		  
-
+		  <hr/>
+		  
+		  <div class="form-group">
+		    <label for="price" class="col-sm-offset-1 col-sm-3 control-label">판매여부</label>
+		    <div class="col-sm-4">
+		       <div class="btn-group" data-toggle="buttons">
+				    <input type="radio" name="onSale" id="option1" value="1" checked> 판매중
+				    <input type="radio" name="onSale" id="option2" value="0"> 판매중지
+				</div>
+		    </div>
+		  </div>
+		  
+		  <hr/>
+		  
 			<div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button type="button" class="btn btn-primary"  >수정</button>

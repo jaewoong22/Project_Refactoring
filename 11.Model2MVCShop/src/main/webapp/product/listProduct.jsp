@@ -73,6 +73,8 @@
 				 console.log('구매하기');
 				 self.location = "/product/getProduct?menu=search&prodNo="+prodNo
 			});
+			 
+			 
 			
 
 			 //=========autoComplete=================================================
@@ -110,16 +112,25 @@ div.row{
 }
  div.page-header{
 	font-family: 'Nanum Myeongjo', serif;
-}       
-       #image {
-			width: 250px;
-		 	height:250px;
-       }   
+}  
+     
+#image {
+	width: 250px;
+	height:250px;
+} 
+
+#image_none {
+	width: 250px;
+	height:250px;
+	filter: blur(2px);
+}   
+    
+div.thumbnail {
+	height:430px;
+}
        
-       div.thumbnail {
-       		height:400px;
-       }
-    </style>
+
+</style>
 	
 </head>
 
@@ -185,19 +196,20 @@ div.row{
 						<select name="orderCondition" class="form-control" style="width:125px">
 							<option value="0"  ${ ! empty search.orderCondition && search.orderCondition==0 ? "selected" : "" }>--정렬하기--</option>
 							<option value="3"  ${ ! empty search.orderCondition && search.orderCondition==3 ? "selected" : "" }>판매중</option>
-							<option value="4"  ${ ! empty search.orderCondition && search.orderCondition==4 ? "selected" : "" }>재고없음</option>
+							<option value="4"  ${ ! empty search.orderCondition && search.orderCondition==4 ? "selected" : "" }>판매중지</option>
+							<option value="5"  ${ ! empty search.orderCondition && search.orderCondition==4 ? "selected" : "" }>재고없음</option>
 						</select>
 					</c:if>
 				  </div>
 				  <button type="button" class="btn btn-default" id="sorting">조회</button>
-				  
+				  </div>
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
 				  
 				</form>
 	    	</div>
 	    	
-		</div>
+		
 		
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 		<div><br/><br/>
@@ -211,32 +223,62 @@ div.row{
 			
 			  <div class="col-sm-6 col-md-4">
 			    <div class="thumbnail">
-			    <c:choose>
-			    <c:when test="${product.fileName.contains('&')}">
+			    
+			    <c:if test="${product.onSale.contains('1') }">
 				    <c:choose>
-					<c:when test="${product.fileName.contains('mp4')}">
-						<img src="/images/noimage.jpg" id="image">
-					</c:when>
-					<c:otherwise>
-						<c:forEach var="name" items="${product.fileName.split('&')[0]}">
-							<img src="/images/uploadFiles/${name}" id="image">
-						</c:forEach>
+				    <c:when test="${product.fileName.contains('&')}">
+					    <c:choose>
+						<c:when test="${product.fileName.contains('mp4')}">
+							<img src="/images/noimage.jpg" id="image">
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="name" items="${product.fileName.split('&')[0]}">
+								<img src="/images/uploadFiles/${name}" id="image">
+							</c:forEach>
+						</c:otherwise>
+						</c:choose>
+				    </c:when>
+				    <c:otherwise>
+						<img src="/images/uploadFiles/${product.fileName}" class="img-responsive img-rounded" id="image">
 					</c:otherwise>
 					</c:choose>
-			    </c:when>
-			    <c:otherwise>
-					<img src="/images/uploadFiles/${product.fileName}" class="img-responsive img-rounded" id="image">
-				</c:otherwise>
-				</c:choose>
+			    </c:if>
+			    
+			    <c:if test="${product.onSale.contains('0') }">
+				    <c:choose>
+				    <c:when test="${product.fileName.contains('&')}">
+					    <c:choose>
+						<c:when test="${product.fileName.contains('mp4')}">
+							<img src="/images/noimage.jpg" id="image_none">
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="name" items="${product.fileName.split('&')[0]}">
+								<img src="/images/uploadFiles/${name}" id="image_none">
+							</c:forEach>
+						</c:otherwise>
+						</c:choose>
+				    </c:when>
+				    <c:otherwise>
+						<img src="/images/uploadFiles/${product.fileName}" class="img-responsive img-rounded" id="image_none">
+					</c:otherwise>
+					</c:choose>
+			    </c:if>
+		    
 			    
 			      <div class="caption">
 			        <h3>${product.prodName}</h3>
 			        <c:choose>
 			        	<c:when test="${user.role.equals('admin') && param.menu.equals('manage')}">
 			        		<p>남은 재고량 : ${product.prodStock}</p>
+			        		<c:if test="${product.onSale.contains('0') }">
+			        			<p style="color:#DB4455">판매중지</p>
+			        		</c:if>
 			        	</c:when>
 			        	<c:otherwise>
 			        		<p>${product.price} 원</p>
+			        		<c:if test="${product.onSale.contains('0') }">
+			        			<p style="color:#DB4455">*판매중지된 상품입니다.</p>
+			        		</c:if>
 			        	</c:otherwise>
 			        </c:choose>
 			        <p align="right">
@@ -250,10 +292,15 @@ div.row{
 			        <c:if test="${param.menu.equals('search') }">
 			        	<c:choose>
 			        		<c:when test="${product.prodStock == '0' }">
-			        			<a class="btn btn-defualt btn disabled" role="button" >재고없음</a>
+			        			<a class="btn btn-defualt btn disabled" role="button" >품절</a>
 			        		</c:when>
 			        		<c:otherwise>
-			        			<a class="btn btn-default btn buy" role="button" value="${product.prodNo}">구매하기</a>
+			        			<c:if test="${product.onSale.contains('1') }">
+			        				<a class="btn btn-default btn buy" role="button" value="${product.prodNo}">구매하기</a>
+			        			</c:if>
+			        			<c:if test="${product.onSale.contains('0') }">
+			        				<a class="btn btn-default btn disabled" role="button" value="${product.prodNo}">구매하기</a>
+			        			</c:if>
 			        		</c:otherwise>
 			        	</c:choose>			        
 			        </c:if>

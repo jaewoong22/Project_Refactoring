@@ -94,6 +94,7 @@ public class ProductController {
 		
 		product.setFileName(fileName);
 		product.setManuDate(manuDate);
+		product.setOnSale("1");
 		productService.addProduct(product);
 		
 		model.addAttribute(product);

@@ -157,7 +157,7 @@ $(function() {
 		      <select 	name="paymentOption"		class="form-control" >
 				<option value="1" selected="selected">현금구매</option>
 				<option value="2">신용구매</option>
-			</select>
+			  </select>
 		    </div>
 		  </div> 
 		  	  

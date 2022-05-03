@@ -14,7 +14,10 @@ public class Product {
 	private Date regDate;
 	private String proTranCode;
 	private int prodStock;
+	private String onSale;
 	
+
+
 	public Product(){
 	}
 	
@@ -75,11 +78,17 @@ public class Product {
 	public void setProdStock(int prodStock) {
 		this.prodStock = prodStock;
 	}
+	public String getOnSale() {
+		return onSale;
+	}
 
+	public void setOnSale(String onSale) {
+		this.onSale = onSale;
+	}
 	// Override
 	public String toString() {
 		return "ProductVO : [fileName]" + fileName
 				+ "[manuDate]" + manuDate+ "[price]" + price + "[prodDetail]" + prodDetail
-				+ "[prodName]" + prodName + "[prodNo]" + prodNo + "[prodStock]" + prodStock + "[regDate]" + regDate;
+				+ "[prodName]" + prodName + "[prodNo]" + prodNo + "[prodStock]" + prodStock + "[onSale]" + onSale + "[regDate]" + regDate;
 	}	
 }
