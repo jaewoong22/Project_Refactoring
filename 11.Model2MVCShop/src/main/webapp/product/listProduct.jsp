@@ -35,7 +35,8 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script type="text/javascript">
 
-
+		
+	
 		function fncGetList(currentPage) {
 			console.log(currentPage);
 			$("#currentPage").val(currentPage)
@@ -91,7 +92,141 @@
 		   		      
 		   		});
 		   	//====================================================================
-			 
+		/*
+		   		   			var cpage = $("#currentPage").val();
+	   		console.log(cpage);
+
+			
+            $(window).scroll(function() {
+                if($(window).scrollTop() == $(document).height() - $(window).height()) { 
+                	
+                	var cpage = $("#currentPage").val();
+                	cpage = Number(cpage)+1;
+                	console.log(cpage);
+        	   		
+        	   		
+			            $.ajax({
+			                
+			                  url : "/product/json/listProduct?&menu=${param.menu }" ,
+			                  method : "POST" ,
+			                  data : JSON.stringify({
+			                	  currentpage : cpage
+			                  }), 
+			                  dataType : "json" ,
+			                  headers : {
+			                     "Accept" : "application/json",
+			                     "Content-Type" : "application/json"
+			                  },
+			                success : function(JSONData , status) {
+			                	 
+			                	$("#currentPage").val(cpage)
+			                	console.log(cpage); 
+			                	//alert(JSONData.list[0].prodName);
+			                	//alert(JSONData.list.length);
+			                	console.log(JSONData.list[0].prodName);
+				                	 ///*
+			                	for(var i=0; i<JSONData.list.length-1; i++){
+			                	
+			                		var image;
+			                		
+			                		console.log('i');
+			                		console.log(i);
+			                		console.log('onSale');
+			                		console.log(JSONData.list[i].onSale);
+			                		console.log('prodName');
+			                		console.log(JSONData.list[i].prodName);
+			                		
+			                		
+			                		
+			                		///*
+			                		if(JSONData.list[i].onSale == '1'){
+			                			if(JSONData.list[i].fileName.indexOf('&',0) != -1){
+			                				if(JSONData.list[i].fileName.indexOf('mp4',0) != -1){
+			                					image = "tumbnail.png";
+			                				}else{
+			                					image = JSONData.list[i].fileName.split('&')[0];
+			                				}
+			                			}else{
+			                				image = JSONData.list[i].fileName
+			                			}
+			                		}else{
+			                			if(JSONData.list[i].fileName.indexOf('&',0) != -1){
+			                				if(JSONData.list[i].fileName.contains('mp4')){
+			                					image = "tumbnail.png";
+			                				}else{
+			                					image = JSONData.list[i].fileName.split('&')[0];
+			                				}
+			                			}else{
+			                				image = JSONData.list[i].fileName
+			                			}
+			                		}
+			                		
+			                		console.log(image);
+			                		
+				                     var displayValue = "<div class='col-sm-6 col-md-4'>"
+				                     					+"<div class='thumbnail'>"
+				                     					+"<img src='/images/uploadFiles/"+image+"' id='image'>"
+			                     						+"<div class='caption'>"
+			                     						+"<h3>"+JSONData.list[i].prodName+"</h3>"
+			                     						///*
+			                     						if(${user.role.equals('admin') && param.menu.equals('manage')}){
+			                     							+"<p>남은 재고량 : "+JSONData.list[i].prodStock+"</p>"
+			                     							
+			                     							if(JSONData.list[i].onSale == '0'){
+				                     							+"<p style='color:#DB4455'>판매중지</p>"
+				                     						}
+			                     							
+			                     							+"<p>"+JSONData.list[i].price+" 원</p>"
+			                     							
+			                     						}else{
+			                     							if(JSONData.list[i].onSale == '0'){
+			                     								+"<p style='color:#DB4455'>*판매중지된 상품입니다.</p>"
+			                     								
+			                     							}
+			                     							+"<p>"+JSONData.list[i].price+" 원</p>"
+			                     						}
+			                     						
+			                     						+"<p align='right'>"
+			                     						+"<a class='btn btn-defualt btn'  role='button' value='"+JSONData.list[i].prodNo+" style='color:#bc8f8f'>상세조회</a>"
+			                     						
+			                     						if(${param.menu=='manage' }){
+			                     							+"<a class='btn btn-defualt btn update'  role='button' value='"+JSONData.list[i].prodNo+"'>수정하기</a>"
+			                     						}else{
+			                     							if(JSONData.list[i].prodStock == "0"){
+			                     								+"<a class='btn btn-defualt btn disabled' role='button' >품절</a>"
+			                     							}else{
+			                     								if(JSONData.list[i].onSale=='1'){
+			                     									+"<a class='btn btn-default btn buy' role='button' value='"+JSONData.list[i].prodNo+"'>구매하기</a>"
+			                     								}else{
+			                     									+"<a class='btn btn-default btn disabled' role='button' value='"+JSONData.list[i].prodNo+"'>구매하기</a>"
+			                     								}
+			                     							}
+			                     						}
+			                     						+"</p>"
+			                     						
+			                     						+"</div></div></div>"
+			                     						
+			                     						
+			                	                    
+				               	$( '#scrollList' ).append(displayValue);	
+			                     						
+			                     						 		
+			                    						
+			                     						
+			                	}//for 
+			                 }
+			            });//ajax
+			           
+                }//if
+            });//function
+		   		
+		   		
+		   		//*/
+
+		   		
+
+		   	//====================================================================	
+	   	
 		});	
 		 
 		
@@ -115,18 +250,21 @@ div.row{
 }  
      
 #image {
-	width: 250px;
-	height:250px;
+	width: 350px;
+	height:350px;
+	border-radius: 5px;
 } 
 
 #image_none {
-	width: 250px;
-	height:250px;
+	width: 350px;
+	height:350px;
 	filter: blur(2px);
+	border-radius: 5px;
 }   
     
 div.thumbnail {
-	height:430px;
+	height:520px;
+	border-radius: 5px;
 }
        
 
@@ -135,7 +273,7 @@ div.thumbnail {
 </head>
 
 <body>
-	<input type="hidden" id="cv" value="${search.currentPage }"/>
+	
 	
 	<!-- ToolBar Start /////////////////////////////////////-->
 		<jsp:include page="/layout/toolbar.jsp" />
@@ -204,7 +342,7 @@ div.thumbnail {
 				  <button type="button" class="btn btn-default" id="sorting">조회</button>
 				  </div>
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
+				  <input type="hidden" id="currentPage" name="currentPage" value="1"/>
 				  
 				</form>
 	    	</div>
@@ -229,7 +367,7 @@ div.thumbnail {
 				    <c:when test="${product.fileName.contains('&')}">
 					    <c:choose>
 						<c:when test="${product.fileName.contains('mp4')}">
-							<img src="/images/noimage.jpg" id="image">
+							<img src="/images/uploadFiles/tumbnail.png" id="image">
 						</c:when>
 						<c:otherwise>
 							<c:forEach var="name" items="${product.fileName.split('&')[0]}">
@@ -311,6 +449,7 @@ div.thumbnail {
 			
 			
           </c:forEach>
+          <div  id="scrollList"></div>
           </div>
 	  <!--  table End /////////////////////////////////////-->
 	  

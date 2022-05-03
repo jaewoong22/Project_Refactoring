@@ -119,10 +119,10 @@ public class ProductRestController {
 		
 		// Business logic 수행
 		Map<String , Object> map=productService.getProductList(search);
-		//Map<String , Object> mapName=productService.getProdNames(search);
+		Map<String , Object> mapName = productService.getProdNames(search);
 		
 		
-		//System.out.println("여기::::::::"+mapName.get("list"));
+		String names = "";
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		System.out.println(resultPage);
@@ -131,7 +131,7 @@ public class ProductRestController {
 		map2.put("list", map.get("list"));
 		map2.put("resultPage", resultPage);
 		map2.put("search", search);
-		//map2.put("prodNames",mapName.get("list"));
+		map2.put("prodNames",mapName.get("list"));
 		
 		
 		return map2;

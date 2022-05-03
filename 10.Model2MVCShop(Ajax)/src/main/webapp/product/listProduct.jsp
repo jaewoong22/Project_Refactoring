@@ -126,19 +126,12 @@
 	   		      
 	   		 });
 	   		
-	   		/*
-	   		  select: function(event, ui) {
-	               console.log(ui.item);	
-	           },
-	           focus: function(event, ui) {
-	               return false;
-				}
-	           //*/
+
 	   		
 	   		//================================================================	
 	   			
-	   		var currentpage = $("#cv").val();
-	   		console.log(currentpage);
+	   		//var currentpage = $("#cv").val();
+	   		//console.log(currentpage);
 
 
 		//================================================================		
@@ -186,7 +179,7 @@
 
 	   //================================================================
 			
-///*	   		
+/*	   		
 			var currentpage = $("#cv").val();
 	   		console.log(currentpage);
 
