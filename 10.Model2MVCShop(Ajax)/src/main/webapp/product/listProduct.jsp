@@ -319,7 +319,7 @@
 					<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>상품명</option>
 					<option value="2"  ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>상품가격</option>
 				</select>
-				<input 	type="text" name="searchKeyword" value="${! empty search.searchKeyword ? search.searchKeyword : ''}"  class="ct_input_g" 
+				<input id="prodname" type="text" name="searchKeyword" value="${! empty search.searchKeyword ? search.searchKeyword : ''}"  class="ct_input_g" 
 							style="width:200px; height:20px" >
 			</c:if>
 				

@@ -90,10 +90,11 @@ body>div.container {
 
 		function fncAddPurchase() {
 			
-			var purchaseCount=$("input[name='purchaseCount']").val();
+			var prodStock=$("#prodStock").val();
 			var buyNum=$("input[name='buyNum']").val();
-
-			if (purchaseCount > buyNum) {
+			console.log(prodStock);
+			console.log(buyNum);
+			if (prodStock < buyNum) {
 				alert("구매 가능 개수가 초과되었습니다");
 				return;
 			}
@@ -149,6 +150,7 @@ body>div.container {
 		    </div>
 		  </div>
 		  
+		  <input type="hidden" id="prodStock" value="${product.prodStock }" />
 		  
 		  <div class="form-group">
 		    <label for="prodDetail" class="col-sm-offset-1 col-sm-3 control-label">상품상세정보</label>

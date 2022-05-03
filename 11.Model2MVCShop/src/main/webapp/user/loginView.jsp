@@ -115,6 +115,8 @@
 					      <a class="btn btn-default btn-sm btn-block" href="#" role="button">Join</a>
 					    </div>
 					  </div>
+					  
+					  
 			
 					</form>
 			   	 </div>

@@ -115,7 +115,8 @@ div.form-group{
 	$(function() {
 		$("button.btn-default").on("click", function() {
 			// resetData();
-			history.go(-1);
+			var prodNo = $("#prodNo").val();
+			self.location = "/product/getProduct?prodNo="+prodNo
 		})
 	})
 
@@ -136,7 +137,7 @@ div.form-group{
 
 		<form class="form-horizontal" enctype="multipart/form-data">
 		
-			<input type="hidden" name="prodNo" value="${product.prodNo }">
+			<input type="hidden" id="prodNo" name="prodNo" value="${product.prodNo }">
 			
 			<div class="form-group">
 		    <label for="prodName" class="col-sm-offset-1 col-sm-3 control-label">ªÛ«∞∏Ì</label>
