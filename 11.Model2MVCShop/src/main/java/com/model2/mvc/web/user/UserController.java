@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -123,6 +124,21 @@ public class UserController {
 		
 		return "redirect:/index.jsp";
 	}
+	
+	//==========================================================
+
+	@RequestMapping( value="kakaologin", method=RequestMethod.POST )
+	public String kakaologin(@RequestParam("kakaologin") String email) throws Exception{
+		
+		System.out.println("/user/kakaologin : POST");
+		//Business Logic
+		System.out.println(email);
+		
+		return "redirect:/index.jsp";
+	}
+	
+	
+	//==========================================================
 		
 	
 	@RequestMapping( value="logout", method=RequestMethod.GET )
@@ -137,17 +153,14 @@ public class UserController {
 	
 	
 	@RequestMapping( value="checkDuplication", method=RequestMethod.POST )
-	public String checkDuplication( @RequestParam("userId") String userId , Model model ) throws Exception{
-		
-		System.out.println("/user/checkDuplication : POST");
-		//Business Logic
-		boolean result=userService.checkDuplication(userId);
-		// Model °ú View ¿¬°á
-		model.addAttribute("result", new Boolean(result));
-		model.addAttribute("userId", userId);
-
-		return "forward:/user/checkDuplication.jsp";
-	}
+	   public int checkDuplication( @RequestBody String userId ) throws Exception{
+	      
+	      System.out.println("/restcontroller check : "+userId);
+	      
+	      
+	      //Business Logic
+	      return userService.checkDuplication(userId.substring(7));
+	   }
 
 	
 	@RequestMapping( value="listUser" )

@@ -33,204 +33,7 @@
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <!-- jQuery UI toolTip 사용 JS-->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script type="text/javascript">
 
-		
-	
-		function fncGetList(currentPage) {
-			console.log(currentPage);
-			$("#currentPage").val(currentPage)
-			$("form").attr("method" , "POST").attr("action" , "/product/listProduct?&menu=${param.menu }").submit();
-		}
-
-
-		 $(function() {
-			 
-			 $( "#search" ).on("click" , function() {
-				fncGetList(1);
-			});
-			
-			 $( "#sorting" ).on("click" , function() {
-					fncGetList(1);
-			});
-			
-			///*
-			 
-			 $( "a.btn-defualt" ).on("click" , function() {
-				 var prodNo =$(this).attr("value");
-				 console.log('상세조회');
-				 self.location = "/product/getProduct?prodNo="+prodNo
-			});
-			 
-			
-			 $( "a.update" ).on("click" , function() {
-				 var prodNo =$(this).attr("value");
-				 console.log('수정하기');
-				 self.location = "/product/updateProduct?prodNo="+prodNo
-			});
-			 
-			 $( "a.buy" ).on("click" , function() {
-				 var prodNo =$(this).attr("value");
-				 console.log('구매하기');
-				 self.location = "/product/getProduct?menu=search&prodNo="+prodNo
-			});
-			 
-			 
-			
-
-			 //=========autoComplete=================================================
-			 
-			 var list = [];
-		   		<c:forEach var="names" items="${prodNames }" >
-		   		list.push("${names.prodName}");
-		   		</c:forEach>
-		   		
-		   		console.log(list);
-	   		    
-		   		$( "#prodname" ).autocomplete({
-		   		      source: list,
-		   		      
-		   		});
-		   	//====================================================================
-		/*
-		   		   			var cpage = $("#currentPage").val();
-	   		console.log(cpage);
-
-			
-            $(window).scroll(function() {
-                if($(window).scrollTop() == $(document).height() - $(window).height()) { 
-                	
-                	var cpage = $("#currentPage").val();
-                	cpage = Number(cpage)+1;
-                	console.log(cpage);
-        	   		
-        	   		
-			            $.ajax({
-			                
-			                  url : "/product/json/listProduct?&menu=${param.menu }" ,
-			                  method : "POST" ,
-			                  data : JSON.stringify({
-			                	  currentpage : cpage
-			                  }), 
-			                  dataType : "json" ,
-			                  headers : {
-			                     "Accept" : "application/json",
-			                     "Content-Type" : "application/json"
-			                  },
-			                success : function(JSONData , status) {
-			                	 
-			                	$("#currentPage").val(cpage)
-			                	console.log(cpage); 
-			                	//alert(JSONData.list[0].prodName);
-			                	//alert(JSONData.list.length);
-			                	console.log(JSONData.list[0].prodName);
-				                	 ///*
-			                	for(var i=0; i<JSONData.list.length-1; i++){
-			                	
-			                		var image;
-			                		
-			                		console.log('i');
-			                		console.log(i);
-			                		console.log('onSale');
-			                		console.log(JSONData.list[i].onSale);
-			                		console.log('prodName');
-			                		console.log(JSONData.list[i].prodName);
-			                		
-			                		
-			                		
-			                		///*
-			                		if(JSONData.list[i].onSale == '1'){
-			                			if(JSONData.list[i].fileName.indexOf('&',0) != -1){
-			                				if(JSONData.list[i].fileName.indexOf('mp4',0) != -1){
-			                					image = "tumbnail.png";
-			                				}else{
-			                					image = JSONData.list[i].fileName.split('&')[0];
-			                				}
-			                			}else{
-			                				image = JSONData.list[i].fileName
-			                			}
-			                		}else{
-			                			if(JSONData.list[i].fileName.indexOf('&',0) != -1){
-			                				if(JSONData.list[i].fileName.contains('mp4')){
-			                					image = "tumbnail.png";
-			                				}else{
-			                					image = JSONData.list[i].fileName.split('&')[0];
-			                				}
-			                			}else{
-			                				image = JSONData.list[i].fileName
-			                			}
-			                		}
-			                		
-			                		console.log(image);
-			                		
-				                     var displayValue = "<div class='col-sm-6 col-md-4'>"
-				                     					+"<div class='thumbnail'>"
-				                     					+"<img src='/images/uploadFiles/"+image+"' id='image'>"
-			                     						+"<div class='caption'>"
-			                     						+"<h3>"+JSONData.list[i].prodName+"</h3>"
-			                     						///*
-			                     						if(${user.role.equals('admin') && param.menu.equals('manage')}){
-			                     							+"<p>남은 재고량 : "+JSONData.list[i].prodStock+"</p>"
-			                     							
-			                     							if(JSONData.list[i].onSale == '0'){
-				                     							+"<p style='color:#DB4455'>판매중지</p>"
-				                     						}
-			                     							
-			                     							+"<p>"+JSONData.list[i].price+" 원</p>"
-			                     							
-			                     						}else{
-			                     							if(JSONData.list[i].onSale == '0'){
-			                     								+"<p style='color:#DB4455'>*판매중지된 상품입니다.</p>"
-			                     								
-			                     							}
-			                     							+"<p>"+JSONData.list[i].price+" 원</p>"
-			                     						}
-			                     						
-			                     						+"<p align='right'>"
-			                     						+"<a class='btn btn-defualt btn'  role='button' value='"+JSONData.list[i].prodNo+" style='color:#bc8f8f'>상세조회</a>"
-			                     						
-			                     						if(${param.menu=='manage' }){
-			                     							+"<a class='btn btn-defualt btn update'  role='button' value='"+JSONData.list[i].prodNo+"'>수정하기</a>"
-			                     						}else{
-			                     							if(JSONData.list[i].prodStock == "0"){
-			                     								+"<a class='btn btn-defualt btn disabled' role='button' >품절</a>"
-			                     							}else{
-			                     								if(JSONData.list[i].onSale=='1'){
-			                     									+"<a class='btn btn-default btn buy' role='button' value='"+JSONData.list[i].prodNo+"'>구매하기</a>"
-			                     								}else{
-			                     									+"<a class='btn btn-default btn disabled' role='button' value='"+JSONData.list[i].prodNo+"'>구매하기</a>"
-			                     								}
-			                     							}
-			                     						}
-			                     						+"</p>"
-			                     						
-			                     						+"</div></div></div>"
-			                     						
-			                     						
-			                	                    
-				               	$( '#scrollList' ).append(displayValue);	
-			                     						
-			                     						 		
-			                    						
-			                     						
-			                	}//for 
-			                 }
-			            });//ajax
-			           
-                }//if
-            });//function
-		   		
-		   		
-		   		//*/
-
-		   		
-
-		   	//====================================================================	
-	   	
-		});	
-		 
-		
-	</script>	
 	 <!-- font -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -269,7 +72,215 @@ div.thumbnail {
        
 
 </style>
+	<script type="text/javascript">
+
+		
 	
+		function fncGetList(currentPage) {
+			console.log(currentPage);
+			$("#currentPage").val(currentPage)
+			$("form").attr("method" , "POST").attr("action" , "/product/listProduct?&menu=${param.menu }").submit();
+		}
+
+
+		 $(function() {
+			 
+			
+			 
+			
+
+			 //=========autoComplete=================================================
+			 
+			 var list = [];
+		   		<c:forEach var="names" items="${prodNames }" >
+		   		list.push("${names.prodName}");
+		   		</c:forEach>
+		   		
+	   		    
+		   		$( "#prodname" ).autocomplete({
+		   		      source: list,
+		   		      
+		   		});
+		   	//====================================================================
+		///*
+		
+			
+            $(window).scroll(function() {
+                if($(window).scrollTop() == $(document).height() - $(window).height()) { 
+                	
+                	var cpage = $("#currentPage").val();
+                	cpage = Number(cpage)+1;
+                	console.log(cpage);
+        	   		
+        	   		
+			            $.ajax({
+			                
+			                  url : "/product/json/listProduct?&menu=${param.menu }" ,
+			                  method : "POST" ,
+			                  data : JSON.stringify({
+			                	  currentPage : cpage
+			                  }), 
+			                  dataType : "json" ,
+			                  headers : {
+			                     "Accept" : "application/json",
+			                     "Content-Type" : "application/json"
+			                  },
+			                success : function(JSONData , status) {
+			                	 
+			                	$("#currentPage").val(cpage)
+			                	console.log(cpage); 
+			                	//alert(JSONData.list[0].prodName);
+			                	//alert(JSONData.list.length);
+			                	console.log(JSONData.list[0].prodName);
+				                	 
+			                	for(var i=0; i<JSONData.list.length-1; i++){
+			                		///*
+			                		var image;
+			                		var message;
+			                		var onSale;
+			                		var button;
+			                		/*
+			                		if(JSONData.list[i].onSale == '1'){
+			                			if(JSONData.list[i].fileName.indexOf('&',0) != -1){
+			                				if(JSONData.list[i].fileName.indexOf('mp4',0) != -1){
+			                					image = "tumbnail.png";
+			                				}else{
+			                					image = JSONData.list[i].fileName.split('&')[0];
+			                				}
+			                			}else{
+			                				image = JSONData.list[i].fileName;
+			                			}
+			                		}else{
+			                			if(JSONData.list[i].fileName.indexOf('&',0) != -1){
+			                				if(JSONData.list[i].fileName.contains('mp4')){
+			                					image = "tumbnail.png";
+			                				}else{
+			                					image = JSONData.list[i].fileName.split('&')[0];
+			                				}
+			                			}else{
+			                				image = JSONData.list[i].fileName;
+			                			}
+			                		}
+			                		*/
+			                		
+			                	
+			                		
+			                		if(JSONData.list[i].onSale == '1'){
+		                				if(JSONData.list[i].fileName.indexOf('mp4',0) != -1){
+		                					image="<img src='/images/uploadFiles/tumbnail.png' id='image'>";
+		                				}else{
+		                					image = "<img src='/images/uploadFiles/"+JSONData.list[i].fileName.split('&')[0]+"' id='image'>";
+		                				}
+			                			
+			                		}else if(JSONData.list[i].onSale == '0'){
+			                			if(JSONData.list[i].fileName.indexOf('mp4',0) != -1){
+		                					image="<img src='/images/uploadFiles/tumbnail.png' id='image_none'>";
+		                				}else{
+		                					image = "<img src='/images/uploadFiles/"+JSONData.list[i].fileName.split('&')[0]+"' id='image_none'>";
+		                				}
+			                		}
+			                		
+			                		
+			                		if(${user.role.equals('admin') && param.menu.equals('manage')}){
+			                			message="<p>남은 재고량 : "+JSONData.list[i].prodStock+"</p>";
+			                		}else{
+			                			message="<p></p>";
+			                		}
+			                		
+			                		
+			                		if(JSONData.list[i].onSale == '0' && param.menu.equals('search')){
+			                			onSale = "<p style='color:#DB4455'>판매중지</p>";
+			                		}else if(JSONData.list[i].onSale == '0' && param.menu.equals('manage')){
+			                			onSale = "<p style='color:#DB4455'>*판매중지된 상품입니다.</p>";
+			                		}else if(JSONData.list[i].onSale == '1'){
+			                			onSale = "<p></p>";
+			                		}
+			                		
+			                		if(${param.menu=='manage' }){
+			                			button = "<a class='btn btn-defualt btn update'  role='button' value='"+JSONData.list[i].prodNo+"'>수정하기</a>" ;
+			                		}else{
+			                			if(JSONData.list[i].prodStock == "0"){
+			                				button = "<a class='btn btn-defualt btn disabled' role='button' >재고없음</a>";
+			                			}else{
+			                				if(JSONData.list[i].onSale=='1'){
+			                					button = "<a class='btn btn-default btn buy' role='button' value='"+JSONData.list[i].prodNo+"'>구매하기</a>";
+			                				}else{
+			                					button = "<a class='btn btn-default btn disabled' role='button' value='"+JSONData.list[i].prodNo+"'>구매하기</a>";
+			                				}
+			                			}
+			                		}
+			                		
+				                     var displayValue = "<div class='col-sm-6 col-md-4'>"
+				                     					+"<div class='thumbnail'>"
+				                     					+image
+			                     						+"<div class='caption'>"
+			                     						+"<h3>"+JSONData.list[i].prodName+"</h3>"
+			                     						+message
+			                     						+onSale
+			                     						+"<p>"+JSONData.list[i].price+" 원</p>"
+			                     						+"<p align='right'>"
+			                     						+"<a class='btn btn-defualt btn'  role='button' value='"+JSONData.list[i].prodNo+"' style='color:#bc8f8f'>상세조회</a>"
+			                     						+button
+			                     						+"</p>"
+			                     						+"</div></div></div>"
+			                     						
+			                     		//*/				
+				               	$( '#scrollList' ).append(displayValue);	
+			                     						
+			                     						 		
+			                    						
+			                     						
+			                	}//for 
+			                 }
+			            });//ajax
+			           
+                }//if
+            });//function
+		   		
+		   		
+		   		//*/
+
+		   		
+
+		   	//====================================================================	
+		   		
+		   		
+            $( "#search" ).on("click" , function() {
+				fncGetList(1);
+			});
+			
+			 $( "#sorting" ).on("click" , function() {
+					fncGetList(1);
+			});
+			
+			///*
+			 
+			 $( "a.btn-defualt" ).on("click" , function() {
+				 var prodNo =$(this).attr("value");
+				 console.log('상세조회');
+				 self.location = "/product/getProduct?prodNo="+prodNo
+			});
+			 
+			
+			 $( "a.update" ).on("click" , function() {
+				 var prodNo =$(this).attr("value");
+				 console.log('수정하기');
+				 self.location = "/product/updateProduct?prodNo="+prodNo
+			});
+			 
+			 $( "a.buy" ).on("click" , function() {
+				 var prodNo =$(this).attr("value");
+				 console.log('구매하기');
+				 self.location = "/product/getProduct?menu=search&prodNo="+prodNo
+			});
+			 
+	   	
+			//====================================================================	
+			 
+		});	
+		 
+		
+	</script>		
 </head>
 
 <body>
@@ -350,7 +361,8 @@ div.thumbnail {
 		
 		
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
-		<div><br/><br/>
+		<div>
+		<br/><jsp:include page="../common/pageNavigator_new.jsp"/><br/>
 		</div>
 		
       <!--  table Start /////////////////////////////////////-->
@@ -462,4 +474,5 @@ div.thumbnail {
 	<!-- PageNavigation End... -->
 	
 </body>
+
 </html>

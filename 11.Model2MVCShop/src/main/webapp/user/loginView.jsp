@@ -72,6 +72,48 @@
 		
 	</script>		
 	
+
+	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+	<script>
+	/*
+		Kakao.init('44e9a817fd963e4dff5a1f8cf9c9e807'); //발급받은 키 중 javascript키를 사용해준다.
+		console.log(Kakao.isInitialized()); // sdk초기화여부판단
+		//카카오로그인
+		function kakaoLogin() {
+		    Kakao.Auth.login({
+		      scope: 'account_email',
+		      success: function (response) {
+		        Kakao.API.request({
+		          url: '/v2/user/me',
+		          success: function (response) {
+		        	  console.log(response);
+		        	  const email = response.kakao_account.email;
+		        	  console.log(email);
+		        	  
+		        	  
+		        	  
+		        	  $("#kakaoemail").val(email);
+		        	  var check = $("#kakaoemail").val();
+		        	  console.log(check);
+		        	  
+		        	  $("form[name='kakaoform']").attr("method","POST").attr("action","/user/kakaologin").submit;
+		        	  
+		        	  
+		        	  
+		          },
+		          fail: function (error) {
+		            console.log(error)
+		          },
+		        })
+		      },
+		      fail: function (error) {
+		        console.log(error)
+		      },
+		    })
+		  }
+		*/
+</script>	
+	
 </head>
 
 <body>
@@ -113,16 +155,26 @@
 					    <div class="text-center">
 					      <button type="button" class="btn btn-default btn-sm btn-block"  >Login</button>
 					      <a class="btn btn-default btn-sm btn-block" href="#" role="button">Join</a>
-					    </div>
+					      </div>
+					      
+					  </div>
+					  
+					   <div class="form-group" id="kakaologin">
+					    <div class="text-center">
+					      
+					      <img src="/images/kakao_login_medium_narrow.png" onclick="kakaoLogin();" />
+					     </div>
 					  </div>
 					  
 					  
 			
 					</form>
 			   	 </div>
-			
-			
-			
+			<%-- 
+			<form name="kakaoform" class="kakaoform">
+				<input type="hidden" name="kakaoemail" id="kakaoemail" value=""/>
+			</form>
+			--%>
   	 	
   	 	<!--  row Start /////////////////////////////////////-->
   	 	

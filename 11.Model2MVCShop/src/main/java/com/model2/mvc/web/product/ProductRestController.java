@@ -117,6 +117,7 @@ public class ProductRestController {
 		}
 		search.setPageSize(pageSize);
 		
+		System.out.println("JSON 현재 페이지:"+search.getCurrentPage());
 		// Business logic 수행
 		Map<String , Object> map=productService.getProductList(search);
 		Map<String , Object> mapName = productService.getProdNames(search);

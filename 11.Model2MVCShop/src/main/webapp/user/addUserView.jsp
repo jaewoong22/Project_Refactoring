@@ -41,6 +41,9 @@ h1.text-center {
 div.form-group{
 	font-family: 'Nanum Myeongjo', serif;
 }
+
+.id_ok{color:black; display: none;}
+.id_already{color:red; display: none;}
     </style>
 
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -158,16 +161,29 @@ div.form-group{
 	
 		 
 		//==>"ID중복확인" Event 처리 및 연결
-		 $(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			 $("button.btn.btn-info").on("click" , function() {
-				popWin 
-				= window.open("/user/checkDuplication.jsp",
-											"popWin", 
-											"left=300,top=200,width=780,height=130,marginwidth=0,marginheight=0,"+
-											"scrollbars=no,scrolling=no,menubar=no,resizable=no");
-			});
-		});	
+		//==>"ID중복확인" Event 처리 및 연결
+		function checkDuplication(){
+		        var userId = $("input:text").val(); //id값이 "id"인 입력란의 값을 저장
+		        console.log(userId);
+		        $.ajax({
+		            url:'/user/json/checkDuplication', //Controller에서 인식할 주소
+		            type:'post', //POST 방식으로 전달
+		            data: {
+		            	userId: userId
+		            	},
+		            success:function(cnt){
+		            	console.log(cnt);
+		            	if(cnt != 1){ //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디 
+		                    $('.id_ok').css("display","inline-block"); 
+		                    $('.id_already').css("display", "none");
+		                } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
+		                    $('.id_already').css("display","inline-block");
+		                    $('.id_ok').css("display", "none");
+		                }
+		            }
+		        });
+		        
+		    };
 
 	</script>		
     
@@ -194,13 +210,9 @@ div.form-group{
 		  <div class="form-group">
 		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">아 이 디</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="userId" name="userId" placeholder="중복확인하세요"  readonly>
-		       <span id="helpBlock" class="help-block">
-		      	<strong class="text-danger">입력전 중복확인 부터..</strong>
-		      </span>
-		    </div>
-		    <div class="col-sm-3">
-		      <button type="button" class="btn btn-info">중복확인</button>
+		      <input type="text" class="form-control" id="userId" name="userId" required oninput = "checkDuplication()"  placeholder="아이디">
+		      <span class="id_ok">사용 가능한 아이디입니다.</span>
+			 <span class="id_already">이미 사용 중인 아이디입니다.</span>
 		    </div>
 		  </div>
 		  
