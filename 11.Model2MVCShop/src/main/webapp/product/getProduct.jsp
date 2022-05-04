@@ -171,7 +171,7 @@ div.page-header{
 		</div>
 		</div>
 
-
+		<hr/>
 	
 		<div class="row">
 	  		<div class="col-xs-4 col-md-4"><strong>상품번호</strong></div>

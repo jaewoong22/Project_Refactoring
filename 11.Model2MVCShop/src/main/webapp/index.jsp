@@ -45,6 +45,17 @@ body>div.container{
    	<!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 		
+	$( function() {
+		$( "a:contains('상품검색')" ).on("click" , function() {
+	 		console.log('검색');
+			$(self.location).attr("href","/product/listProduct?menu=search");
+		});
+		//=============  최근 본 상품 Event  처리 =============	
+	 	$( "a:contains('최근 본 상품')" ).on("click" , function() {
+	 		console.log('기록');
+	 		popWin = window.open("/history.jsp","popWin","left=300, top=200, width=300, height=400, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+		});
+	});
 		//============= 회원원가입 화면이동 =============
 		$( function() {
 			//==> 추가된부분 : "addUser"  Event 연결
