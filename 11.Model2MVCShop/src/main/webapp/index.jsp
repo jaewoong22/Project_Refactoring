@@ -133,10 +133,38 @@ body>div.container{
         <li data-target="#myCarousel" data-slide-to="1"></li>
         <li data-target="#myCarousel" data-slide-to="2"></li>
         <li data-target="#myCarousel" data-slide-to="3"></li>
+		<li data-target="#myCarousel" data-slide-to="4"></li>
       </ol>
       <div class="carousel-inner" role="listbox">
         <div class="item active">
-          <img class="first-slide" src="/images/homedeco/main04.jpg"  alt="First slide">
+          <img class="first-slide" src="/images/homedeco/main30.jpg"  alt="First slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h2 align="left">테이블 위<br/>작은 변화</h2>
+              <h4 align="left">TABLEWARE</h4>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img class="second-slide" src="/images/homedeco/main32.jpg" alt="Second slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h2 align="left" >편안하고<br/>실용적인<br/>소재</h2>
+              <h4 align="left" >RITTEN</h4>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img class="third-slide" src="/images/homedeco/main09.jpg" alt="Third slide">
+          <div class="container">
+            <div class="carousel-caption">
+             <h2 align="left" >색채의<br/>확장과 흐름</h2>
+              <h4 align="left" >POTTERY</h4>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img class="fourth-slide" src="/images/homedeco/main04.jpg" alt="fourth slide">
           <div class="container">
             <div class="carousel-caption">
               <h2 align="left">내 방 안에<br/>작은 따스함</h2>
@@ -145,34 +173,14 @@ body>div.container{
           </div>
         </div>
         <div class="item">
-          <img class="second-slide" src="/images/homedeco/main08.jpg" alt="Second slide">
+          <img class="fifth-slide" src="/images/homedeco/main31.jpg" alt="fifth slide">
           <div class="container">
             <div class="carousel-caption">
-              <h2 align="left" style="color:black;">편안하고<br/>실용적인<br/>소재</h2>
-              <h4 align="left" style="color:black;">RITTEN</h4>
+              <h2 align="left">함께 떠나는<br/>패턴 여행</h2>
+              <h4 align="left">LUG</h4>
             </div>
           </div>
         </div>
-        <div class="item">
-          <img class="third-slide" src="/images/homedeco/main09.jpg" alt="Third slide">
-          <div class="container">
-            <div class="carousel-caption">
-             <h2 align="left" style="color:black;">색채의<br/>확장과 흐름</h2>
-              <h4 align="left" style="color:black;">POTTERY</h4>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <img class="fourth-slide" src="/images/homedeco/main11.jpg" alt="fourth slide">
-          <div class="container">
-            <div class="carousel-caption">
-              <h2 align="left" style="color:black;">니치 향수를 담은<br/>프리미엄 홈케어</h2>
-              <h4 align="left" style="color:black;">DIFUSER</h4>
-            </div>
-          </div>
-        </div>
-        
-        
         
       </div>
       <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
