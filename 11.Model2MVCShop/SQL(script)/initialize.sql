@@ -18,7 +18,7 @@ CREATE TABLE users (
 	role 					VARCHAR2(5) 		DEFAULT 'user',
 	ssn 					VARCHAR2(13),
 	cell_phone 		VARCHAR2(14),
-	addr 				VARCHAR2(100),
+	addr 				VARCHAR2(200),
 	email 				VARCHAR2(50),
 	reg_date 		DATE,
 	PRIMARY KEY(user_id)
@@ -45,7 +45,7 @@ CREATE TABLE transaction (
 	payment_option		CHAR(3),
 	receiver_name 		VARCHAR2(20),
 	receiver_phone		VARCHAR2(14),
-	demailaddr 			VARCHAR2(100),
+	demailaddr 			VARCHAR2(200),
 	dlvy_request 			VARCHAR2(100),
 	buy_num 		NUMBER, 
 	tran_status_code	CHAR(3),
