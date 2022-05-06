@@ -178,12 +178,6 @@ body{
 			<div class="col-xs-8 col-md-8">${purchase.divyDate }</div>
 		</div>
 		
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-4"><strong>¡÷πÆ¿œ</strong></div>
-			<div class="col-xs-8 col-md-8">${purchase.orderDate }</div>
-		</div>
 		
 		
 		

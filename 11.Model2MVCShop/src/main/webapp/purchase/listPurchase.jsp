@@ -103,7 +103,9 @@ table {
 			
 			
 			$( "td:nth-child(2)" ).css("color" , "#ffb6c1");
-			
+			$( "td.divy" ).css("color" , "#f08080");
+			$( "td.end" ).css("color" , "#87cefa");
+			$( "td.complete" ).css("color" , "#708090");
 			///*
 			$( "td:nth-child(5) > i" ).on("click" , function() {
 		         
@@ -119,10 +121,20 @@ table {
 		                  },
 		                  success : function(JSONData , status) {
 		                	  
+		                	  
+		                	  var image = "";
+		                	  
+		                	if(JSONData.purchaseProd.fileName.indexOf('mp4',0) != -1){
+               					image="<img src='/images/uploadFiles/tumbnail.png' id='image' width='150' height='150'>";
+               				}else{
+               					image = "<img src='/images/uploadFiles/"+JSONData.purchaseProd.fileName.split('&')[0]+"' id='image'  width='150' height='150'>";
+               				}
+		                	  
+		                	  
 		                	  var displayValue = "<table class='display' width='500' height='180'>"
 				            					  +"<tr>"
 				             					  +"<td>&emsp;"
-				             					  +"<img src='/images/uploadFiles/"+JSONData.purchaseProd.fileName+"' width='125' height='125' />"
+				             					  + image
 				                                  +"</td>"
 				                                  +"<td>"
 				                                  +"<h5>&emsp;"
@@ -216,16 +228,16 @@ table {
 			  
 			  <c:choose>
 			  <c:when test="${purchase.tranCode.equals('002')}">
-					<td align="center" class="divy" value1="${purchase.tranNo }" value2="${purchase.tranCode}">물건도착</td>
+					<td align="center" class="divy"  value1="${purchase.tranNo }" value2="${purchase.tranCode}">물건도착</td>
 				</c:when>
 				<c:when test="${purchase.tranCode.equals('001')}">
 					<td align="center" class="cancel"  value1="${purchase.tranNo }" value2="${purchase.tranCode}">구매취소</a>
 				</c:when>
 				<c:when test="${purchase.tranCode.equals('000')}">
-					<td align="center">구매취소완료</td>
+					<td align="center" class="complete">구매취소완료</td>
 				</c:when>
 				<c:otherwise>
-					<td align="center">수정사항 없음</td>
+					<td align="center" class="end">배송완료</td>
 				</c:otherwise>
 			  	</c:choose>
 			  	

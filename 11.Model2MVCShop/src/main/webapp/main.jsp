@@ -197,6 +197,9 @@ document.addEventListener('DOMContentLoaded', function() {
     </div><!-- /.carousel -->
     
     <hr/>
+    
+    <%--
+    
     <c:if test="${user.role=='admin' }">
       <div id='calendar'></div>
 		 <div class="modal fade" id="calendarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -231,6 +234,8 @@ document.addEventListener('DOMContentLoaded', function() {
 		    
 		    <hr/>
     </c:if>
+    
+     --%>
 
 </div>
 

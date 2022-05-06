@@ -159,6 +159,7 @@
 					      
 					  </div>
 					  
+					  <%--
 					   <div class="form-group" id="kakaologin">
 					    <div class="text-center">
 					      
@@ -166,7 +167,7 @@
 					     </div>
 					  </div>
 					  
-					  
+					   --%>
 			
 					</form>
 			   	 </div>

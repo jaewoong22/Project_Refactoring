@@ -196,9 +196,9 @@ public class PurchaseController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		if(user.getRole().equals("admin")) {
-			modelAndView.setViewName("/purchase/listSales.jsp");	
+			modelAndView.setViewName("/purchase/listSales?menu=menage");	
 		}else {
-			modelAndView.setViewName("/purchase/listPurchase.jsp");
+			modelAndView.setViewName("/purchase/listPurchase");
 		}
 			
 		

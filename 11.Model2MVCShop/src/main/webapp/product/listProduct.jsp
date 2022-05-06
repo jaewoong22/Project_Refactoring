@@ -274,6 +274,26 @@ div.thumbnail {
 				 self.location = "/product/getProduct?menu=search&prodNo="+prodNo
 			});
 			 
+			 
+			 $(document).on('click', 'a.btn-defualt', function(){
+				 var prodNo =$(this).attr("value");
+				 console.log('상세조회');
+				 self.location = "/product/getProduct?prodNo="+prodNo
+			});
+			 
+			
+			 $(document).on('click', 'a.update', function(){
+				 var prodNo =$(this).attr("value");
+				 console.log('수정하기');
+				 self.location = "/product/updateProduct?prodNo="+prodNo
+			});
+			 
+			 $(document).on('click', 'a.buy', function(){
+				 var prodNo =$(this).attr("value");
+				 console.log('구매하기');
+				 self.location = "/product/getProduct?menu=search&prodNo="+prodNo
+			});
+			 
 	   	
 			//====================================================================	
 			 
@@ -361,8 +381,9 @@ div.thumbnail {
 		
 		
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
+	<br/>
 		<div>
-		<br/><jsp:include page="../common/pageNavigator_new.jsp"/><br/>
+		<%--<br/><jsp:include page="../common/pageNavigator_new.jsp"/><br/> --%>
 		</div>
 		
       <!--  table Start /////////////////////////////////////-->
@@ -468,10 +489,7 @@ div.thumbnail {
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
- 	
- 	<!-- PageNavigation Start... -->
-	<jsp:include page="../common/pageNavigator_new.jsp"/>
-	<!-- PageNavigation End... -->
+
 	
 </body>
 
