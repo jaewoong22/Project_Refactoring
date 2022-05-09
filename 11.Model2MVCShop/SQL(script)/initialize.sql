@@ -55,6 +55,14 @@ CREATE TABLE transaction (
 );
 
 
+CREATE TABLE wishlist(
+	wish_no				  NUMBER 			  	  NOT NULL,
+	prod_no 		   	number(16) 		      NOT NULL REFERENCES     product(prod_no),
+	user_id				  VARCHAR2(20)	    NOT NULL REFERENCES     users(user_id),
+	PRIMARY KEY(wish_no)
+);
+
+
 INSERT 
 INTO users ( user_id, user_name, password, role, ssn, cell_phone, addr, email, reg_date ) 
 VALUES ( 'admin', 'admin', '1234', 'admin', NULL, NULL, '서울시 서초구', 'admin@mvc.com',to_date('2012/01/14 10:48:43', 'YYYY/MM/DD HH24:MI:SS')); 
