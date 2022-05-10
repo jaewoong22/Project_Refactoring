@@ -67,7 +67,16 @@ body>div.container {
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	
-		//============= "가입"  Event 연결 =============
+		//============= "장바구니"  Event 연결 =============
+		 $(function() {
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			$( "button.btn.btn-warning" ).on("click" , function() {
+				console.log('장바구니');
+				fncAddWishlist();
+			});
+		});
+	
+		//============= "구매"  Event 연결 =============
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "button.btn.btn-primary" ).on("click" , function() {
@@ -125,6 +134,25 @@ body>div.container {
 
 			
 		}
+		
+		//====================================================
+		function fncAddWishlist() {
+			
+			var prodStock=$("#prodStock").val();
+			var buyNum=$("input[name='buyNum']").val();
+			console.log(prodStock);
+			console.log(buyNum);
+			if (prodStock < buyNum) {
+				alert("장바구니 담기가능 개수가 초과되었습니다");
+				return;
+			}
+			
+			
+			$("form").attr("method" , "POST").attr("action" , "/wishList/addWishlist").submit();
+			
+		}
+		
+		//====================================================
 
 
 		$(function() {
@@ -251,6 +279,7 @@ body>div.container {
 		    <label for="buyerId" class="col-sm-offset-1 col-sm-3 control-label">구매자아이디</label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="buyerId" name="buyerId" placeholder="${user.userId}" value="${user.userId}" readonly>
+		      <input type="hidden" id="userId" name="userId" value="${user.userId}"/>
 		    </div>
 		  </div>
 		  
@@ -316,8 +345,9 @@ body>div.container {
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
+		      <button type="button"  class="btn btn-warning"  >장바구니</button>
 		      <button type="button"  class="btn btn-primary"  >등&nbsp;록</button>
-			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
+			  <a class="btn btn-default btn" href="#" role="button">취&nbsp;소</a>
 		    </div>
 		  </div>
 		</form>

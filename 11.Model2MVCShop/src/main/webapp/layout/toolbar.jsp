@@ -93,12 +93,20 @@ body>div.container{
 	                 </li>
 	             </ul>
 	             
-	              <c:if test="${! empty sessionScope.user.role}">
-	              <ul class="nav navbar-nav navbar-right">
+				<c:if test="${! empty sessionScope.user.role}">
+				<ul class="nav navbar-nav navbar-right">
+	                 <li><a href="#"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"/> Cart</a></li>
 	                 <li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"/> MyPage</a></li>
 	                <li><a href="#"> <span class="glyphicon glyphicon-log-out" aria-hidden="true"/> LOGOUT</a></li>
-	            </ul>
-	            </c:if>
+				</ul>
+				</c:if>
+				
+				<c:if test="${empty sessionScope.user.role}">
+				<ul class="nav navbar-nav navbar-right">
+	                 <li><a href="#"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"/> Cart</a></li>
+				</ul>
+				</c:if>
+				
 		</div>
 		<!-- dropdown hover END -->	       
 	    
@@ -138,6 +146,13 @@ body>div.container{
 	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$(self.location).attr("href","/user/getUser?userId=${sessionScope.user.userId}");
 		});
+	 	
+	 	//=============  장바구니 Event  처리 =============	
+	 	$( "a:contains(' Cart')" ).on("click" , function() {
+	 		
+			$(self.location).attr("href","/wishList/getWishlist?userId=${sessionScope.user.userId}");
+		});
+	 	
 	 	//=============  판매상품등록 Event  처리 =============	
 	 	$( "a:contains('상품등록')" ).on("click" , function() {
 	 		
@@ -167,6 +182,7 @@ body>div.container{
 	 		
 			$(self.location).attr("href","/purchase/listPurchase");
 		});
+	 	
 		
 	 	//=============  최근 본 상품 Event  처리 =============	
 	 	$( "a:contains('최근 본 상품')" ).on("click" , function() {

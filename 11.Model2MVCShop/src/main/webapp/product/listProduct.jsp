@@ -74,7 +74,7 @@ div.thumbnail {
 </style>
 	<script type="text/javascript">
 
-		
+	
 	
 		function fncGetList(currentPage) {
 			console.log(currentPage);
@@ -86,7 +86,7 @@ div.thumbnail {
 		 $(function() {
 			 
 			
-			 
+			
 			
 
 			 //=========autoComplete=================================================
@@ -258,7 +258,7 @@ div.thumbnail {
 			 $( "a.btn-defualt" ).on("click" , function() {
 				 var prodNo =$(this).attr("value");
 				 console.log('상세조회');
-				 self.location = "/product/getProduct?prodNo="+prodNo
+				 self.location = "/product/getProduct?prodNo="+prodNo+"&menu="+menu
 			});
 			 
 			
@@ -275,10 +275,15 @@ div.thumbnail {
 			});
 			 
 			 
+			 var menu = $("#menu").val();
+			 console.log(menu);
+			 
+			 
 			 $(document).on('click', 'a.btn-defualt', function(){
+				 
 				 var prodNo =$(this).attr("value");
 				 console.log('상세조회');
-				 self.location = "/product/getProduct?prodNo="+prodNo
+				 self.location = "/product/getProduct?prodNo="+prodNo+"&menu="+menu
 			});
 			 
 			
@@ -374,6 +379,7 @@ div.thumbnail {
 				  </div>
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <input type="hidden" id="currentPage" name="currentPage" value="1"/>
+				  <input type="hidden" id="menu" name = "menu" value="${param.menu }"/>
 				  
 				</form>
 	    	</div>
@@ -479,6 +485,7 @@ div.thumbnail {
 			      </div>
 			    </div>
 			  </div>
+			
 			
 			
           </c:forEach>

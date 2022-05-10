@@ -6,10 +6,11 @@ public class Wishlist {
 	private int wishNo;
 	private int prodNo;
 	private String userId;
-	private int quantity;
-	private int remain;
-	private int price;
+	private int buyNum;
 	private String prodName;
+	private String fileName;
+	private int price;	
+	
 
 
 	public Wishlist(){
@@ -23,6 +24,16 @@ public class Wishlist {
 
 	public void setWishNo(int wishNo) {
 		this.wishNo = wishNo;
+	}
+
+
+	public int getPrice() {
+		return price;
+	}
+
+
+	public void setPrice(int price) {
+		this.price = price;
 	}
 
 
@@ -46,36 +57,16 @@ public class Wishlist {
 	}
 
 
-	public int getQuantity() {
-		return quantity;
+	public int getBuyNum() {
+		return buyNum;
 	}
 
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void setBuyNum(int buyNum) {
+		this.buyNum = buyNum;
 	}
-
-
-	public int getRemain() {
-		return remain;
-	}
-
-
-	public void setRemain(int remain) {
-		this.remain = remain;
-	}
-
-
-	public int getPrice() {
-		return price;
-	}
-
-
-	public void setPrice(int price) {
-		this.price = price;
-	}
-
-
+	
+	
 	public String getProdName() {
 		return prodName;
 	}
@@ -84,8 +75,18 @@ public class Wishlist {
 	public void setProdName(String prodName) {
 		this.prodName = prodName;
 	}
-	
-	
+
+
+	public String getFileName() {
+		return fileName;
+	}
+
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+
 	public String toString() {
 		return "WishlisVO :"+"[wishNo]"+wishNo+"[prodNo]"+prodNo+"[userId]"+userId;
 	}

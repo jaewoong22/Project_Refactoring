@@ -10,41 +10,28 @@
 	<resultMap id="wishlistSelectMap" type="wishlist">
 		<result property="wishNo" 				column="wish_no" 				jdbcType="NUMERIC"/>
 		<result property="prodNo"	   			column="prod_no" 				jdbcType="NUMERIC" />
-		<result property="remain" 			column="remain" 			jdbcType="NUMERIC" />
+		<result property="buyNum" 			column="quantity" 			jdbcType="NUMERIC" />
 		<result property="userId" 			column="user_id" 		jdbcType="VARCHAR" />
-		<result property="prodName" 			column="prod_Name" 		jdbcType="VARCHAR" />
-		<result property="price" 			column="price" 			jdbcType="NUMERIC" />
+		<result property="prodName"			column="prod_name" 			jdbcType="VARCHAR" />
+		<result property="fileName" 		column="image_file" 		jdbcType="VARCHAR" />
+		<result property="price" 		column="price" 		jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
 	<insert 	id="addWishlist"		parameterType="wishlist" >
 		INSERT 
-	 	INTO WISHLIST(wish_no, prod_no, USER_ID) 
-	 	values (seq_wishlist_wish_no.nextval, #{prodNo}, #{userId})
+	 	INTO wishlist(wish_no, prod_no, quantity, user_Id, price) 
+	 	values (seq_wishlist_wish_no.nextval, #{prodNo}, #{buyNum},#{userId}, #{price})
 	 </insert>
 	 
-	 <select id="findWishlist" parameterType="int" resultMap="wishlistSelectMap">
-		SELECT W.*, (P.QUANTITY-NVL(A.SUM,0)) remain, PPRICE, P.PROD_NAME
-		FROM WISHLIST W, PRODUCT P, (SELECT prod_no, SUM(buyNum) SUM FROM TRANSACTION GROUP BY prod_no) A 
-	 	WHERE W.PROD_NO = A.PROD_NO
-		AND W.prod_no = P.prod_no 
-		AND wish_no = #{wishNo}
-	 </select>
-	 
-	 <!-- SQL : SELECT ONE -->
+	 <!-- SQL : SELECT -->
 	 <select 	id="getWishlist"	parameterType="string"	resultMap="wishlistSelectMap">
-		SELECT W.*, (P.QUANTITY-NVL(A.SUM,0)) remain, PPRICE, P.PROD_NAME
-		FROM WISHLIST W, PRODUCT P, (SELECT prod_no, SUM(buyNum) SUM FROM TRANSACTION GROUP BY prod_no) A 
-	 	WHERE W.PROD_NO = A.PROD_NO
-		AND W.prod_no = P.prod_no 
+		SELECT p.prod_name, p.image_file, p.price, w.*
+		FROM product p, wishlist w 
+		WHERE p.prod_no=w.prod_no 
 		AND user_id = #{userId}
+		ORDER BY wish_no DESC
 	 </select>
 	 
-	 <!-- SQL : UPDATE -->
-	 <delete	id="deleteWishlist"	parameterType="int" >
-	   	DELETE
-	   	FROM WISHLIST
-	   	WHERE wish_no = #{wishNo}
-	 </delete>
 	 
 </mapper>
