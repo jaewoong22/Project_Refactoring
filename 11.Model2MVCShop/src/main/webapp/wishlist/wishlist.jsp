@@ -168,6 +168,9 @@ table {
       <input type="text" id="totalprice" value=""/> 원
       </div>
 	  
+	  <div align="right">
+	  구매하기
+	  </div>
  	</div>
  	
 
