@@ -130,7 +130,7 @@ body>div.container {
 			console.log(addr);
 			$("input:hidden[name='divyAddr']").val( addr );
 			
-			$("form").attr("method" , "POST").attr("action" , "/purchase/addPurchase").submit();
+			$("form.form-horizontal").attr("method" , "POST").attr("action" , "/purchase/addPurchase").submit();
 
 			
 		}
@@ -148,7 +148,7 @@ body>div.container {
 			}
 			
 			
-			$("form").attr("method" , "POST").attr("action" , "/wishList/addWishlist").submit();
+			$("form.form-horizontal").attr("method" , "POST").attr("action" , "/wishList/addWishlist").submit();
 			
 		}
 		

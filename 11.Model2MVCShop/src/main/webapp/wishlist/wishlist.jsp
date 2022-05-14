@@ -66,15 +66,18 @@ table {
 
 		 $(function() {
 			 
+			
 			 
 			 var totalprice = 0;
 			 var price = $("td.price").attr("value");
+			 var buyNum = $("td.buyNum").attr("value");
 			 console.log(price);
-			 console.log('price');
-
+			 console.log(buyNum);
+		
+			 
 			 var list = [];
 		   		<c:forEach var="wishprod" items="${wishlist}" >
-		   		totalprice += Number(${wishprod.price});
+		   		totalprice += (Number(${wishprod.price})*Number(${wishprod.buyNum}));
 		   		</c:forEach>
 		   		
 			 console.log(totalprice);
@@ -83,10 +86,6 @@ table {
 			 
 			 
 			 
-			 
-			 
-			 
-			$( "td:nth-child(3)" ).css("color" , "#ffb6c1");
 
 
 			
@@ -115,12 +114,10 @@ table {
         <thead>
           <tr class="jaewoong">
             <th align="center">선택</th>     
-            <th align="center">No</th>       
-            <th align="center" >상품번호</th>
-            <th align="center" >상품이미지</th>
-            <th align="center" >상품명</th>
+            <th align="center">No</th>
+            <th align="center" >상품정보</th>
             <th align="center">상품수량</th>
-            <th align="center">상품가격</th>
+            <th align="center">주문금액</th>
           </tr>
         </thead>
        
@@ -130,9 +127,8 @@ table {
 		  <c:forEach var="wishlist" items="${wishlist}">
 			<c:set var="i" value="${ i+1 }" />
 			<tr>			  
-			  <td align="center"><input type="checkbox" checked/></td>
+			  <td align="center"><input type="checkbox" name="checkbox" checked/></td>
 			  <td align="center">${ i }</td>
-			  <td align="center" class="view" value="${wishlist.prodNo }">${wishlist.prodNo }</td>		
 			  <td align="center">
 			  <c:choose>
 				    <c:when test="${wishlist.fileName.contains('&')}">
@@ -151,10 +147,10 @@ table {
 						<img src="/images/uploadFiles/${wishlist.fileName}" class="img-responsive img-rounded" class="image" width="100" height="100">
 					</c:otherwise>
 				</c:choose>
-			  </td>	  
-			  <td align="center" class="view" value="${wishlist.prodName }">${wishlist.prodName }</td>			  
-			  <td align="center" class="view" value="${wishlist.buyNum }">${wishlist.buyNum }개</td>
-			  <td align="center" class="price" value="${wishlist.price }">${wishlist.price }원</td>
+				&emsp;&emsp;${wishlist.prodName }
+			  </td>	  	  
+			  <td align="center" class="buyNum" value="${wishlist.buyNum }">${wishlist.buyNum }개</td>
+			  <td align="center" class="price" value="${wishlist.price*wishlist.buyNum }">${wishlist.price*wishlist.buyNum } 원</td>
 			</tr>
           </c:forEach>
         
@@ -165,11 +161,13 @@ table {
       <hr/>
       
       <div align="right">총 결제금액 : 
-      <input type="text" id="totalprice" value=""/> 원
+      	<input type="text" id="totalprice" value="" style="border:none;width:100px;" readonly/> 원
       </div>
+      
+	  <hr/>
 	  
 	  <div align="right">
-	  구매하기
+	  <button>구매하기</button>
 	  </div>
  	</div>
  	
