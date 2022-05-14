@@ -7,7 +7,7 @@
 <html lang="ko">
 	
 <head>
-	<meta charset="EUC-KR">
+<meta charset="UTF-8">
 	
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
@@ -403,6 +403,10 @@ function payment(data) {
 		<div class="text-left">
 			<button type="button" class="iamportPayment" id="iamportPayment">결제하기</button>	
 		</div>
+		
+		<form method="post" action="/kakao/kakaoPay">
+		    <button>카카오페이</button>
+		</form>
 		
  	</div>
 	

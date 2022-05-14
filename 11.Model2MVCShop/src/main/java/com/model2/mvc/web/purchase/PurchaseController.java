@@ -68,7 +68,8 @@ public class PurchaseController {
 		//model.addAttribute("product", product);
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/purchase/addPurchaseView.jsp");
+		//modelAndView.setViewName("/purchase/addPurchaseView.jsp");
+		modelAndView.setViewName("/purchase/addPurchaseViewByKakao.jsp");
 		modelAndView.addObject("product", product);
 		
 		//return "forward:/purchase/addPurchaseView.jsp";

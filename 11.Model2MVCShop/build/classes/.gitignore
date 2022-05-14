@@ -3,3 +3,6 @@
 /WishlistDao.class
 /WishlistDaoImpl.class
 /WishListController.class
+/UserController.class
+/UserService.class
+/UserServiceImpl.class
