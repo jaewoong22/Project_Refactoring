@@ -10,15 +10,14 @@ public interface WishlistDao {
 	
 	// INSERT
 	public void addWishlist(Wishlist wishlist) throws Exception ;
-	
-	//Find
-	public Wishlist findWishlist(int wishNo) throws Exception;
 
 	// SELECT LIST
 	public List<Wishlist> getWishlist(String userId) throws Exception ;
 
-	
+	//update
+	public void updateWishlist(int wishNo, int buyNum) throws Exception ;
+		
 	//delete
-	public int deleteWishlist(int wishNo) throws Exception ;
+	public void deleteWishlist(int wishNo) throws Exception ;
 	
 }

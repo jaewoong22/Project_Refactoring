@@ -239,7 +239,7 @@ function payment(data) {
     IMP.request_pay({
     	pg : "html5_inicis", 
         pay_method : 'card',
-        merchant_uid : '1004',
+        merchant_uid : '1012',
         name : 'Å×½ºÆ®',
         amount : 100,
         buyer_email : 'pjn39@naver.com',

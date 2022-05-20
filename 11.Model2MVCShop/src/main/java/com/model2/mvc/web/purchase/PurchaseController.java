@@ -68,8 +68,8 @@ public class PurchaseController {
 		//model.addAttribute("product", product);
 		
 		ModelAndView modelAndView = new ModelAndView();
-		//modelAndView.setViewName("/purchase/addPurchaseView.jsp");
-		modelAndView.setViewName("/purchase/addPurchaseViewByKakao.jsp");
+		modelAndView.setViewName("/purchase/addPurchaseView.jsp");
+		//modelAndView.setViewName("/purchase/addPurchaseViewByKakao.jsp");
 		modelAndView.addObject("product", product);
 		
 		//return "forward:/purchase/addPurchaseView.jsp";
@@ -287,7 +287,7 @@ public class PurchaseController {
 		System.out.println(resultPage);
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/purchase/listSales.jsp");
+		modelAndView.setViewName("/purchase/listSales2.jsp");
 		modelAndView.addObject("list", map.get("list"));
 		modelAndView.addObject("resultPage", resultPage);
 		modelAndView.addObject("search", search);

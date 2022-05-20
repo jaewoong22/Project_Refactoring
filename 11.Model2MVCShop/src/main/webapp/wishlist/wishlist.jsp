@@ -49,16 +49,13 @@ body{
 div.row{
 	font-family: 'Nanum Myeongjo', serif;
 }
- div.page-header{
+ div{
 	font-family: 'Nanum Myeongjo', serif;
 }  
-table {
-	font-family: 'Nanum Myeongjo', serif;
-}
-.jaewoong th{
- 	text-align:center;
-}
 
+ input[type="checkbox"]:checked{
+ 	background: #bc8f8f;
+ }
 
 </style>
 	<script type="text/javascript">
@@ -66,11 +63,11 @@ table {
 
 		 $(function() {
 			 
-			
+			<!-- ------------- 총 결제금액 초기값 --------------- -->
 			 
 			 var totalprice = 0;
-			 var price = $("td.price").attr("value");
-			 var buyNum = $("td.buyNum").attr("value");
+			 var price = $("div.price").attr("value");
+			 var buyNum = $("div.buyNum").attr("value");
 			 console.log(price);
 			 console.log(buyNum);
 		
@@ -85,10 +82,102 @@ table {
 			 $("#totalprice").val(totalprice);
 			 
 			 
+			 <!-- ------------- 장바구니 삭제 --------------- -->
 			 
+			 $( "button.delete" ).on("click" , function() {
+				 var wishNo = $(this).val();
+					console.log('delete');
+					console.log(wishNo);
+					self.location = "/wishList/deleteWishlist?wishNo="+wishNo;
+			  });
 
-
-			
+	
+			 <!-- ------------- 상품수량 수정 --------------- -->
+			 
+			 $( "button.plus" ).on("click" , function() {
+				 var wishNo = $(this).val();
+				 var quantity = $(this).parent().children().eq(1).val();
+				 quantity = Number(quantity)+1;
+					console.log('plus');
+					console.log(wishNo);
+					console.log(quantity);
+					self.location = "/wishList/updateWishlist?wishNo="+wishNo+"&buyNum="+quantity;
+			  });
+			 
+			 $( "button.minus" ).on("click" , function() {
+				 var wishNo = $(this).val();
+				 var quantity = $(this).parent().children().eq(1).val();
+				 quantity = Number(quantity)-1;
+					console.log('minus');
+					console.log(wishNo);
+					console.log(quantity);
+					self.location = "/wishList/updateWishlist?wishNo="+wishNo+"&buyNum="+quantity;
+			  });
+			 
+			 
+			 <!--  --------------- ckeckbox event ---------------- -->
+			 
+			 var checkArr = new Array();
+			 
+			 ///*
+			 $(document).ready(function() {
+					$("#cbx_chkAll").click(function() {
+						if($("#cbx_chkAll").is(":checked")){
+							$("input[name=checkbox]").prop("checked", true);
+							
+							totalprice=0;
+							
+							<c:forEach var="wishprod" items="${wishlist}" >
+					   		totalprice += (Number(${wishprod.price})*Number(${wishprod.buyNum}));
+					   		</c:forEach>
+							$("#totalprice").val(totalprice);
+							
+						}else{
+							$("input[name=checkbox]").prop("checked", false);
+							totalprice = 0;
+							$("#totalprice").val(totalprice);
+						}
+					});
+					
+					$("input[name=checkbox]").click(function() {
+						var total = $("input[name=checkbox]").length;
+						var checked = $("input[name=checkbox]:checked").length;
+						
+						if(total != checked){
+							$("#cbx_chkAll").prop("checked", false);
+						}else{
+							$("#cbx_chkAll").prop("checked", true);
+						}
+					});
+					
+					$("input[name=checkbox]").click(function() {
+						console.log('change');
+						if($(this).is(":checked")){
+							console.log('1');
+							var checkprice = $(this).val();
+							console.log(checkprice);
+							totalprice = Number(totalprice)+Number(checkprice);
+							$("#totalprice").val(totalprice);
+							
+						}else{
+							console.log('2');
+							var checkprice = $(this).val();
+							console.log(checkprice);
+							totalprice = Number(totalprice)-Number(checkprice);
+							$("#totalprice").val(totalprice);
+						}
+					});
+					
+				});
+			 
+				
+			 <!--  --------------- TEST ---------------- -->
+			 
+			 $( "button.test" ).on("click" , function() {
+				 console.log(checkArr);
+			  });
+			 
+			 
 		});	
 	</script>		
 
@@ -108,28 +197,30 @@ table {
 	    </div>
 		
 		
-      <!--  table Start /////////////////////////////////////-->
-      <table class="table table-hover table-striped">
       
-        <thead>
-          <tr class="jaewoong">
-            <th align="center">선택</th>     
-            <th align="center">No</th>
-            <th align="center" >상품정보</th>
-            <th align="center">상품수량</th>
-            <th align="center">주문금액</th>
-          </tr>
-        </thead>
+        <div class="row">
+            <div class="col-md-1 text-center"><input type="checkbox" id="cbx_chkAll" checked/></div>
+            <div class="col-md-6 text-center">상품정보</div>
+            <div class="col-md-2 text-center">상품수량</div>
+            <div class="col-md-2 text-center">소 계</div>
+            <div class="col-md-1 text-center"></div>
+        </div>
        
-		<tbody>
+		<hr/>
 		
 		  <c:set var="i" value="0" />
 		  <c:forEach var="wishlist" items="${wishlist}">
+		  <div class="row">
 			<c:set var="i" value="${ i+1 }" />
-			<tr>			  
-			  <td align="center"><input type="checkbox" name="checkbox" checked/></td>
-			  <td align="center">${ i }</td>
-			  <td align="center">
+			  
+			  <div class="col-md-1 text-center">
+			  	<input type="checkbox" name="checkbox" value="${wishlist.price*wishlist.buyNum}" checked="checked"/>
+			  	<input type="hidden" name="prodNo" value="${ wishlist.prodNo}"/>
+			  	<input type="hidden" name="buyerId" value="${ wishlist.userId}"/>
+			  	<input type="hidden" name="buyNum" value="${ wishlist.buyNum}"/>			  	
+			  </div>
+			  
+			  <div class="col-md-6 text-left">
 			  <c:choose>
 				    <c:when test="${wishlist.fileName.contains('&')}">
 					    <c:choose>
@@ -148,27 +239,52 @@ table {
 					</c:otherwise>
 				</c:choose>
 				&emsp;&emsp;${wishlist.prodName }
-			  </td>	  	  
-			  <td align="center" class="buyNum" value="${wishlist.buyNum }">${wishlist.buyNum }개</td>
-			  <td align="center" class="price" value="${wishlist.price*wishlist.buyNum }">${wishlist.price*wishlist.buyNum } 원</td>
-			</tr>
+			  </div>	 
+			    	  
+			    	  
+			    	  
+			  <div align="center" class="col-md-2 text-center buyNum" value="${wishlist.buyNum }">
+			  	<c:choose>
+			  		<c:when test="${wishlist.buyNum == 1 }">
+			  			<a href="#" class="btn btn-default btn-xs disabled" role="button" value="${wishlist.wishNo}">-</a>
+			  		</c:when>
+			  		<c:otherwise>
+			  			<button class="btn btn-default btn-xs minus" value="${wishlist.wishNo}">-</button>
+			  		</c:otherwise>
+			  	</c:choose>
+			  	<input type="text" name="buyNum" value=" ${wishlist.buyNum }" style="width:30px;" readonly/>
+			  	<button class="btn btn-default btn-xs plus" value="${wishlist.wishNo}">+</button>
+			  </div>
+			  
+			  
+			  
+			  <div align="center" class="col-md-2 text-center price" value="${wishlist.price*wishlist.buyNum }" >${wishlist.price*wishlist.buyNum } 원</div>
+			  
+			  
+			  
+			  <div class="col-md-1 text-center">
+			  	<button class="btn btn-default btn-sm delete" value="${wishlist.wishNo}">삭제</button>
+			  </div>
+			  
+			  
+			  
+           </div>
+           <hr/>
           </c:forEach>
         
-        </tbody>
-      
-      </table>
-      
-      <hr/>
-      
-      <div align="right">총 결제금액 : 
-      	<input type="text" id="totalprice" value="" style="border:none;width:100px;" readonly/> 원
-      </div>
+	      
+	      <div align="right">
+	        총 결제금액 : <input type="text" id="totalprice" value="" style="border:none;width:100px;text-align:right;" min="0" readonly/> 원
+	      </div>
+     
       
 	  <hr/>
 	  
 	  <div align="right">
-	  <button>구매하기</button>
+	 	 <button class="btn btn-default btn-sm test">TEST</button>
+	  	<button class="btn btn-default btn-sm">구매하기</button>
 	  </div>
+	  
  	</div>
  	
 

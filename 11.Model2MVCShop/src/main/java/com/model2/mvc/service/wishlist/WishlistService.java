@@ -14,13 +14,13 @@ public interface WishlistService {
 	//장바구니추가
 	public void addWishlist(Wishlist wishlist) throws Exception;
 	
-	//장바구니 조회
-	public Wishlist findWishlist(int wishNo) throws Exception;
-	
 	// 장바구니리스트 
 	public List<Wishlist> getWishlist(String userId) throws Exception;
 	
+	// 장바구니수정(수량)
+	public void updateWishlist(int wishNo, int buyNum) throws Exception;
+	
 	// 장바구니삭제
-	public int deleteWishlist(int wishNo) throws Exception;
+	public void deleteWishlist(int wishNo) throws Exception;
 	
 }

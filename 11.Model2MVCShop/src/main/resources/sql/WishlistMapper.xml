@@ -33,5 +33,21 @@
 		ORDER BY wish_no DESC
 	 </select>
 	 
+	 <!-- SQL : UPDATE Stock -->
+	 <update	id="updateWishlist"	parameterType="map" >
+	   		UPDATE wishlist
+	   	<set>
+	   		quantity = #{buyNum}
+	   	</set>
+	   		WHERE wish_no = #{wishNo}
+	 </update>
+	 
+	 <!-- SQL : DELETE -->
+	 <delete	id="deleteWishlist"	parameterType="int" >
+	   	DELETE
+	   	FROM wishlist
+	   	WHERE wish_no = #{wishNo}
+	 </delete>
+	 
 	 
 </mapper>

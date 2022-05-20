@@ -156,7 +156,8 @@ body>div.container{
 	 	//=============  판매상품등록 Event  처리 =============	
 	 	$( "a:contains('상품등록')" ).on("click" , function() {
 	 		
-			$(self.location).attr("href","/product/addProductView.jsp");
+			//$(self.location).attr("href","/product/addProductView.jsp");
+			$(self.location).attr("href","/store/summernoteTest.jsp");
 		});
 	 	
 	 	//=============  판매상품관리 Event  처리 =============	

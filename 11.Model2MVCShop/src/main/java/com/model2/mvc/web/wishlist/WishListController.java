@@ -55,7 +55,7 @@ public class WishListController {
 	
 	
 	@RequestMapping("getWishlist")
-	public String listProduct( @RequestParam("userId") String userId, Model model) throws Exception{
+	public String getWishlist( @RequestParam("userId") String userId, Model model) throws Exception{
 		
 		System.out.println("/getWishlist");
 		
@@ -66,6 +66,30 @@ public class WishListController {
 		model.addAttribute("wishlist", list);
 		
 		return "forward:/wishlist/wishlist.jsp";
+	}
+	
+	@RequestMapping("updateWishlist")
+	public String updateWishlist( @RequestParam("wishNo") int wishNo, @RequestParam("buyNum") int buyNum, Model model, HttpSession session) throws Exception{
+		
+		System.out.println("/updateWishlist");
+		
+		User user = (User) session.getAttribute("user");
+		wishlistService.updateWishlist(wishNo,buyNum);
+		
+		
+		return "redirect:/wishList/getWishlist?userId="+user.getUserId();
+	}
+	
+	@RequestMapping("deleteWishlist")
+	public String deleteWishlist( @RequestParam("wishNo") int wishNo, Model model, HttpSession session) throws Exception{
+		
+		System.out.println("/deleteWishlist");
+		
+		User user = (User) session.getAttribute("user");
+		wishlistService.deleteWishlist(wishNo);
+		
+		
+		return "redirect:/wishList/getWishlist?userId="+user.getUserId();
 	}
 
 }

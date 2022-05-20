@@ -43,15 +43,14 @@ public class WishlistServiceImpl implements WishlistService{
 	}
 
 	@Override
-	public int deleteWishlist(int wishNo) throws Exception {
+	public void deleteWishlist(int wishNo) throws Exception {
 		wishlistDao.deleteWishlist(wishNo);
-		return 1;
 	}
 
 	@Override
-	public Wishlist findWishlist(int wishNo) throws Exception {
+	public void updateWishlist(int wishNo, int buyNum) throws Exception {
 		
-		return wishlistDao.findWishlist(wishNo);
+		wishlistDao.updateWishlist(wishNo, buyNum);
 	}
 
 	

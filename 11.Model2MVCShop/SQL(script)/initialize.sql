@@ -3,16 +3,19 @@ DROP TABLE transaction;
 DROP TABLE product;
 DROP TABLE users;
 DROP TABLE wishlist;
+DROP TABLE store;
 
 
 DROP SEQUENCE seq_product_prod_no;
 DROP SEQUENCE seq_transaction_tran_no;
 DROP SEQUENCE seq_wishlist_wish_no;
+DROP SEQUENCE seq_store_store_no;
 
 
 CREATE SEQUENCE seq_product_prod_no		 	INCREMENT BY 1 START WITH 10000;
 CREATE SEQUENCE seq_transaction_tran_no	INCREMENT BY 1 START WITH 10000;
 CREATE SEQUENCE seq_wishlist_wish_no	  INCREMENT BY 1 START WITH 10000;
+CREATE SEQUENCE seq_store_store_no	  INCREMENT BY 1 START WITH 10000;
 
 
 CREATE TABLE users ( 
@@ -68,6 +71,13 @@ CREATE TABLE wishlist(
 	image_file 					VARCHAR2(200),
 	price 							NUMBER(20),
 	PRIMARY KEY(wish_no)
+);
+
+CREATE TABLE store(
+	store_no				  NUMBER 			  	  NOT NULL,
+	title 				VARCHAR2(100),
+	content 					VARCHAR2(4000),
+	PRIMARY KEY(store_no)
 );
 
 

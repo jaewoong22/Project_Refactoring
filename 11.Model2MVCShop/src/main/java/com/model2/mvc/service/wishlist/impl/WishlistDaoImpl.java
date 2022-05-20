@@ -1,6 +1,8 @@
 package com.model2.mvc.service.wishlist.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,6 @@ public class WishlistDaoImpl implements WishlistDao{
 		sqlSession.insert("WishlistMapper.addWishlist", wishlist);
 	}
 
-
 	@Override
 	public List<Wishlist> getWishlist(String userId) throws Exception {
 		
@@ -42,15 +43,21 @@ public class WishlistDaoImpl implements WishlistDao{
 	}
 
 	@Override
-	public int deleteWishlist(int wishNo) throws Exception {
+	public void deleteWishlist(int wishNo) throws Exception {
 		sqlSession.delete("WishlistMapper.deleteWishlist",wishNo);
-		return 1;
 	}
 
 	@Override
-	public Wishlist findWishlist(int wishNo) throws Exception {
+	public void updateWishlist(int wishNo, int buyNum) throws Exception {
 		
+		String buyNumber = buyNum+"";
+		String wishNumber = wishNo+"";
 		
-		return sqlSession.selectOne("WishlistMapper.findWishlist", wishNo);
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("buyNum", buyNumber);
+		map.put("wishNo",  wishNumber );
+		
+		sqlSession.update("WishlistMapper.updateWishlist",map);
 	}
+
 }

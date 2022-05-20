@@ -18,6 +18,7 @@
 		<typeAlias alias="product" type="com.model2.mvc.service.domain.Product" />
 		<typeAlias alias="purchase" type="com.model2.mvc.service.domain.Purchase" />
 		<typeAlias alias="wishlist" type="com.model2.mvc.service.domain.Wishlist" />
+		<typeAlias alias="store" type="com.model2.mvc.service.domain.Store" />
 		<typeAlias alias="search" type="com.model2.mvc.common.Search" />
 	</typeAliases>
 	
@@ -27,6 +28,7 @@
 		<mapper resource="sql/ProductMapper.xml"/>
 		<mapper resource="sql/PurchaseMapper.xml"/>
 		<mapper resource="sql/WishlistMapper.xml"/>
+		<mapper resource="sql/StoreMapper.xml"/>
 	</mappers>
 
 </configuration>

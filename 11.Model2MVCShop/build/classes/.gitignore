@@ -1,8 +1,8 @@
 /com/
+/ProductController.class
+/ProductDao.class
+/ProductService.class
+/StoreDao.class
+/ProductDaoImpl.class
+/ProductServiceImpl.class
 /sql/
-/WishlistDao.class
-/WishlistDaoImpl.class
-/WishListController.class
-/UserController.class
-/UserService.class
-/UserServiceImpl.class
