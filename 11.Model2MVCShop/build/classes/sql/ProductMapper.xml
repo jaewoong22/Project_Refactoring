@@ -17,8 +17,6 @@
 		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
 		<result property="prodStock" 		column="prod_stock" 		jdbcType="INTEGER"/>
 		<result property="onSale" 		column="prod_onSale" 		jdbcType="VARCHAR"/>
-		
-		
 	</resultMap>
 	
 	<!-- SQL : INSERT -->

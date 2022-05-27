@@ -63,6 +63,7 @@ div.row{
 
 		 $(function() {
 			 
+			/* 
 			<!-- ------------- 총 결제금액 초기값 --------------- -->
 			 
 			 var totalprice = 0;
@@ -170,13 +171,19 @@ div.row{
 					
 				});
 			 
-				
+			//*/	
 			 <!--  --------------- TEST ---------------- -->
 			 
 			 $( "button.test" ).on("click" , function() {
 				 console.log(checkArr);
 			  });
 			 
+			 $( "button:contains('구매')" ).on("click" , function() {
+				 console.log('구매');
+				 
+				 $("form").attr("method" , "POST").attr("action" , "/purchase/addPurchaseByWishlist").submit();
+				 
+				});
 			 
 		});	
 	</script>		
@@ -207,17 +214,14 @@ div.row{
         </div>
        
 		<hr/>
-		
+		<form class="form-horizontal">
 		  <c:set var="i" value="0" />
 		  <c:forEach var="wishlist" items="${wishlist}">
 		  <div class="row">
 			<c:set var="i" value="${ i+1 }" />
 			  
 			  <div class="col-md-1 text-center">
-			  	<input type="checkbox" name="checkbox" value="${wishlist.price*wishlist.buyNum}" checked="checked"/>
-			  	<input type="hidden" name="prodNo" value="${ wishlist.prodNo}"/>
-			  	<input type="hidden" name="buyerId" value="${ wishlist.userId}"/>
-			  	<input type="hidden" name="buyNum" value="${ wishlist.buyNum}"/>			  	
+			  	<input type="checkbox" name="checkbox" value="${wishlist.wishNo}" checked="checked"/>		  	
 			  </div>
 			  
 			  <div class="col-md-6 text-left">
@@ -272,7 +276,7 @@ div.row{
            <hr/>
           </c:forEach>
         
-	      
+	      </form>
 	      <div align="right">
 	        총 결제금액 : <input type="text" id="totalprice" value="" style="border:none;width:100px;text-align:right;" min="0" readonly/> 원
 	      </div>

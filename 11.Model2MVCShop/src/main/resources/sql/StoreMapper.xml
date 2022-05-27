@@ -14,17 +14,53 @@
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
-	<insert 	id="addProduct"		parameterType="store" >
+	<insert 	id="addStore"		parameterType="store" >
 	 	INSERT
 		INTO store( store_no , title , content) 
 		VALUES	 (	seq_store_store_no.NEXTVAL , #{title}, #{content})
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
-	 <select 	id="getProduct"	parameterType="int"	resultMap="storeSelectMap">
+	 <select 	id="getStore"	parameterType="int"	resultMap="storeSelectMap">
 		SELECT *		
 		FROM store
 		WHERE store_no = #{value}
+	 </select>
+	 
+	 
+	 <!-- SQL : SELECT LIST -->
+	<select  id="getStoreList"  parameterType="search"	resultMap="storeSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT * 
+											FROM store
+											
+											<if test="searchCondition != null">
+													<if test="searchCondition == 0 ">
+										 				WHERE store_no LIKE '%'||#{searchKeyword}||'%'
+													</if>
+											</if>
+											
+												ORDER BY store_no 
+											 )  inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
+	 	
+	
+	<!-- SQL : SELECT ROW Count -->	 
+	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT * 
+											FROM store
+											
+											<if test="searchCondition != null">
+													<if test="searchCondition == 0 ">
+										 				WHERE store_no LIKE '%'||#{searchKeyword}||'%'
+													</if>
+											</if>
+											
+												ORDER BY store_no ) countTable						
 	 </select>
 	 
 	 

@@ -91,6 +91,18 @@ body>div.container{
 	                         </c:if>
 	                     </ul>
 	                 </li>
+	                 
+	                 <!-- 스토어관리 DrowDown -->
+	              <li class="dropdown">
+	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+	                         <span >스토어</span>
+	                         <span class="caret"></span>
+	                     </a>
+	                     <ul class="dropdown-menu">
+	                         <li><a href="#">스토어</a></li>
+	                     </ul>
+	                 </li>
+	                 
 	             </ul>
 	             
 				<c:if test="${! empty sessionScope.user.role}">
@@ -157,7 +169,7 @@ body>div.container{
 	 	$( "a:contains('상품등록')" ).on("click" , function() {
 	 		
 			//$(self.location).attr("href","/product/addProductView.jsp");
-			$(self.location).attr("href","/store/summernoteTest.jsp");
+			$(self.location).attr("href","/store/summernoteTest2.jsp");
 		});
 	 	
 	 	//=============  판매상품관리 Event  처리 =============	
@@ -176,6 +188,13 @@ body>div.container{
 	 	$( "a:contains('상품검색')" ).on("click" , function() {
 	 		
 			$(self.location).attr("href","/product/listProduct?menu=search");
+		});
+	 	
+	 	
+	 	//=============  스토어 Event  처리 =============	
+	 	$( "a:contains('스토어')" ).on("click" , function() {
+	 		
+			$(self.location).attr("href","/store/listStore?menu=search");
 		});
 	 	
 	 	//=============  구매이력조회 Event  처리 =============	

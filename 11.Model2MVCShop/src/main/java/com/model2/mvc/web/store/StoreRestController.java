@@ -3,36 +3,23 @@ package com.model2.mvc.web.store;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.gson.JsonObject;
-import com.model2.mvc.common.Page;
-import com.model2.mvc.common.Search;
-import com.model2.mvc.service.domain.Product;
-import com.model2.mvc.service.domain.User;
-import com.model2.mvc.service.product.ProductService;
 import com.model2.mvc.service.store.StoreService;
 
 
@@ -54,8 +41,10 @@ public class StoreRestController {
 	@PostMapping(value="/uploadSummernoteImageFile", produces = "application/json")
 	@ResponseBody
     public Map uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
+	//public Map uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, @RequestParam("userId") String userId) {
 
 		System.out.println("썸머노트");
+		//System.out.println("userId: "+userId);		
 		System.out.println("1: "+multipartFile);
 		
 		
@@ -68,9 +57,22 @@ public class StoreRestController {
         String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
 
         // 랜덤 UUID+확장자로 저장될 savedFileName
-        String savedFileName = UUID.randomUUID() + extension;	
+        //String savedFileName = UUID.randomUUID() + extension;	
+
+        Date now = new Date();
+       
+        SimpleDateFormat formatter = new SimpleDateFormat("yyMMddHHmmss");
+        
+        String formatedNow = formatter.format(now);
+        
+       //파일명에 유니크값 부여 -> 년월일시분초
+        String savedFileName = formatedNow + extension;	
+        //String savedFileName = userId+formatedNow + extension;	
         
         System.out.println("2: "+savedFileName);
+        System.out.println("2: "+extension);
+        System.out.println("2: "+formatedNow);
+        //System.out.println("2: "+userId);
         
         File targetFile = new File(fileRoot + savedFileName);
         

@@ -52,6 +52,15 @@ public class StoreController {
 		System.out.println(this.getClass());
 	}
 	
+	//==> classpath:config/common.properties  ,  classpath:config/commonservice.xml 참조 할것
+	//==> 아래의 두개를 주석을 풀어 의미를 확인 할것
+	@Value("#{commonProperties['pageUnit']}")
+	//@Value("#{commonProperties['pageUnit'] ?: 3}")
+	int pageUnit;
+	
+	@Value("#{commonProperties['pageSize']}")
+	//@Value("#{commonProperties['pageSize'] ?: 2}")
+	int pageSize;
 	
 
 	@RequestMapping(value="addProduct", method=RequestMethod.POST)
@@ -59,52 +68,41 @@ public class StoreController {
 
 		System.out.println("/store/addProduct : POST");
 		//Business Logic
-		System.out.println("/////"+store.getTitle());
-		storeService.addProduct(store);
+		System.out.println();
+		System.out.println("1: "+store.getTitle());
+		System.out.println("2: "+store.getContent());
+		System.out.println();
+		storeService.addStore(store);
 		
 		model.addAttribute(store);
 		
 		return "forward:/store/readProduct.jsp";
 	}
 
-	/*
-	@RequestMapping(value="getProduct", method=RequestMethod.GET)
-	public String getProduct( @RequestParam("prodNo") int prodNo , @CookieValue(value="history", required=false) Cookie cookie,  
-										HttpServletResponse response, Model model ) throws Exception {
+	@RequestMapping( value="listStore" )
+	public String listStore( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
 		
-		System.out.println("/product/getProduct : GET");
-		//Business Logic
-		Product product = productService.getProduct(prodNo);
-		// Model 과 View 연결
-		model.addAttribute("product", product);
+		System.out.println("/store/listStore :  GET / POST ");
 		
-		
-		String img = product.getFileName();
-		String prod = product.getProdName().replace(" ", "_");
-		String pn = "/"+prodNo+"&"+img+"&"+prod;
-		String first = prodNo+"&"+img+"&"+prod;
-		
-		if (cookie == null) {
-			
-			Cookie prodCookie = new Cookie("history",first);
-			prodCookie.setPath("/");
-			response.addCookie(prodCookie);
-					
-		}else{
-	
-			String str1 = cookie.getValue()+ pn;
-			
-			Cookie prodCookie02 = new Cookie("history",str1);
-			prodCookie02.setPath("/");
-			response.addCookie(prodCookie02);
-			
-			System.out.println("Not NULL일 때 저장된 prod쿠키값"+cookie.getValue());
-			System.out.println("Not NULL일 때 저장될 prod쿠키값"+str1);
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
 		}
+		search.setPageSize(pageSize);
+		// Business logic 수행
+		Map<String , Object> map=storeService.getStoreList(search);
 		
-		return "forward:/product/getProduct.jsp";
+		String names = "";
+		
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		System.out.println(resultPage);
+		
+		// Model 과 View 연결
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
+		
+		
+		return "forward:/store/listStore.jsp";
 	}
-	//*/
-
 	
 }

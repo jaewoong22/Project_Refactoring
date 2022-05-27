@@ -64,7 +64,7 @@ $(function() {
 	
 	$("#add").click(function(){
 		console.log('추가등록');
-		self.location = "/store/summernoteTest2.jsp"
+		self.location = "/store/summernoteTest.jsp"
 		
 	});
 	
@@ -85,36 +85,44 @@ $(function() {
 	<div class="container">
 	
 		<div class="page-header">
-	       <h3 class=" text-info"  style="color:#bc8f8f">상품등록조회</h3>
+	       <h3 class=" text-info"  style="color:#bc8f8f">상품리뷰</h3>
 	    </div>
 	
 		
+	<div class="row">
 	
-		<div class="row">
-	  		<div class="col-xs-4 col-md-4"><strong>TITLE</strong></div>
-			<div class="col-xs-8 col-md-8">${store.title}</div>
+		<div class="col-xs-8 col-md-8">
+				<div class="row">
+			  		<div class="col-xs-4 col-md-4"><strong>TITLE</strong></div>
+					<div class="col-xs-8 col-md-8">${store.title}</div>
+				</div>
+				
+				<hr/>	
+						
+				<div class="row">
+			  		<div class="col-xs-4 col-md-4"><strong>CONTENT</strong></div>
+					<div class="col-xs-8 col-md-8">${store.content }</div>
+				</div>
+				
+				<hr/>
 		</div>
 		
-		<hr/>
-		
-		
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-4"><strong>CONTENT</strong></div>
-			<div class="col-xs-8 col-md-8">${store.content }</div>
+		<div class="col-xs-4 col-md-4">			
+				<div class="row">
+			  		<div class="col-md-12 text-right ">
+			  			<button type="button" class="btn btn-default" id="check">확인</button>
+			  			<button type="button" class="btn btn-default" id="add">추가등록</button>
+			  		</div>
+				</div>
 		</div>
 		
-		<hr/>
-			
-		
-		<div class="row">
-	  		<div class="col-md-12 text-right ">
-	  			<button type="button" class="btn btn-default" id="check">확인</button>
-	  			<button type="button" class="btn btn-default" id="add">추가등록</button>
-	  		</div>
-		</div>
-		
+	</div>
+	
+	
+	
+	
 		<br/>
+	
 		
  	</div>
  	<!--  화면구성 div Start /////////////////////////////////////-->

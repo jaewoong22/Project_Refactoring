@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-<title>열어본 상품 보기</title>
+<title>Home Deco</title>
 </head>
 
 <body align="center">

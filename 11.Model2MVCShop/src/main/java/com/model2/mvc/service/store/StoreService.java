@@ -1,5 +1,8 @@
 package com.model2.mvc.service.store;
 
+import java.util.Map;
+
+import com.model2.mvc.common.Search;
 import com.model2.mvc.service.domain.Store;
 
 
@@ -7,12 +10,10 @@ import com.model2.mvc.service.domain.Store;
 public interface StoreService {
 	
 	
-	public void addProduct(Store store) throws Exception;
+	public void addStore(Store store) throws Exception;
 	
-	
-	public Store getProduct(int storeNo) throws Exception;
 
-
+	public Map<String , Object> getStoreList(Search search) throws Exception;
 	
 	
 }

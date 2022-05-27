@@ -1,10 +1,14 @@
 package com.model2.mvc.service.store.impl;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.model2.mvc.common.Search;
+import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.domain.Store;
 import com.model2.mvc.service.store.StoreDao;
 
@@ -27,12 +31,20 @@ public class StoreDaoImpl implements StoreDao{
 	}
 
 	///Method
-	public void addProduct(Store store) throws Exception {
-		sqlSession.insert("StoreMapper.addProduct", store);
+	public void addStore(Store store) throws Exception {
+		sqlSession.insert("StoreMapper.addStoret", store);
 	}
 
-	public Store getProduct(int storeNo) throws Exception {
-		return sqlSession.selectOne("StoreMapper.getProduct", storeNo);
+	public Store getStore(int storeNo) throws Exception {
+		return sqlSession.selectOne("StoreMapper.getStore", storeNo);
 	}
 	
+	public List<Store> getStoreList(Search search) throws Exception {
+		return sqlSession.selectList("StoreMapper.getStoreList", search);
+	}
+
+	// 게시판 Page 처리를 위한 전체 Row(totalCount)  return
+	public int getTotalCount(Search search) throws Exception {
+		return sqlSession.selectOne("StoreMapper.getTotalCount", search);
+	}
 }

@@ -78,7 +78,7 @@ body>div.container{
 	</script>	
 	
 </head>
-
+<title>Home Deco</title>
 <body>
 
 	<!-- ToolBar Start /////////////////////////////////////-->

@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>	 	
 	
 </head>
-	
+<title>Home Deco</title>	
 <body>
 
 	<!-- ToolBar Start /////////////////////////////////////-->

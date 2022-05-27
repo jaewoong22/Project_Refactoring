@@ -155,7 +155,8 @@ public class ProductController {
 			System.out.println("Not NULL일 때 저장될 prod쿠키값"+str1);
 		}
 		
-		return "forward:/product/getProduct.jsp";
+		//return "forward:/product/getProduct.jsp";
+		return "forward:/product/getProduct2.jsp";
 	}
 	
 	

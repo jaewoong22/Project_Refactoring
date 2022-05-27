@@ -98,147 +98,12 @@ div.bar{
 		function fncGetList(currentPage) {
 			console.log(currentPage);
 			$("#currentPage").val(currentPage)
-			$("form").attr("method" , "POST").attr("action" , "/product/listProduct?&menu=${param.menu }").submit();
+			$("form").attr("method" , "POST").attr("action" , "/store/listStore?&menu=${param.menu }").submit();
 		}
 
-
+		/*
 		 $(function() {
 			 
-			
-			
-			
-
-			 //=========autoComplete=================================================
-			 
-			 var list = [];
-		   		<c:forEach var="names" items="${prodNames }" >
-		   		list.push("${names.prodName}");
-		   		</c:forEach>
-		   		
-	   		    
-		   		$( "#prodname" ).autocomplete({
-		   		      source: list,
-		   		      
-		   		});
-		   	//====================================================================
-		///*
-		
-			
-            $(window).scroll(function() {
-                if($(window).scrollTop() == $(document).height() - $(window).height()) { 
-                	
-                	var cpage = $("#currentPage").val();
-                	cpage = Number(cpage)+1;
-                	console.log(cpage);
-        	   		
-        	   		
-			            $.ajax({
-			                
-			                  url : "/product/json/listProduct?&menu=${param.menu }" ,
-			                  method : "POST" ,
-			                  data : JSON.stringify({
-			                	  currentPage : cpage
-			                  }), 
-			                  dataType : "json" ,
-			                  headers : {
-			                     "Accept" : "application/json",
-			                     "Content-Type" : "application/json"
-			                  },
-			                success : function(JSONData , status) {
-			                	 
-			                	$("#currentPage").val(cpage)
-			                	console.log(cpage); 
-			                	//alert(JSONData.list[0].prodName);
-			                	//alert(JSONData.list.length);
-			                	console.log(JSONData.list[0].prodName);
-				                	 
-			                	for(var i=0; i<JSONData.list.length-1; i++){
-			                		///*
-			                		var image;
-			                		var message;
-			                		var onSale;
-			                		var button;
-			                		
-			                	
-			                		
-			                		if(JSONData.list[i].onSale == '1'){
-		                				if(JSONData.list[i].fileName.indexOf('mp4',0) != -1){
-		                					image="<img src='/images/uploadFiles/tumbnail.png' id='image'>";
-		                				}else{
-		                					image = "<img src='/images/uploadFiles/"+JSONData.list[i].fileName.split('&')[0]+"' id='image'>";
-		                				}
-			                			
-			                		}else if(JSONData.list[i].onSale == '0'){
-			                			if(JSONData.list[i].fileName.indexOf('mp4',0) != -1){
-		                					image="<img src='/images/uploadFiles/tumbnail.png' id='image_none'>";
-		                				}else{
-		                					image = "<img src='/images/uploadFiles/"+JSONData.list[i].fileName.split('&')[0]+"' id='image_none'>";
-		                				}
-			                		}
-			                		
-			                		
-			                		if(${user.role.equals('admin') && param.menu.equals('manage')}){
-			                			message="<p>남은 재고량 : "+JSONData.list[i].prodStock+"</p>";
-			                		}else{
-			                			message="<p></p>";
-			                		}
-			                		
-			                		
-			                		if(JSONData.list[i].onSale == '0' && param.menu.equals('search')){
-			                			onSale = "<p style='color:#DB4455'>판매중지</p>";
-			                		}else if(JSONData.list[i].onSale == '0' && param.menu.equals('manage')){
-			                			onSale = "<p style='color:#DB4455'>*판매중지된 상품입니다.</p>";
-			                		}else if(JSONData.list[i].onSale == '1'){
-			                			onSale = "<p></p>";
-			                		}
-			                		
-			                		if(${param.menu=='manage' }){
-			                			button = "<a class='btn btn-defualt btn update'  role='button' value='"+JSONData.list[i].prodNo+"'>수정하기</a>" ;
-			                		}else{
-			                			if(JSONData.list[i].prodStock == "0"){
-			                				button = "<a class='btn btn-defualt btn disabled' role='button' >재고없음</a>";
-			                			}else{
-			                				if(JSONData.list[i].onSale=='1'){
-			                					button = "<a class='btn btn-default btn buy' role='button' value='"+JSONData.list[i].prodNo+"'>구매하기</a>";
-			                				}else{
-			                					button = "<a class='btn btn-default btn disabled' role='button' value='"+JSONData.list[i].prodNo+"'>구매하기</a>";
-			                				}
-			                			}
-			                		}
-			                		
-				                     var displayValue = "<div class='col-sm-6 col-md-3'>"
-				                     					+"<div class='thumbnail'>"
-				                     					+image
-			                     						+"<div class='caption'>"
-			                     						+"<h3>"+JSONData.list[i].prodName+"</h3>"
-			                     						+message
-			                     						+onSale
-			                     						+"<p>"+JSONData.list[i].price+" 원</p>"
-			                     						+"<p align='right'>"
-			                     						+"<a class='btn btn-defualt btn'  role='button' value='"+JSONData.list[i].prodNo+"' style='color:#bc8f8f'>상세조회</a>"
-			                     						+button
-			                     						+"</p>"
-			                     						+"</div></div></div>"
-			                     						
-			                     		//*/				
-				               	$( '#scrollList' ).append(displayValue);	
-			                     						
-			                     						 		
-			                    						
-			                     						
-			                	}//for 
-			                 }
-			            });//ajax
-			           
-                }//if
-            });//function
-		   		
-		   		
-		   		//*/
-
-		   		
-
-		   	//====================================================================	
 		   		
 		   		
             $( "#search" ).on("click" , function() {
@@ -299,7 +164,7 @@ div.bar{
 			//====================================================================	
 			 
 		});	
-		 
+		 //*/
 		
 	</script>		
 </head>
@@ -316,7 +181,7 @@ div.bar{
 	<div class="container">
 	
 		<div class="page-header text-info text-left">
-	       <h3  style="color:#bc8f8f">상품목록조회</h3>
+	       <h3  style="color:#bc8f8f">STORE</h3>
 	    </div>
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
@@ -393,92 +258,28 @@ div.bar{
       
 		<div class="row" id="target">
 		  <c:set var="i" value="0" />
-		  <c:forEach var="product" items="${list}">
+		  <c:forEach var="store" items="${list}">
 			
 			  <div class="col-sm-6 col-md-3">
 			    <div class="thumbnail">
 			    
-			    <c:if test="${product.onSale.contains('1') }">
-				    <c:choose>
-				    <c:when test="${product.fileName.contains('&')}">
-					    <c:choose>
-						<c:when test="${product.fileName.contains('mp4')}">
-							<img src="/images/uploadFiles/tumbnail.png" id="image">
-						</c:when>
-						<c:otherwise>
-							<c:forEach var="name" items="${product.fileName.split('&')[0]}">
-								<img src="/images/uploadFiles/${name}" id="image">
-							</c:forEach>
-						</c:otherwise>
-						</c:choose>
-				    </c:when>
-				    <c:otherwise>
-						<img src="/images/uploadFiles/${product.fileName}" class="img-responsive img-rounded" id="image">
-					</c:otherwise>
-					</c:choose>
-			    </c:if>
-			    
-			    <c:if test="${product.onSale.contains('0') }">
-				    <c:choose>
-				    <c:when test="${product.fileName.contains('&')}">
-					    <c:choose>
-						<c:when test="${product.fileName.contains('mp4')}">
-							<img src="/images/noimage.jpg" id="image_none">
-						</c:when>
-						<c:otherwise>
-							<c:forEach var="name" items="${product.fileName.split('&')[0]}">
-								<img src="/images/uploadFiles/${name}" id="image_none">
-							</c:forEach>
-						</c:otherwise>
-						</c:choose>
-				    </c:when>
-				    <c:otherwise>
-						<img src="/images/uploadFiles/${product.fileName}" class="img-responsive img-rounded" id="image_none">
-					</c:otherwise>
-					</c:choose>
-			    </c:if>
-		    
-			    
+				    
 			      <div class="caption">
-			        <h3>${product.prodName}</h3>
-			        <c:choose>
-			        	<c:when test="${user.role.equals('admin') && param.menu.equals('manage')}">
-			        		<p>남은 재고량 : ${product.prodStock}</p>
-			        		<c:if test="${product.onSale.contains('0') }">
-			        			<p style="color:#DB4455">판매중지</p>
-			        		</c:if>
-			        	</c:when>
-			        	<c:otherwise>
-			        		<p>${product.price} 원</p>
-			        		<c:if test="${product.onSale.contains('0') }">
-			        			<p style="color:#DB4455">*판매중지된 상품입니다.</p>
-			        		</c:if>
-			        	</c:otherwise>
-			        </c:choose>
+			        <h3>${store.title}</h3>
+			        
+			        <p>번호: ${store.storeNo}</p>
+			        
 			        <p align="right">
-			        <a class="btn btn-defualt btn"  role="button" value="${product.prodNo}" style="color:#bc8f8f">상세조회</a>
-			        
-			        
+			        <a class="btn btn-defualt btn"  role="button" value="${store.storeNo}" style="color:#bc8f8f">상세조회</a>
 			        
 			        <c:if test="${param.menu.equals('manage') }">
-			        <a class="btn btn-defualt btn update"  role="button" value="${product.prodNo}">수정하기</a>			        
+			        	<a class="btn btn-defualt btn update"  role="button" value="${store.storeNo}">수정하기</a>			        
 			        </c:if>
 			        <c:if test="${param.menu.equals('search') }">
-			        	<c:choose>
-			        		<c:when test="${product.prodStock == '0' }">
-			        			<a class="btn btn-defualt btn disabled" role="button" >품절</a>
-			        		</c:when>
-			        		<c:otherwise>
-			        			<c:if test="${product.onSale.contains('1') }">
-			        				<a class="btn btn-default btn buy" role="button" value="${product.prodNo}">구매하기</a>
-			        			</c:if>
-			        			<c:if test="${product.onSale.contains('0') }">
-			        				<a class="btn btn-default btn disabled" role="button" value="${product.prodNo}">구매하기</a>
-			        			</c:if>
-			        		</c:otherwise>
-			        	</c:choose>			        
+			        	<a class="btn btn-defualt btn disabled" role="button" >품절</a>	        
 			        </c:if>
 			        </p>
+			        
 			      </div>
 			    </div>
 			  </div>
@@ -490,7 +291,7 @@ div.bar{
           
           <div  id="scrollList"></div>
           
-          </div>
+      </div>
 	  <!--  table End /////////////////////////////////////-->
 	  
 	  
@@ -507,7 +308,9 @@ div.bar{
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
-
+	<!-- PageNavigation Start... -->
+	<jsp:include page="../common/pageNavigator_new.jsp"/>
+	<!-- PageNavigation End... -->
 	
 </body>
 
