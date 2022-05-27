@@ -25,6 +25,7 @@ import com.model2.mvc.service.domain.Wishlist;
 import com.model2.mvc.service.product.ProductService;
 import com.model2.mvc.service.purchase.PurchaseService;
 import com.model2.mvc.service.user.UserService;
+import com.model2.mvc.service.wishlist.WishlistService;
 
 
 //==> 회원관리 Controller
@@ -42,6 +43,9 @@ public class PurchaseController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	@Autowired
+	@Qualifier("wishlistServiceImpl")
+	private WishlistService wishlistService;
 		
 	public PurchaseController(){
 		System.out.println(this.getClass());
@@ -113,6 +117,22 @@ public class PurchaseController {
 		return modelAndView;
 	}
 	
+	@RequestMapping("addPurchaseByWishlist")
+	public void addPurchaseByWishlist(@RequestParam("wishNo") int[] wishNo, HttpSession session ) throws Exception {
+
+		System.out.println("/addPurchaseByWishlist");
+		
+		User user = (User) session.getAttribute("user");
+		
+		for(int wishnum : wishNo) {
+			
+			Wishlist wishlist = wishlistService.findWishlist(wishnum);			
+			System.out.println(wishnum);
+			System.out.println(wishlist);
+		}
+		
+	}
+	
 	@RequestMapping( value="getPurchase", method=RequestMethod.GET)
 	public ModelAndView getPurchase( @RequestParam("tranNo") int tranNo) throws Exception {
 		
@@ -133,6 +153,7 @@ public class PurchaseController {
 		return modelAndView;
 	}
 	
+
 	@RequestMapping(value="updatePurchase", method=RequestMethod.GET)
 	public ModelAndView updatePurchase( @RequestParam("tranNo") int tranNo) throws Exception{
 
