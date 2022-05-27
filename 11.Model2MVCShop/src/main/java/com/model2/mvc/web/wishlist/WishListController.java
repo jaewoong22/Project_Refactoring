@@ -47,6 +47,9 @@ public class WishListController {
 		System.out.println("/addWishlist");
 		System.out.println("userId : "+wishlist.getUserId());
 		System.out.println("prodNo : "+wishlist.getProdNo());
+		System.out.println("buyNum : "+wishlist.getBuyNum());
+		System.out.println("prodName : "+wishlist.getProdName());
+		System.out.println("price : "+wishlist.getPrice());
 		
 		wishlistService.addWishlist(wishlist);
 		
@@ -55,9 +58,13 @@ public class WishListController {
 	
 	
 	@RequestMapping("getWishlist")
-	public String getWishlist( @RequestParam("userId") String userId, Model model) throws Exception{
+	public String getWishlist( HttpSession session, Model model) throws Exception{
 		
 		System.out.println("/getWishlist");
+		
+		User user = (User) session.getAttribute("user");
+		String userId = user.getUserId();
+		System.out.println(userId);
 		
 		List<Wishlist> list = wishlistService.getWishlist(userId);
 		
@@ -69,15 +76,16 @@ public class WishListController {
 	}
 	
 	@RequestMapping("updateWishlist")
-	public String updateWishlist( @RequestParam("wishNo") int wishNo, @RequestParam("buyNum") int buyNum, Model model, HttpSession session) throws Exception{
+	public String updateWishlist( @RequestParam("wishNo") int wishNo, @RequestParam("buyNum") int buyNum, HttpSession session) throws Exception{
 		
 		System.out.println("/updateWishlist");
 		
 		User user = (User) session.getAttribute("user");
 		wishlistService.updateWishlist(wishNo,buyNum);
+		String userid = user.getUserId();
+		System.out.println("userId: "+userid);
 		
-		
-		return "redirect:/wishList/getWishlist?userId="+user.getUserId();
+		return "redirect:/wishList/getWishlist";
 	}
 	
 	@RequestMapping("deleteWishlist")
@@ -89,7 +97,7 @@ public class WishListController {
 		wishlistService.deleteWishlist(wishNo);
 		
 		
-		return "redirect:/wishList/getWishlist?userId="+user.getUserId();
+		return "redirect:/wishList/getWishlist";
 	}
 
 }

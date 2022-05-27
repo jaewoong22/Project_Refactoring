@@ -22,5 +22,8 @@ public interface WishlistService {
 	
 	// 장바구니삭제
 	public void deleteWishlist(int wishNo) throws Exception;
+		
+	// 장바구니 찾기 (구매페이지 이동시 필요)
+	public Wishlist findWishlist(int wishNo) throws Exception ;
 	
 }

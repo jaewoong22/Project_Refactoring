@@ -11,6 +11,7 @@ public class Wishlist {
 	private String fileName;
 	private int price;	
 	
+	
 
 
 	public Wishlist(){
@@ -75,8 +76,8 @@ public class Wishlist {
 	public void setProdName(String prodName) {
 		this.prodName = prodName;
 	}
-
-
+	
+	
 	public String getFileName() {
 		return fileName;
 	}
@@ -86,8 +87,9 @@ public class Wishlist {
 		this.fileName = fileName;
 	}
 
+	
 
 	public String toString() {
-		return "WishlisVO :"+"[wishNo]"+wishNo+"[prodNo]"+prodNo+"[userId]"+userId;
+		return "WishlisVO :"+"[wishNo: "+wishNo+", userId: "+userId+", prodNo: "+prodNo+", prodName: "+prodName+", fileName: "+fileName+", buyNum: "+buyNum+", price: "+price +"]";
 	}
 }

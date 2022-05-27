@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-
+import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.domain.Wishlist;
 import com.model2.mvc.service.wishlist.WishlistDao;
 import com.model2.mvc.service.wishlist.WishlistService;
@@ -53,7 +53,10 @@ public class WishlistServiceImpl implements WishlistService{
 		wishlistDao.updateWishlist(wishNo, buyNum);
 	}
 
-	
+	@Override
+	public Wishlist findWishlist(int wishNo) throws Exception {
+		return wishlistDao.findWishlist(wishNo);
+	}
 
 }
 

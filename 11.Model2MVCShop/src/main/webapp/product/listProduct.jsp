@@ -69,7 +69,7 @@ div.row{
 }   
     
 div.thumbnail {
-	height:400px;
+	height:420px;
 	border-radius: 5px;
 }
        

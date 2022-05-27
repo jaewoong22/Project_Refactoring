@@ -20,4 +20,7 @@ public interface WishlistDao {
 	//delete
 	public void deleteWishlist(int wishNo) throws Exception ;
 	
+	//find
+	public Wishlist findWishlist(int wishNo) throws Exception ;
+	
 }

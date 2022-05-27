@@ -162,7 +162,7 @@ body>div.container{
 	 	//=============  장바구니 Event  처리 =============	
 	 	$( "a:contains(' Cart')" ).on("click" , function() {
 	 		
-			$(self.location).attr("href","/wishList/getWishlist?userId=${sessionScope.user.userId}");
+			$(self.location).attr("href","/wishList/getWishlist");
 		});
 	 	
 	 	//=============  판매상품등록 Event  처리 =============	

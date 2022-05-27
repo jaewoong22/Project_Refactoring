@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-
+import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.domain.Wishlist;
 import com.model2.mvc.service.wishlist.WishlistDao;
 
@@ -58,6 +58,11 @@ public class WishlistDaoImpl implements WishlistDao{
 		map.put("wishNo",  wishNumber );
 		
 		sqlSession.update("WishlistMapper.updateWishlist",map);
+	}
+
+	@Override
+	public Wishlist findWishlist(int wishNo) throws Exception {
+		return sqlSession.selectOne("WishlistMapper.findWishlist", wishNo);
 	}
 
 }

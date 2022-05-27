@@ -61,9 +61,9 @@ div.row{
 	<script type="text/javascript">
 
 
-		 $(function() {
+	$(document).ready(function() {
 			 
-			/* 
+			///* 
 			<!-- ------------- 총 결제금액 초기값 --------------- -->
 			 
 			 var totalprice = 0;
@@ -94,89 +94,63 @@ div.row{
 
 	
 			 <!-- ------------- 상품수량 수정 --------------- -->
+
+			 
 			 
 			 $( "button.plus" ).on("click" , function() {
+		         
 				 var wishNo = $(this).val();
 				 var quantity = $(this).parent().children().eq(1).val();
 				 quantity = Number(quantity)+1;
-					console.log('plus');
-					console.log(wishNo);
-					console.log(quantity);
-					self.location = "/wishList/updateWishlist?wishNo="+wishNo+"&buyNum="+quantity;
-			  });
+				console.log('plus');
+				console.log(wishNo);
+				console.log(quantity);
+				
+		         $.ajax( 
+		               {
+		                  url : "/wishList/json/updateWishlist?wishNo="+wishNo+"&buyNum="+quantity ,
+		                  method : "GET" ,
+		                  dataType : "json" ,
+		                  headers : {
+		                     "Accept" : "application/json",
+		                     "Content-Type" : "application/json"
+		                  },
+		                  success : function(JSONData , status) {
+
+		                	 $('input[name=buyNum]').val(JSONData)
+		                	 
+		                  }
+		            });
+	  			 });
 			 
 			 $( "button.minus" ).on("click" , function() {
+		         
 				 var wishNo = $(this).val();
 				 var quantity = $(this).parent().children().eq(1).val();
 				 quantity = Number(quantity)-1;
 					console.log('minus');
 					console.log(wishNo);
 					console.log(quantity);
-					self.location = "/wishList/updateWishlist?wishNo="+wishNo+"&buyNum="+quantity;
-			  });
+				
+		         $.ajax( 
+		               {
+		                  url : "/wishList/json/updateWishlist?wishNo="+wishNo+"&buyNum="+quantity ,
+		                  method : "GET" ,
+		                  dataType : "json" ,
+		                  headers : {
+		                     "Accept" : "application/json",
+		                     "Content-Type" : "application/json"
+		                  },
+		                  success : function(JSONData , status) {
+		                	  
+		                	  $('input[name=buyNum]').val(JSONData)
+		                	 
+		                  }
+		            });
+	  			 });
 			 
+		 
 			 
-			 <!--  --------------- ckeckbox event ---------------- -->
-			 
-			 var checkArr = new Array();
-			 
-			 ///*
-			 $(document).ready(function() {
-					$("#cbx_chkAll").click(function() {
-						if($("#cbx_chkAll").is(":checked")){
-							$("input[name=checkbox]").prop("checked", true);
-							
-							totalprice=0;
-							
-							<c:forEach var="wishprod" items="${wishlist}" >
-					   		totalprice += (Number(${wishprod.price})*Number(${wishprod.buyNum}));
-					   		</c:forEach>
-							$("#totalprice").val(totalprice);
-							
-						}else{
-							$("input[name=checkbox]").prop("checked", false);
-							totalprice = 0;
-							$("#totalprice").val(totalprice);
-						}
-					});
-					
-					$("input[name=checkbox]").click(function() {
-						var total = $("input[name=checkbox]").length;
-						var checked = $("input[name=checkbox]:checked").length;
-						
-						if(total != checked){
-							$("#cbx_chkAll").prop("checked", false);
-						}else{
-							$("#cbx_chkAll").prop("checked", true);
-						}
-					});
-					
-					$("input[name=checkbox]").click(function() {
-						console.log('change');
-						if($(this).is(":checked")){
-							console.log('1');
-							var checkprice = $(this).val();
-							console.log(checkprice);
-							totalprice = Number(totalprice)+Number(checkprice);
-							$("#totalprice").val(totalprice);
-							
-						}else{
-							console.log('2');
-							var checkprice = $(this).val();
-							console.log(checkprice);
-							totalprice = Number(totalprice)-Number(checkprice);
-							$("#totalprice").val(totalprice);
-						}
-					});
-					
-				});
-			 
-			//*/	
-			 <!--  --------------- TEST ---------------- -->
-			 
-			 $( "button.test" ).on("click" , function() {
-				 console.log(checkArr);
-			  });
 			 
 			 $( "button:contains('구매')" ).on("click" , function() {
 				 console.log('구매');
@@ -221,7 +195,7 @@ div.row{
 			<c:set var="i" value="${ i+1 }" />
 			  
 			  <div class="col-md-1 text-center">
-			  	<input type="checkbox" name="checkbox" value="${wishlist.wishNo}" checked="checked"/>		  	
+			  	<input type="checkbox" name="wishNo" value="${wishlist.wishNo}"/>		  	
 			  </div>
 			  
 			  <div class="col-md-6 text-left">
