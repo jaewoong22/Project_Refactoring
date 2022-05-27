@@ -117,7 +117,7 @@ div.row{
 		                  },
 		                  success : function(JSONData , status) {
 
-		                	 $('input[name=buyNum]').val(JSONData)
+		                	 //$('input[name=buyNum]').val(JSONData)
 		                	 
 		                  }
 		            });
@@ -143,7 +143,7 @@ div.row{
 		                  },
 		                  success : function(JSONData , status) {
 		                	  
-		                	  $('input[name=buyNum]').val(JSONData)
+		                	  //$('input[name=buyNum]').val(JSONData)
 		                	 
 		                  }
 		            });
@@ -155,7 +155,7 @@ div.row{
 			 $( "button:contains('구매')" ).on("click" , function() {
 				 console.log('구매');
 				 
-				 $("form").attr("method" , "POST").attr("action" , "/purchase/addPurchaseByWishlist").submit();
+				 $("form").attr("method" , "GET").attr("action" , "/purchase/addPurchaseByWishlist").submit();
 				 
 				});
 			 

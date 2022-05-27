@@ -1,5 +1,8 @@
 package com.model2.mvc.web.purchase;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -117,21 +120,54 @@ public class PurchaseController {
 		return modelAndView;
 	}
 	
-	@RequestMapping("addPurchaseByWishlist")
-	public void addPurchaseByWishlist(@RequestParam("wishNo") int[] wishNo, HttpSession session ) throws Exception {
+	
+	@RequestMapping(value="addPurchaseByWishlist", method=RequestMethod.GET)
+	public String addPurchaseByWishlist(@RequestParam("wishNo") int[] wishNo,  Model model) throws Exception {
 
-		System.out.println("/addPurchaseByWishlist");
+		System.out.println("/addPurchaseByWishlist : GET");
 		
-		User user = (User) session.getAttribute("user");
+		List list = new ArrayList();
 		
 		for(int wishnum : wishNo) {
 			
 			Wishlist wishlist = wishlistService.findWishlist(wishnum);			
 			System.out.println(wishnum);
 			System.out.println(wishlist);
+			
+			Product product = productService.getProduct(wishlist.getProdNo());
+			list.add(product);
+			
 		}
 		
+		model.addAttribute("list", list);
+		
+		return "forward:/purchase/addPurchaseViewByWishlist.jsp";
 	}
+	
+	///*
+	@RequestMapping(value="addPurchaseByWishlist", method=RequestMethod.POST)
+	public ModelAndView addPurchaseByWishlist(@ModelAttribute("purchase") Purchase purchase, HttpSession session) throws Exception {
+
+		System.out.println("/addPurchaseByWishlist");
+		
+		User user = (User) session.getAttribute("user");
+		System.out.println(user.getUserId());
+		System.out.println(purchase);
+		
+//		for(Purchase buy : purchase) {
+//			
+//			System.out.println(buy);
+//			
+//			//purchaseService.addPurchase(buy);
+//		}
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("/wishlist/wishlist.jsp");
+		
+		return modelAndView;
+	}
+	//*/
+	
 	
 	@RequestMapping( value="getPurchase", method=RequestMethod.GET)
 	public ModelAndView getPurchase( @RequestParam("tranNo") int tranNo) throws Exception {
