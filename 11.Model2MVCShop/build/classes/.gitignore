@@ -2,3 +2,6 @@
 /config/
 /log4j.properties
 /sql/
+/Cart.class
+/Product.class
+/Purchase.class
