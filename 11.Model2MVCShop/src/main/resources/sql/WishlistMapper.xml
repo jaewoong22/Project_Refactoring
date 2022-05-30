@@ -17,6 +17,7 @@
 		<result property="price" 		column="price" 		jdbcType="VARCHAR" />
 	</resultMap>
 	
+	
 	<!-- SQL : INSERT -->
 	<insert 	id="addWishlist"		parameterType="wishlist" >
 		INSERT 
